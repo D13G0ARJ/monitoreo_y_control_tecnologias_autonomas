@@ -1,79 +1,209 @@
-# Simulador Radar UNEFA
+# Sistema de Monitoreo y Control de Tecnologías Autónomas
 
-Aplicación de escritorio desarrollada en Python y PySide6 para simular el monitoreo y control básico de múltiples tecnologías autónomas dentro de una interfaz gráfica tipo radar.
+## Descripción
+Este repositorio contiene el desarrollo de un sistema de escritorio orientado al **monitoreo y control de tecnologías autónomas en un entorno simulado**, mediante una **interfaz gráfica tipo radar**.
 
-## Características de esta primera versión
-- Interfaz oscura tipo centro de monitoreo.
-- Radar 2D con círculos concéntricos y zona de vigilancia.
-- Creación de unidades autónomas simuladas.
-- Selección de unidades desde el radar.
-- Asignación de objetivos mediante clic sobre el radar.
-- Movimiento en tiempo real con control proporcional simple.
-- Trayectoria histórica visible.
-- Panel lateral con variables básicas de la unidad seleccionada.
-- Alertas por batería baja, fuera de zona y objetivo alcanzado.
-- Modos operativos iniciales: defensivo, reconocimiento y mixto.
+El proyecto fue concebido como una propuesta académica para la tesis:
 
-## Requisitos
-- Python 3.11 o superior recomendado.
-- PySide6.
+**“Diseño de un sistema de monitoreo y control de tecnologías autónomas mediante una interfaz gráfica tipo radar en un entorno simulado para aplicaciones en el área de defensa y vigilancia militar en la UNEFA”**
 
-## Instalación
-```bash
-python -m venv .venv
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
+Su propósito es demostrar, en un entorno local y controlado, cómo pueden integrarse:
+
+- monitoreo visual de múltiples unidades;
+- control básico de movimiento;
+- escenarios operativos simulados;
+- organización por enjambres;
+- alertas y estados operativos;
+- una interfaz especializada tipo radar.
+
+---
+
+## Enfoque del proyecto
+El sistema está orientado a:
+
+- vigilancia;
+- patrullaje;
+- supervisión de zonas estratégicas;
+- reconocimiento de áreas de interés;
+- coordinación operativa simulada.
+
+No está orientado a:
+
+- hardware real;
+- drones reales;
+- GPS real;
+- mapas reales;
+- armamento;
+- ataques reales;
+- daño o letalidad;
+- inteligencia artificial avanzada;
+- base de datos en la versión actual.
+
+---
+
+## Capacidades principales
+
+### Visualización y monitoreo
+- Radar 2D con círculos concéntricos y barrido visual.
+- Zona estratégica y puntos de observación.
+- Unidades autónomas con etiquetas operativas.
+- Rutas activas y trayectorias históricas.
+- HUD con escenario, modo, unidades activas y alertas.
+
+### Control operativo
+- Configuración previa de escenarios.
+- Modos operativos: `Defensivo`, `Reconocimiento` y `Mixto`.
+- Asignación de objetivos manuales.
+- Tareas temporales sin perder la misión original.
+- Control manual de unidades individuales.
+
+### Organización por grupos
+- Gestión simple de enjambres operativos.
+- Escenario combinado con división entre patrullaje y reconocimiento.
+- Visualización de etiquetas como `U01 [E1-P]` y `U04 [E2-R]`.
+
+### Supervisión de estado
+- Estado global del sistema.
+- Estado detallado de unidad seleccionada.
+- Batería, velocidad, posición, distancia al objetivo y rol.
+- Alertas con severidad `INFO`, `WARN` y `CRIT`.
+- Sonido opcional de alertas.
+
+---
+
+## Arquitectura general
+El sistema está organizado con una arquitectura modular y un **motor de simulación compartido**.
+
+### Componentes principales
+- **Radar Operativo**: ventana principal de observación.
+- **Centro de Control**: ventana secundaria de gestión.
+- **Motor de simulación**: núcleo lógico que mantiene el estado del sistema.
+
+### Organización del código
+```text
+tesis/
+├─ main.py
+├─ app/
+│  ├─ config/
+│  ├─ domain/
+│  ├─ services/
+│  ├─ simulation/
+│  └─ ui/
+├─ docs/
+├─ requirements.txt
+├─ run.bat
+├─ run.ps1
+└─ README.md
 ```
 
-## Ejecución
-```bash
+---
+
+## Requisitos
+- Python 3.11 o superior recomendado
+- PySide6
+- Windows PowerShell o terminal compatible para los scripts de arranque
+
+---
+
+## Instalación
+
+### Opción 1. Instalación manual
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
 python main.py
 ```
 
-### Ejecución fácil (recomendado)
+### Opción 2. Ejecución rápida recomendada
+Sin activar manualmente el entorno:
 
-Sin activar el entorno (ideal para PowerShell/VS Code):
-
-```bash
+```powershell
 .\run.bat
 ```
 
-Si quieres forzar reinstalación de dependencias:
+Si deseas forzar reinstalación de dependencias:
 
-```bash
+```powershell
 .\run.bat --reinstall
 ```
 
-O con PowerShell:
+También puedes usar:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\run.ps1
 ```
 
-## Uso básico
-1. Ejecutar la aplicación.
-2. Pulsar `Crear unidad` una o más veces.
-3. Seleccionar una unidad en el radar.
-4. Pulsar `Asignar objetivo`.
-5. Hacer clic dentro del radar para fijar el waypoint.
-6. Pulsar `Iniciar` para comenzar la simulación.
-7. Usar `Pausar` o `Reiniciar` según sea necesario.
-8. Cambiar el modo operativo desde el selector lateral para distribuir objetivos automáticos.
+---
 
-## Estructura del proyecto
-```text
-tesis_simulador/
-├─ main.py
-├─ app/
-│  ├─ ui/
-│  ├─ domain/
-│  ├─ simulation/
-│  ├─ services/
-│  └─ config/
-├─ requirements.txt
-└─ README.md
-```
+## Flujo básico de uso
+1. Abrir la aplicación.
+2. Seleccionar un escenario desde el Centro de Control.
+3. Configurar cantidad de unidades, enjambres y parámetros principales.
+4. Aplicar el escenario.
+5. Iniciar la simulación.
+6. Seleccionar una unidad en el radar.
+7. Asignar una tarea temporal o control manual si es necesario.
+8. Supervisar alertas, batería y estado operativo.
+9. Pausar o reiniciar según la demostración requerida.
+
+Para una guía práctica paso a paso, consulta el manual de usuario en la documentación.
+
+---
+
+## Documentación
+El repositorio incluye documentación académica y operativa en la carpeta [`docs/`](docs/).
+
+### Índice principal
+- [Índice de documentación](docs/indice_documentacion.md)
+
+### Documentos disponibles
+- [Sistema general](docs/sistema_general.md)
+- [Arquitectura](docs/arquitectura.md)
+- [Interfaz](docs/interfaz.md)
+- [Escenarios y modos](docs/escenarios_y_modos.md)
+- [Control y lógica](docs/control_y_logica.md)
+- [Manual de usuario](docs/manual_usuario.md)
+- [Descripción de módulos](docs/descripcion_modulos.md)
+- [Defensa](docs/defensa.md)
+
+### Uso recomendado de la documentación
+- Si deseas entender el sistema desde cero: comienza por `sistema_general.md`.
+- Si deseas aprender a usarlo: revisa `manual_usuario.md`.
+- Si deseas prepararte para la defensa: revisa `defensa.md`.
+- Si deseas explicar el desarrollo interno: revisa `descripcion_modulos.md`.
+
+---
 
 ## Alcance actual
-Esta versión no incluye base de datos, exportación de reportes, mapas reales, GPS real, hardware físico, PID ni simulación 3D. El objetivo es ofrecer una base funcional, modular y defendible para la tesis.
+La versión actual del sistema incluye:
+
+- simulación local;
+- interfaz tipo radar;
+- control básico;
+- escenarios operativos;
+- enjambres simples;
+- alertas;
+- batería y estados operativos;
+- documentación académica y técnica.
+
+No incluye actualmente:
+
+- base de datos;
+- exportación de reportes;
+- mapas reales;
+- hardware real;
+- comunicación real entre unidades;
+- PID;
+- simulación 3D;
+- inteligencia artificial avanzada.
+
+---
+
+## Valor académico
+Este proyecto busca demostrar que es posible construir una plataforma académica de monitoreo y control de tecnologías autónomas en entorno simulado, con una interfaz clara, lógica operativa defendible y organización modular suficiente para ser estudiada, explicada y ampliada.
+
+---
+
+## Autoría y contexto
+Desarrollado como proyecto académico de tesis en el contexto de la UNEFA, con enfoque en simulación aplicada al área de defensa y vigilancia militar desde una perspectiva segura, no letal y orientada a supervisión y reconocimiento.
