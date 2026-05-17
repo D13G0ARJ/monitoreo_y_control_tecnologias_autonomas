@@ -435,6 +435,8 @@ class ControlPanel(QGroupBox):
         mode_row.addWidget(self.mode_selector)
         mode_row.addStretch(1)
 
+        self.export_button = QPushButton("Exportar informe")
+
         button_grid = QGridLayout()
         button_grid.setHorizontalSpacing(10)
         button_grid.setVerticalSpacing(10)
@@ -443,6 +445,7 @@ class ControlPanel(QGroupBox):
         button_grid.addWidget(self.start_button, 1, 0)
         button_grid.addWidget(self.pause_button, 1, 1)
         button_grid.addWidget(self.reset_button, 2, 0, 1, 2)
+        button_grid.addWidget(self.export_button, 3, 0, 1, 2)
 
         layout = QVBoxLayout()
         layout.addLayout(mode_row)

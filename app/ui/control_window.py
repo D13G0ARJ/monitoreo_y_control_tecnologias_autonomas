@@ -57,6 +57,7 @@ class ControlWindow(QMainWindow):
         )
 
         self.panels.alerts.clear_button.clicked.connect(self.engine.clear_alert_history)
+        controls.export_button.clicked.connect(self._export_report)
         self.panels.unit_list_panel.unit_list.itemClicked.connect(
             lambda item: self.engine.set_selected_unit(item.data(Qt.UserRole))
         )
@@ -191,6 +192,7 @@ class ControlWindow(QMainWindow):
         controls.start_button.setEnabled(has_units and not self.engine.is_running)
         controls.pause_button.setEnabled(has_units and self.engine.is_running)
         controls.reset_button.setEnabled(has_units)
+        controls.export_button.setEnabled(has_units)
 
     def _handle_alerts_updated(self, new_alerts: list[Alert]) -> None:
         self._refresh_alerts()
@@ -245,6 +247,16 @@ class ControlWindow(QMainWindow):
         self.panels.scenario.scenario_selector.blockSignals(True)
         self.panels.scenario.scenario_selector.setCurrentText(self.engine.current_scenario_name)
         self.panels.scenario.scenario_selector.blockSignals(False)
+
+    def _export_report(self) -> None:
+        from PySide6.QtWidgets import QFileDialog
+        from app.io.exporter import export_run
+        directory = QFileDialog.getExistingDirectory(self, "Carpeta de destino")
+        if not directory:
+            return
+        summary = self.engine.metrics.build_summary(self.engine.get_global_status())
+        paths = export_run(directory, self.engine.metrics.timeseries_rows(), summary)
+        self.statusBar().showMessage(f"Informe exportado en {paths['timeseries']}")
 
     def _sync_mode_selector(self) -> None:
         self.panels.controls.mode_selector.blockSignals(True)
