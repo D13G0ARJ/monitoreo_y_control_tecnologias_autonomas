@@ -117,23 +117,6 @@ class SimulationEngine(QObject):
                 unit.waypoint.altitude = self.target_altitude
         self.updated.emit()
 
-    def apply_scenario(self, scenario_name: str) -> None:
-        defaults = self._scenario_service.build_dialog_defaults(self, scenario_name)
-        config = ScenarioApplicationConfig(
-            scenario_name=scenario_name,
-            unit_count=int(defaults["unit_count"]),
-            swarm_count=int(defaults["swarm_count"]),
-            distribution=str(defaults["distribution"]),
-            use_existing_units=bool(self.units),
-            max_speed=float(defaults["max_speed"]),
-            target_altitude=float(defaults["target_altitude"]),
-            zone_radius=float(defaults["zone_radius"]),
-            min_separation=float(defaults["min_separation"]),
-            low_battery_threshold=float(defaults["low_battery_threshold"]),
-            auto_start=False,
-        )
-        self._scenario_service.apply(self, config)
-
     def ensure_unit_count(self, target_count: int) -> None:
         target_count = max(0, target_count)
         current_count = len(self.units)
