@@ -1,0 +1,16 @@
+[project]
+name = "simulador-radar-unefa"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = ["PySide6"]
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"

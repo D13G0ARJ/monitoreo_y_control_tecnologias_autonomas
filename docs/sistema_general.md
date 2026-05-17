@@ -21,6 +21,8 @@ En términos prácticos, es un simulador donde el operador puede:
 - supervisar su estado;
 - intervenir sobre ellas;
 - recibir alertas;
+- revisar métricas;
+- exportar informes;
 - analizar comportamientos de patrullaje y reconocimiento.
 
 ### 1.2 ¿Para qué sirve?
@@ -31,6 +33,9 @@ Sirve para demostrar de manera académica cómo puede construirse un sistema cap
 - control básico del movimiento;
 - organización por grupos operativos;
 - manejo de alertas;
+- retorno automático a base y recarga;
+- métricas exportables;
+- ejecución headless reproducible;
 - simulación de escenarios de vigilancia y defensa.
 
 ### 1.3 ¿Qué problema resuelve?
@@ -89,6 +94,7 @@ Monitorear significa observar de forma continua el estado del sistema y de sus u
 - tarea actual;
 - distancia al objetivo;
 - alertas.
+- métricas de la corrida.
 
 ### 2.2 Control
 Controlar significa influir sobre el comportamiento de las unidades. En este sistema, el control se expresa en:
@@ -145,6 +151,7 @@ Cuando el operador confirma:
 - crea o reutiliza unidades;
 - organiza los enjambres;
 - aplica el modo correspondiente;
+- calcula los waypoints y distancias iniciales al objetivo;
 - actualiza el radar y el Centro de Control.
 
 Si el operador cancela, no cambia nada.
@@ -161,7 +168,7 @@ El Radar Operativo muestra:
 - resumen de alertas.
 
 ### Paso 6. Seleccionar unidad
-Al hacer clic sobre una unidad en el radar:
+Al hacer clic sobre una unidad en el radar o en la lista de unidades activas:
 
 - la unidad queda seleccionada;
 - el Centro de Control muestra su detalle.
@@ -179,6 +186,8 @@ El modo operativo puede cambiarse sin crear nuevas unidades.
 
 Si no existen unidades activas, el sistema informa que primero debe crearse o cargarse un escenario.
 
+Si se crea una unidad nueva después de aplicar un escenario, el sistema la integra automáticamente al escenario activo. La unidad recibe enjambre, rol, ruta, waypoint y distancia inicial al objetivo.
+
 ### Paso 9. Generar alertas
 Durante la simulación se generan alertas por eventos como:
 
@@ -188,6 +197,8 @@ Durante la simulación se generan alertas por eventos como:
 - fuera de zona;
 - proximidad entre unidades;
 - objetivo alcanzado.
+- retorno a base iniciado;
+- recarga completada.
 
 ### Paso 10. Pausar o reiniciar
 El operador puede:
@@ -196,6 +207,21 @@ El operador puede:
 - reiniciarla.
 
 Al reiniciar, el sistema conserva la estructura general del escenario actual y restablece la misión operativa.
+
+### Paso 11. Exportar y analizar
+El operador puede exportar la corrida en CSV y JSON.
+
+El sistema registra:
+
+- posición por tick;
+- estado;
+- batería;
+- velocidad;
+- rol y tarea;
+- objetivo activo;
+- distancia al objetivo;
+- alertas activas;
+- resumen de distancias, batería y tiempos por estado.
 
 ---
 
@@ -210,6 +236,8 @@ Porque integra de manera coherente:
 - monitoreo de variables;
 - gestión de grupos operativos;
 - alertas;
+- informes exportables;
+- corridas reproducibles;
 - simulación de escenarios.
 
 ### 4.2 ¿Qué aporta?

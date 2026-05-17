@@ -71,8 +71,6 @@ class AlertService:
     def _resolve_severity(alert_type: str) -> str:
         if alert_type in {settings.ALERT_BATTERY_CRITICAL, settings.ALERT_NO_BATTERY, settings.ALERT_OUT_OF_ZONE}:
             return settings.SEVERITY_CRIT
-        if alert_type == settings.ALERT_OUT_OF_ZONE:
-            return settings.SEVERITY_CRIT
         if alert_type == settings.ALERT_BATTERY_LOW:
             return settings.SEVERITY_WARN
         if alert_type == settings.ALERT_PROXIMITY:

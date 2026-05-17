@@ -1,0 +1,33 @@
+{
+  "scenario_name": "Reconocimiento de área de interés",
+  "unit_count": 7,
+  "swarm_count": 1,
+  "distribution": "Automática",
+  "use_existing_units": false,
+  "mode": "Reconocimiento",
+  "max_speed": 70.0,
+  "target_altitude": 180.0,
+  "zone_radius": 320.0,
+  "min_separation": 38.0,
+  "low_battery_threshold": 20.0,
+  "protected_radius": 70.0,
+  "observation_points": [
+    [
+      -180.0,
+      -120.0
+    ],
+    [
+      180.0,
+      -40.0
+    ],
+    [
+      -150.0,
+      70.0
+    ],
+    [
+      150.0,
+      160.0
+    ]
+  ],
+  "auto_start": false
+}

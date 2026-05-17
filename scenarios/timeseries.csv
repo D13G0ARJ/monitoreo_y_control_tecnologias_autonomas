@@ -1,0 +1,1534 @@
+sim_time,unit_id,x,y,battery,state
+0.1,U01,72.816,23.563,99.93,patrullando
+0.1,U02,2.786,-74.836,99.96,patrullando
+0.1,U03,122.746,-15.34,99.94,patrullando
+0.2,U01,76.517,29.513,99.85,patrullando
+0.2,U02,1.058,-72.312,99.91,patrullando
+0.2,U03,120.015,-19.84,99.88,patrullando
+0.3,U01,80.218,35.462,99.78,patrullando
+0.3,U02,-0.671,-69.789,99.87,patrullando
+0.3,U03,117.284,-24.34,99.82,patrullando
+0.4,U01,83.919,41.412,99.71,patrullando
+0.4,U02,-2.399,-67.265,99.83,patrullando
+0.4,U03,114.553,-28.84,99.76,patrullando
+0.5,U01,87.619,47.361,99.63,patrullando
+0.5,U02,-4.128,-64.742,99.79,patrullando
+0.5,U03,111.822,-33.339,99.7,patrullando
+0.6,U01,91.32,53.311,99.56,patrullando
+0.6,U02,-5.856,-62.218,99.74,patrullando
+0.6,U03,109.091,-37.839,99.64,patrullando
+0.7,U01,95.021,59.261,99.49,patrullando
+0.7,U02,-7.584,-59.695,99.7,patrullando
+0.7,U03,106.361,-42.339,99.58,patrullando
+0.8,U01,98.721,65.21,99.41,patrullando
+0.8,U02,-9.313,-57.172,99.66,patrullando
+0.8,U03,103.63,-46.839,99.52,patrullando
+0.9,U01,102.422,71.16,99.34,patrullando
+0.9,U02,-11.041,-54.648,99.62,patrullando
+0.9,U03,100.899,-51.339,99.46,patrullando
+1.0,U01,106.123,77.109,99.26,patrullando
+1.0,U02,-12.77,-52.125,99.57,patrullando
+1.0,U03,98.168,-55.839,99.4,patrullando
+1.1,U01,109.823,83.059,99.19,patrullando
+1.1,U02,-14.498,-49.601,99.53,patrullando
+1.1,U03,95.437,-60.339,99.33,patrullando
+1.2,U01,113.524,89.008,99.12,patrullando
+1.2,U02,-16.227,-47.078,99.49,patrullando
+1.2,U03,92.706,-64.839,99.27,patrullando
+1.3,U01,116.953,94.521,99.04,patrullando
+1.3,U02,-17.955,-44.554,99.44,patrullando
+1.3,U03,89.975,-69.339,99.21,patrullando
+1.4,U01,120.091,99.566,98.97,patrullando
+1.4,U02,-19.684,-42.031,99.4,patrullando
+1.4,U03,87.244,-73.839,99.15,patrullando
+1.5,U01,122.962,104.181,98.9,patrullando
+1.5,U02,-21.412,-39.507,99.36,patrullando
+1.5,U03,84.513,-78.339,99.09,patrullando
+1.6,U01,125.589,108.404,98.82,patrullando
+1.6,U02,-23.141,-36.984,99.32,patrullando
+1.6,U03,81.782,-82.839,99.03,patrullando
+1.7,U01,127.992,112.269,98.75,patrullando
+1.7,U02,-24.869,-34.46,99.27,patrullando
+1.7,U03,79.051,-87.339,98.97,patrullando
+1.8,U01,130.192,115.805,98.68,patrullando
+1.8,U02,-26.598,-31.937,99.23,patrullando
+1.8,U03,76.321,-91.839,98.91,patrullando
+1.9,U01,132.204,119.04,98.6,patrullando
+1.9,U02,-28.326,-29.413,99.19,patrullando
+1.9,U03,73.59,-96.339,98.85,patrullando
+2.0,U01,134.045,122.0,98.53,patrullando
+2.0,U02,-30.055,-26.89,99.15,patrullando
+2.0,U03,70.859,-100.839,98.79,patrullando
+2.1,U01,135.73,124.709,98.46,patrullando
+2.1,U02,-31.783,-24.367,99.1,patrullando
+2.1,U03,68.128,-105.339,98.73,patrullando
+2.2,U01,137.272,127.187,98.38,patrullando
+2.2,U02,-33.512,-21.843,99.06,patrullando
+2.2,U03,65.397,-109.839,98.67,patrullando
+2.3,U01,138.682,129.455,98.31,patrullando
+2.3,U02,-35.24,-19.32,99.02,patrullando
+2.3,U03,62.666,-114.339,98.61,patrullando
+2.4,U01,139.973,131.53,98.23,patrullando
+2.4,U02,-36.969,-16.796,98.97,patrullando
+2.4,U03,59.935,-118.839,98.55,patrullando
+2.5,U01,141.154,133.428,98.16,patrullando
+2.5,U02,-38.697,-14.273,98.93,patrullando
+2.5,U03,57.204,-123.339,98.49,patrullando
+2.6,U01,142.234,135.166,98.09,patrullando
+2.6,U02,-40.426,-11.749,98.89,patrullando
+2.6,U03,54.473,-127.839,98.43,patrullando
+2.7,U01,143.291,136.864,98.01,patrullando
+2.7,U02,-42.154,-9.226,98.85,patrullando
+2.7,U03,51.742,-132.339,98.37,patrullando
+2.8,U01,144.347,138.562,97.94,patrullando
+2.8,U02,-43.883,-6.702,98.8,patrullando
+2.8,U03,49.011,-136.839,98.31,patrullando
+2.9,U01,145.403,140.261,97.87,patrullando
+2.9,U02,-45.611,-4.179,98.76,patrullando
+2.9,U03,46.281,-141.339,98.25,patrullando
+3.0,U01,146.46,141.959,97.79,patrullando
+3.0,U02,-47.34,-1.655,98.72,patrullando
+3.0,U03,43.55,-145.839,98.19,patrullando
+3.1,U01,147.516,143.657,97.72,patrullando
+3.1,U02,-49.068,0.868,98.68,patrullando
+3.1,U03,40.819,-150.339,98.12,patrullando
+3.2,U01,148.572,145.355,97.65,patrullando
+3.2,U02,-50.797,3.392,98.63,patrullando
+3.2,U03,38.088,-154.839,98.06,patrullando
+3.3,U01,149.629,147.054,97.57,patrullando
+3.3,U02,-52.525,5.915,98.59,patrullando
+3.3,U03,35.357,-159.339,98.0,patrullando
+3.4,U01,143.291,150.042,97.5,patrullando
+3.4,U02,-54.253,8.438,98.55,patrullando
+3.4,U03,32.626,-163.839,97.94,patrullando
+3.5,U01,136.954,153.03,97.42,patrullando
+3.5,U02,-55.982,10.962,98.51,patrullando
+3.5,U03,29.895,-168.339,97.88,patrullando
+3.6,U01,130.616,156.018,97.34,patrullando
+3.6,U02,-57.71,13.485,98.46,patrullando
+3.6,U03,27.354,-172.526,97.82,patrullando
+3.7,U01,124.279,159.006,97.26,patrullando
+3.7,U02,-59.439,16.009,98.42,patrullando
+3.7,U03,25.029,-176.358,97.76,patrullando
+3.8,U01,117.941,161.994,97.19,patrullando
+3.8,U02,-61.167,18.532,98.38,patrullando
+3.8,U03,22.901,-179.863,97.7,patrullando
+3.9,U01,111.604,164.982,97.11,patrullando
+3.9,U02,-62.896,21.056,98.33,patrullando
+3.9,U03,20.955,-183.071,97.64,patrullando
+4.0,U01,105.266,167.97,97.03,patrullando
+4.0,U02,-64.624,23.579,98.29,patrullando
+4.0,U03,19.174,-186.006,97.58,patrullando
+4.1,U01,98.929,170.958,96.96,patrullando
+4.1,U02,-66.353,26.103,98.25,patrullando
+4.1,U03,17.544,-188.691,97.52,patrullando
+4.2,U01,92.591,173.946,96.88,patrullando
+4.2,U02,-68.081,28.626,98.21,patrullando
+4.2,U03,16.053,-191.149,97.46,patrullando
+4.3,U01,86.253,176.934,96.8,patrullando
+4.3,U02,-69.81,31.15,98.16,patrullando
+4.3,U03,14.688,-193.397,97.4,patrullando
+4.4,U01,79.916,179.922,96.73,patrullando
+4.4,U02,-71.538,33.673,98.12,patrullando
+4.4,U03,13.44,-195.454,97.34,patrullando
+4.5,U01,73.578,182.91,96.65,patrullando
+4.5,U02,-73.267,36.197,98.08,patrullando
+4.5,U03,12.297,-197.337,97.28,patrullando
+4.6,U01,67.324,185.858,96.57,patrullando
+4.6,U02,-74.995,38.72,98.04,patrullando
+4.6,U03,11.252,-199.059,97.22,patrullando
+4.7,U01,61.602,188.556,96.49,patrullando
+4.7,U02,-76.724,41.243,97.99,patrullando
+4.7,U03,10.214,-200.769,97.16,patrullando
+4.8,U01,56.366,191.025,96.42,patrullando
+4.8,U02,-78.452,43.767,97.95,patrullando
+4.8,U03,9.177,-202.479,97.1,patrullando
+4.9,U01,51.574,193.284,96.34,patrullando
+4.9,U02,-80.181,46.29,97.91,patrullando
+4.9,U03,8.139,-204.188,97.04,patrullando
+5.0,U01,47.191,195.351,96.26,patrullando
+5.0,U02,-81.909,48.814,97.86,patrullando
+5.0,U03,7.102,-205.898,96.98,patrullando
+5.1,U01,43.179,197.242,96.19,patrullando
+5.1,U02,-83.638,51.337,97.82,patrullando
+5.1,U03,6.064,-207.608,96.91,patrullando
+5.2,U01,39.509,198.972,96.11,patrullando
+5.2,U02,-85.366,53.861,97.78,patrullando
+5.2,U03,5.026,-209.318,96.85,patrullando
+5.3,U01,36.151,200.556,96.03,patrullando
+5.3,U02,-87.095,56.384,97.74,patrullando
+5.3,U03,9.959,-207.48,96.79,patrullando
+5.4,U01,33.078,202.004,95.96,patrullando
+5.4,U02,-88.823,58.908,97.69,patrullando
+5.4,U03,14.892,-205.642,96.73,patrullando
+5.5,U01,30.266,203.33,95.88,patrullando
+5.5,U02,-90.552,61.431,97.65,patrullando
+5.5,U03,19.824,-203.805,96.66,patrullando
+5.6,U01,27.694,204.543,95.8,patrullando
+5.6,U02,-92.28,63.955,97.61,patrullando
+5.6,U03,24.757,-201.967,96.6,patrullando
+5.7,U01,25.34,205.653,95.72,patrullando
+5.7,U02,-94.009,66.478,97.57,patrullando
+5.7,U03,29.689,-200.129,96.53,patrullando
+5.8,U01,23.186,206.668,95.65,patrullando
+5.8,U02,-95.737,69.002,97.52,patrullando
+5.8,U03,34.622,-198.292,96.47,patrullando
+5.9,U01,21.215,207.598,95.57,patrullando
+5.9,U02,-97.466,71.525,97.48,patrullando
+5.9,U03,39.555,-196.454,96.4,patrullando
+6.0,U01,19.406,208.45,95.49,patrullando
+6.0,U02,-99.194,74.048,97.44,patrullando
+6.0,U03,44.487,-194.616,96.34,patrullando
+6.1,U01,17.597,209.303,95.42,patrullando
+6.1,U02,-100.922,76.572,97.39,patrullando
+6.1,U03,49.42,-192.779,96.27,patrullando
+6.2,U01,15.788,210.156,95.34,patrullando
+6.2,U02,-102.651,79.095,97.35,patrullando
+6.2,U03,54.353,-190.941,96.21,patrullando
+6.3,U01,13.979,211.009,95.26,patrullando
+6.3,U02,-104.379,81.619,97.31,patrullando
+6.3,U03,59.285,-189.103,96.15,patrullando
+6.4,U01,12.17,211.862,95.18,patrullando
+6.4,U02,-106.108,84.142,97.27,patrullando
+6.4,U03,64.218,-187.266,96.08,patrullando
+6.5,U01,10.361,212.715,95.11,patrullando
+6.5,U02,-107.836,86.666,97.22,patrullando
+6.5,U03,69.15,-185.428,96.02,patrullando
+6.6,U01,8.552,213.568,95.03,patrullando
+6.6,U02,-109.565,89.189,97.18,patrullando
+6.6,U03,74.083,-183.59,95.95,patrullando
+6.7,U01,1.976,211.151,94.95,batería baja
+6.7,U02,-111.293,91.713,97.14,patrullando
+6.7,U03,79.016,-181.753,95.89,patrullando
+6.8,U01,1.91,204.144,94.87,regresando a base
+6.8,U02,-113.022,94.236,97.1,patrullando
+6.8,U03,83.948,-179.915,95.82,patrullando
+6.9,U01,1.845,197.138,94.79,regresando a base
+6.9,U02,-114.75,96.76,97.05,patrullando
+6.9,U03,88.881,-178.077,95.76,patrullando
+7.0,U01,1.779,190.132,94.7,regresando a base
+7.0,U02,-116.479,99.283,97.01,patrullando
+7.0,U03,93.813,-176.24,95.69,patrullando
+7.1,U01,1.713,183.125,94.62,regresando a base
+7.1,U02,-118.207,101.807,96.97,patrullando
+7.1,U03,98.746,-174.402,95.63,patrullando
+7.2,U01,1.648,176.119,94.54,regresando a base
+7.2,U02,-119.936,104.33,96.92,patrullando
+7.2,U03,103.431,-172.656,95.57,patrullando
+7.3,U01,1.582,169.113,94.45,regresando a base
+7.3,U02,-121.664,106.854,96.88,patrullando
+7.3,U03,107.718,-171.059,95.5,patrullando
+7.4,U01,1.517,162.107,94.37,regresando a base
+7.4,U02,-123.393,109.377,96.84,patrullando
+7.4,U03,111.641,-169.598,95.44,patrullando
+7.5,U01,1.451,155.1,94.29,regresando a base
+7.5,U02,-125.121,111.9,96.8,patrullando
+7.5,U03,115.23,-168.261,95.37,patrullando
+7.6,U01,1.386,148.094,94.2,regresando a base
+7.6,U02,-126.85,114.424,96.75,patrullando
+7.6,U03,118.514,-167.037,95.31,patrullando
+7.7,U01,1.32,141.088,94.12,regresando a base
+7.7,U02,-128.578,116.947,96.71,patrullando
+7.7,U03,121.519,-165.918,95.24,patrullando
+7.8,U01,1.255,134.081,94.04,regresando a base
+7.8,U02,-130.307,119.471,96.67,patrullando
+7.8,U03,124.269,-164.893,95.18,patrullando
+7.9,U01,1.189,127.075,93.95,regresando a base
+7.9,U02,-132.035,121.994,96.63,patrullando
+7.9,U03,126.784,-163.956,95.12,patrullando
+8.0,U01,1.123,120.069,93.87,regresando a base
+8.0,U02,-133.764,124.518,96.58,patrullando
+8.0,U03,129.086,-163.098,95.05,patrullando
+8.1,U01,1.058,113.063,93.79,regresando a base
+8.1,U02,-135.472,127.012,96.54,patrullando
+8.1,U03,131.193,-162.314,94.99,batería baja
+8.2,U01,0.992,106.056,93.71,regresando a base
+8.2,U02,-137.036,129.295,96.5,patrullando
+8.2,U03,127.884,-158.22,94.93,regresando a base
+8.3,U01,0.927,99.05,93.62,regresando a base
+8.3,U02,-138.466,131.384,96.45,patrullando
+8.3,U03,124.575,-154.126,94.87,regresando a base
+8.4,U01,0.861,92.044,93.54,regresando a base
+8.4,U02,-139.775,133.295,96.41,patrullando
+8.4,U03,121.266,-150.032,94.82,regresando a base
+8.5,U01,0.796,85.037,93.46,regresando a base
+8.5,U02,-140.973,135.043,96.37,patrullando
+8.5,U03,117.957,-145.938,94.76,regresando a base
+8.6,U01,0.73,78.031,93.37,regresando a base
+8.6,U02,-142.103,136.693,96.33,patrullando
+8.6,U03,114.648,-141.845,94.7,regresando a base
+8.7,U01,0.668,71.398,93.29,regresando a base
+8.7,U02,-143.234,138.343,96.28,patrullando
+8.7,U03,111.339,-137.751,94.65,regresando a base
+8.8,U01,0.611,65.33,93.21,regresando a base
+8.8,U02,-144.364,139.993,96.24,patrullando
+8.8,U03,108.031,-133.657,94.59,regresando a base
+8.9,U01,0.559,59.777,93.12,regresando a base
+8.9,U02,-145.494,141.643,96.2,patrullando
+8.9,U03,104.722,-129.563,94.53,regresando a base
+9.0,U01,0.512,54.696,93.04,regresando a base
+9.0,U02,-146.624,143.293,96.16,patrullando
+9.0,U03,101.413,-125.47,94.47,regresando a base
+9.1,U01,0.468,50.046,92.96,regresando a base
+9.1,U02,-147.754,144.943,96.11,patrullando
+9.1,U03,98.104,-121.376,94.42,regresando a base
+9.2,U01,0.428,45.792,92.88,regresando a base
+9.2,U02,-148.885,146.593,96.07,patrullando
+9.2,U03,94.795,-117.282,94.36,regresando a base
+9.3,U01,0.392,41.9,92.79,regresando a base
+9.3,U02,-150.183,143.824,96.03,patrullando
+9.3,U03,91.486,-113.188,94.3,regresando a base
+9.4,U01,0.359,38.339,92.71,regresando a base
+9.4,U02,-151.481,141.054,95.98,patrullando
+9.4,U03,88.177,-109.094,94.25,regresando a base
+9.5,U01,0.328,35.08,92.63,regresando a base
+9.5,U02,-152.779,138.285,95.94,patrullando
+9.5,U03,84.868,-105.001,94.19,regresando a base
+9.6,U01,0.3,32.098,92.54,regresando a base
+9.6,U02,-154.077,135.515,95.89,patrullando
+9.6,U03,81.56,-100.907,94.13,regresando a base
+9.7,U01,0.275,29.37,92.46,regresando a base
+9.7,U02,-155.376,132.746,95.85,patrullando
+9.7,U03,78.251,-96.813,94.08,regresando a base
+9.8,U01,0.251,26.873,92.38,regresando a base
+9.8,U02,-156.674,129.976,95.8,patrullando
+9.8,U03,74.942,-92.719,94.02,regresando a base
+9.9,U01,0.23,24.589,92.29,regresando a base
+9.9,U02,-157.972,127.207,95.76,patrullando
+9.9,U03,71.633,-88.625,93.96,regresando a base
+10.0,U01,0.211,22.499,92.21,regresando a base
+10.0,U02,-159.27,124.437,95.71,patrullando
+10.0,U03,68.324,-84.532,93.91,regresando a base
+10.1,U01,0.192,20.499,92.13,regresando a base
+10.1,U02,-160.569,121.668,95.67,patrullando
+10.1,U03,65.015,-80.438,93.85,regresando a base
+10.2,U01,0.173,18.499,92.04,regresando a base
+10.2,U02,-161.867,118.898,95.62,patrullando
+10.2,U03,61.706,-76.344,93.79,regresando a base
+10.3,U01,0.154,16.499,91.96,regresando a base
+10.3,U02,-163.165,116.129,95.58,patrullando
+10.3,U03,58.397,-72.25,93.74,regresando a base
+10.4,U01,0.136,14.499,91.88,regresando a base
+10.4,U02,-164.463,113.359,95.53,patrullando
+10.4,U03,55.089,-68.156,93.68,regresando a base
+10.5,U01,0.117,12.499,91.8,regresando a base
+10.5,U02,-165.761,110.59,95.49,patrullando
+10.5,U03,51.78,-64.063,93.62,regresando a base
+10.6,U01,0.098,10.5,91.71,regresando a base
+10.6,U02,-167.06,107.82,95.44,patrullando
+10.6,U03,48.471,-59.969,93.57,regresando a base
+10.7,U01,0.08,8.5,91.63,recargando
+10.7,U02,-168.358,105.051,95.4,patrullando
+10.7,U03,45.162,-55.875,93.51,regresando a base
+10.8,U01,0.08,8.5,92.23,recargando
+10.8,U02,-169.656,102.281,95.35,patrullando
+10.8,U03,41.853,-51.781,93.45,regresando a base
+10.9,U01,0.08,8.5,92.83,recargando
+10.9,U02,-170.954,99.512,95.31,patrullando
+10.9,U03,38.544,-47.688,93.39,regresando a base
+11.0,U01,0.08,8.5,93.43,recargando
+11.0,U02,-172.252,96.742,95.26,patrullando
+11.0,U03,35.268,-43.634,93.34,regresando a base
+11.1,U01,0.08,8.5,94.03,recargando
+11.1,U02,-173.551,93.973,95.22,patrullando
+11.1,U03,32.27,-39.925,93.28,regresando a base
+11.2,U01,0.08,8.5,94.63,recargando
+11.2,U02,-174.849,91.203,95.17,patrullando
+11.2,U03,29.527,-36.532,93.22,regresando a base
+11.3,U01,0.08,8.5,95.23,recargando
+11.3,U02,-176.147,88.434,95.13,patrullando
+11.3,U03,27.017,-33.426,93.17,regresando a base
+11.4,U01,0.08,8.5,95.83,recargando
+11.4,U02,-177.445,85.664,95.08,patrullando
+11.4,U03,24.721,-30.585,93.11,regresando a base
+11.5,U01,0.08,8.5,96.43,recargando
+11.5,U02,-178.743,82.895,95.04,patrullando
+11.5,U03,22.62,-27.985,93.05,regresando a base
+11.6,U01,0.08,8.5,97.03,recargando
+11.6,U02,-180.042,80.125,94.99,batería baja
+11.6,U03,20.697,-25.607,93.0,regresando a base
+11.7,U01,0.052,8.547,97.63,recargando
+11.7,U02,-177.247,78.882,94.95,regresando a base
+11.7,U03,18.966,-23.477,92.94,regresando a base
+11.8,U01,-0.049,8.721,98.23,recargando
+11.8,U02,-174.453,77.638,94.9,regresando a base
+11.8,U03,17.454,-21.656,92.88,regresando a base
+11.9,U01,-0.204,8.997,98.83,recargando
+11.9,U02,-171.658,76.394,94.86,regresando a base
+11.9,U03,16.125,-20.091,92.83,regresando a base
+12.0,U01,-0.399,9.355,99.43,recargando
+12.0,U02,-168.864,75.151,94.81,regresando a base
+12.0,U03,14.95,-18.741,92.77,regresando a base
+12.1,U01,-0.624,9.778,99.98,patrullando
+12.1,U02,-166.069,73.907,94.77,regresando a base
+12.1,U03,13.904,-17.572,92.71,regresando a base
+12.2,U01,-5.8,14.697,99.91,patrullando
+12.2,U02,-163.275,72.663,94.72,regresando a base
+12.2,U03,12.735,-16.122,92.66,regresando a base
+12.3,U01,-10.906,19.495,99.85,patrullando
+12.3,U02,-160.48,71.42,94.68,regresando a base
+12.3,U03,11.495,-14.553,92.6,regresando a base
+12.4,U01,-16.011,24.294,99.78,patrullando
+12.4,U02,-157.686,70.176,94.63,regresando a base
+12.4,U03,10.255,-12.983,92.54,regresando a base
+12.5,U01,-21.116,29.093,99.72,patrullando
+12.5,U02,-154.892,68.933,94.59,regresando a base
+12.5,U03,9.016,-11.414,92.48,regresando a base
+12.6,U01,-26.222,33.891,99.65,patrullando
+12.6,U02,-152.097,67.689,94.54,regresando a base
+12.6,U03,7.776,-9.844,92.43,regresando a base
+12.7,U01,-31.327,38.69,99.58,patrullando
+12.7,U02,-149.303,66.445,94.5,regresando a base
+12.7,U03,6.536,-8.275,92.37,regresando a base
+12.8,U01,-36.433,43.489,99.52,patrullando
+12.8,U02,-146.508,65.202,94.45,regresando a base
+12.8,U03,5.297,-6.706,92.31,recargando
+12.9,U01,-41.538,48.287,99.45,patrullando
+12.9,U02,-143.714,63.958,94.41,regresando a base
+12.9,U03,5.297,-6.706,92.91,recargando
+13.0,U01,-46.644,53.086,99.39,patrullando
+13.0,U02,-140.919,62.714,94.36,regresando a base
+13.0,U03,5.297,-6.706,93.51,recargando
+13.1,U01,-51.749,57.885,99.32,patrullando
+13.1,U02,-138.125,61.471,94.32,regresando a base
+13.1,U03,5.297,-6.706,94.11,recargando
+13.2,U01,-56.854,62.683,99.25,patrullando
+13.2,U02,-135.33,60.227,94.27,regresando a base
+13.2,U03,5.297,-6.706,94.71,recargando
+13.3,U01,-61.96,67.482,99.19,patrullando
+13.3,U02,-132.536,58.983,94.22,regresando a base
+13.3,U03,5.297,-6.706,95.31,recargando
+13.4,U01,-67.065,72.281,99.12,patrullando
+13.4,U02,-129.742,57.74,94.18,regresando a base
+13.4,U03,5.297,-6.706,95.91,recargando
+13.5,U01,-72.171,77.079,99.06,patrullando
+13.5,U02,-126.947,56.496,94.13,regresando a base
+13.5,U03,5.297,-6.706,96.51,recargando
+13.6,U01,-77.276,81.878,98.99,patrullando
+13.6,U02,-124.153,55.253,94.09,regresando a base
+13.6,U03,5.297,-6.706,97.11,recargando
+13.7,U01,-82.381,86.677,98.92,patrullando
+13.7,U02,-121.358,54.009,94.04,regresando a base
+13.7,U03,5.297,-6.706,97.71,recargando
+13.8,U01,-87.487,91.475,98.86,patrullando
+13.8,U02,-118.564,52.765,94.0,regresando a base
+13.8,U03,5.297,-6.706,98.31,recargando
+13.9,U01,-92.592,96.274,98.79,patrullando
+13.9,U02,-115.769,51.522,93.95,regresando a base
+13.9,U03,5.297,-6.706,98.91,recargando
+14.0,U01,-97.698,101.073,98.73,patrullando
+14.0,U02,-112.975,50.278,93.91,regresando a base
+14.0,U03,5.297,-6.706,99.51,recargando
+14.1,U01,-102.472,105.56,98.66,patrullando
+14.1,U02,-110.181,49.034,93.86,regresando a base
+14.1,U03,5.297,-6.706,99.98,patrullando
+14.2,U01,-106.841,109.666,98.6,patrullando
+14.2,U02,-107.386,47.791,93.82,regresando a base
+14.2,U03,9.036,-10.41,99.93,patrullando
+14.3,U01,-110.838,113.423,98.53,patrullando
+14.3,U02,-104.592,46.547,93.77,regresando a base
+14.3,U03,12.776,-14.114,99.87,patrullando
+14.4,U01,-114.495,116.861,98.46,patrullando
+14.4,U02,-101.797,45.304,93.73,regresando a base
+14.4,U03,16.516,-17.818,99.82,patrullando
+14.5,U01,-117.842,120.006,98.4,patrullando
+14.5,U02,-99.003,44.06,93.68,regresando a base
+14.5,U03,20.256,-21.523,99.77,patrullando
+14.6,U01,-120.904,122.884,98.33,patrullando
+14.6,U02,-96.208,42.816,93.64,regresando a base
+14.6,U03,23.996,-25.227,99.71,patrullando
+14.7,U01,-123.706,125.518,98.27,patrullando
+14.7,U02,-93.414,41.573,93.59,regresando a base
+14.7,U03,27.735,-28.931,99.66,patrullando
+14.8,U01,-126.269,127.928,98.2,patrullando
+14.8,U02,-90.619,40.329,93.55,regresando a base
+14.8,U03,31.475,-32.636,99.6,patrullando
+14.9,U01,-128.615,130.132,98.13,patrullando
+14.9,U02,-87.825,39.085,93.5,regresando a base
+14.9,U03,35.215,-36.34,99.55,patrullando
+15.0,U01,-130.761,132.15,98.07,patrullando
+15.0,U02,-85.031,37.842,93.46,regresando a base
+15.0,U03,38.955,-40.044,99.5,patrullando
+15.1,U01,-132.725,133.996,98.0,patrullando
+15.1,U02,-82.236,36.598,93.41,regresando a base
+15.1,U03,42.694,-43.749,99.44,patrullando
+15.2,U01,-134.522,135.685,97.94,patrullando
+15.2,U02,-79.442,35.355,93.37,regresando a base
+15.2,U03,46.434,-47.453,99.39,patrullando
+15.3,U01,-136.167,137.23,97.87,patrullando
+15.3,U02,-76.647,34.111,93.32,regresando a base
+15.3,U03,50.174,-51.157,99.34,patrullando
+15.4,U01,-137.671,138.644,97.8,patrullando
+15.4,U02,-73.853,32.867,93.28,regresando a base
+15.4,U03,53.914,-54.862,99.28,patrullando
+15.5,U01,-139.128,140.014,97.74,patrullando
+15.5,U02,-71.058,31.624,93.23,regresando a base
+15.5,U03,57.653,-58.566,99.23,patrullando
+15.6,U01,-140.586,141.384,97.67,patrullando
+15.6,U02,-68.264,30.38,93.19,regresando a base
+15.6,U03,61.393,-62.27,99.18,patrullando
+15.7,U01,-142.043,142.753,97.61,patrullando
+15.7,U02,-65.469,29.136,93.14,regresando a base
+15.7,U03,65.133,-65.974,99.12,patrullando
+15.8,U01,-143.5,144.123,97.54,patrullando
+15.8,U02,-62.675,27.893,93.1,regresando a base
+15.8,U03,68.873,-69.679,99.07,patrullando
+15.9,U01,-144.958,145.493,97.47,patrullando
+15.9,U02,-59.881,26.649,93.05,regresando a base
+15.9,U03,72.613,-73.383,99.01,patrullando
+16.0,U01,-146.415,146.863,97.41,patrullando
+16.0,U02,-57.086,25.405,93.01,regresando a base
+16.0,U03,76.352,-77.087,98.96,patrullando
+16.1,U01,-147.872,148.232,97.34,patrullando
+16.1,U02,-54.292,24.162,92.96,regresando a base
+16.1,U03,80.092,-80.792,98.91,patrullando
+16.2,U01,-150.855,141.892,97.26,patrullando
+16.2,U02,-51.497,22.918,92.92,regresando a base
+16.2,U03,83.832,-84.496,98.85,patrullando
+16.3,U01,-153.837,135.552,97.19,patrullando
+16.3,U02,-48.703,21.675,92.87,regresando a base
+16.3,U03,87.572,-88.2,98.8,patrullando
+16.4,U01,-156.819,129.212,97.11,patrullando
+16.4,U02,-45.908,20.431,92.83,regresando a base
+16.4,U03,91.311,-91.905,98.75,patrullando
+16.5,U01,-159.802,122.872,97.03,patrullando
+16.5,U02,-43.114,19.187,92.78,regresando a base
+16.5,U03,95.051,-95.609,98.69,patrullando
+16.6,U01,-162.784,116.532,96.96,patrullando
+16.6,U02,-40.32,17.944,92.73,regresando a base
+16.6,U03,98.791,-99.313,98.64,patrullando
+16.7,U01,-165.767,110.191,96.88,patrullando
+16.7,U02,-37.525,16.7,92.69,regresando a base
+16.7,U03,102.531,-103.018,98.58,patrullando
+16.8,U01,-168.749,103.851,96.8,patrullando
+16.8,U02,-34.731,15.456,92.64,regresando a base
+16.8,U03,106.27,-106.722,98.53,patrullando
+16.9,U01,-171.731,97.511,96.73,patrullando
+16.9,U02,-31.936,14.213,92.6,regresando a base
+16.9,U03,110.01,-110.426,98.48,patrullando
+17.0,U01,-174.714,91.171,96.65,patrullando
+17.0,U02,-29.222,13.005,92.55,regresando a base
+17.0,U03,113.738,-114.119,98.42,patrullando
+17.1,U01,-177.696,84.831,96.57,patrullando
+17.1,U02,-26.738,11.899,92.51,regresando a base
+17.1,U03,117.149,-117.497,98.37,patrullando
+17.2,U01,-180.679,78.491,96.49,patrullando
+17.2,U02,-24.465,10.888,92.46,regresando a base
+17.2,U03,120.27,-120.589,98.32,patrullando
+17.3,U01,-183.661,72.15,96.42,patrullando
+17.3,U02,-22.386,9.962,92.42,regresando a base
+17.3,U03,123.126,-123.417,98.26,patrullando
+17.4,U01,-186.546,66.018,96.34,patrullando
+17.4,U02,-20.483,9.116,92.37,regresando a base
+17.4,U03,125.739,-126.005,98.21,patrullando
+17.5,U01,-189.185,60.406,96.26,patrullando
+17.5,U02,-18.656,8.302,92.33,regresando a base
+17.5,U03,128.129,-128.374,98.16,patrullando
+17.6,U01,-191.601,55.272,96.19,patrullando
+17.6,U02,-16.828,7.489,92.28,regresando a base
+17.6,U03,130.317,-130.54,98.1,patrullando
+17.7,U01,-193.811,50.574,96.11,patrullando
+17.7,U02,-15.001,6.676,92.24,regresando a base
+17.7,U03,132.319,-132.523,98.05,patrullando
+17.8,U01,-195.833,46.275,96.03,patrullando
+17.8,U02,-13.174,5.863,92.19,regresando a base
+17.8,U03,134.15,-134.337,97.99,patrullando
+17.9,U01,-197.683,42.341,95.95,patrullando
+17.9,U02,-11.347,5.05,92.15,regresando a base
+17.9,U03,135.826,-135.997,97.94,patrullando
+18.0,U01,-199.376,38.742,95.88,patrullando
+18.0,U02,-9.519,4.237,92.1,regresando a base
+18.0,U03,137.36,-137.516,97.89,patrullando
+18.1,U01,-200.925,35.449,95.8,patrullando
+18.1,U02,-7.692,3.423,92.06,recargando
+18.1,U03,138.781,-138.924,97.83,patrullando
+18.2,U01,-202.342,32.436,95.72,patrullando
+18.2,U02,-7.692,3.423,92.66,recargando
+18.2,U03,140.201,-140.331,97.78,patrullando
+18.3,U01,-203.639,29.679,95.65,patrullando
+18.3,U02,-7.692,3.423,93.26,recargando
+18.3,U03,141.622,-141.739,97.73,patrullando
+18.4,U01,-204.826,27.156,95.57,patrullando
+18.4,U02,-7.692,3.423,93.86,recargando
+18.4,U03,143.043,-143.146,97.67,patrullando
+18.5,U01,-205.912,24.848,95.49,patrullando
+18.5,U02,-7.692,3.423,94.46,recargando
+18.5,U03,144.464,-144.553,97.62,patrullando
+18.6,U01,-206.905,22.736,95.42,patrullando
+18.6,U02,-7.692,3.423,95.06,recargando
+18.6,U03,145.885,-145.961,97.57,patrullando
+18.7,U01,-207.814,20.803,95.34,patrullando
+18.7,U02,-7.692,3.423,95.66,recargando
+18.7,U03,147.306,-147.368,97.51,patrullando
+18.8,U01,-208.666,18.994,95.26,patrullando
+18.8,U02,-7.692,3.423,96.26,recargando
+18.8,U03,149.572,-142.617,97.45,patrullando
+18.9,U01,-209.517,17.184,95.18,patrullando
+18.9,U02,-7.692,3.423,96.86,recargando
+18.9,U03,151.839,-137.866,97.39,patrullando
+19.0,U01,-210.368,15.374,95.11,patrullando
+19.0,U02,-7.692,3.423,97.46,recargando
+19.0,U03,154.105,-133.115,97.32,patrullando
+19.1,U01,-211.219,13.564,95.03,patrullando
+19.1,U02,-7.692,3.423,98.06,recargando
+19.1,U03,156.371,-128.364,97.26,patrullando
+19.2,U01,-212.071,11.755,94.95,batería baja
+19.2,U02,-7.692,3.423,98.66,recargando
+19.2,U03,158.637,-123.613,97.2,patrullando
+19.3,U01,-205.075,11.367,94.87,regresando a base
+19.3,U02,-7.692,3.423,99.26,recargando
+19.3,U03,160.903,-118.862,97.14,patrullando
+19.4,U01,-198.079,10.979,94.79,regresando a base
+19.4,U02,-7.692,3.423,99.86,recargando
+19.4,U03,163.17,-114.111,97.07,patrullando
+19.5,U01,-191.083,10.591,94.7,regresando a base
+19.5,U02,-7.692,3.423,99.98,patrullando
+19.5,U03,165.436,-109.36,97.01,patrullando
+19.6,U01,-184.087,10.203,94.62,regresando a base
+19.6,U02,-10.75,3.373,99.93,patrullando
+19.6,U03,167.702,-104.609,96.95,patrullando
+19.7,U01,-177.091,9.816,94.54,regresando a base
+19.7,U02,-13.809,3.324,99.88,patrullando
+19.7,U03,169.968,-99.858,96.88,patrullando
+19.8,U01,-170.096,9.428,94.46,regresando a base
+19.8,U02,-16.867,3.274,99.84,patrullando
+19.8,U03,172.234,-95.107,96.82,patrullando
+19.9,U01,-163.1,9.04,94.37,regresando a base
+19.9,U02,-19.925,3.224,99.79,patrullando
+19.9,U03,174.501,-90.356,96.76,patrullando
+20.0,U01,-156.104,8.652,94.29,regresando a base
+20.0,U02,-22.984,3.174,99.74,patrullando
+20.0,U03,176.767,-85.605,96.7,patrullando
+20.1,U01,-149.108,8.265,94.21,regresando a base
+20.1,U02,-26.042,3.124,99.69,patrullando
+20.1,U03,179.033,-80.854,96.63,patrullando
+20.2,U01,-142.112,7.877,94.12,regresando a base
+20.2,U02,-29.1,3.074,99.65,patrullando
+20.2,U03,181.299,-76.103,96.57,patrullando
+20.3,U01,-135.116,7.489,94.04,regresando a base
+20.3,U02,-32.158,3.024,99.6,patrullando
+20.3,U03,183.565,-71.352,96.51,patrullando
+20.4,U01,-128.12,7.101,93.96,regresando a base
+20.4,U02,-35.217,2.974,99.55,patrullando
+20.4,U03,185.832,-66.601,96.44,patrullando
+20.5,U01,-121.125,6.714,93.87,regresando a base
+20.5,U02,-38.275,2.925,99.5,patrullando
+20.5,U03,188.098,-61.85,96.38,patrullando
+20.6,U01,-114.129,6.326,93.79,regresando a base
+20.6,U02,-41.333,2.875,99.46,patrullando
+20.6,U03,190.364,-57.099,96.32,patrullando
+20.7,U01,-107.133,5.938,93.71,regresando a base
+20.7,U02,-44.391,2.825,99.41,patrullando
+20.7,U03,192.63,-52.348,96.26,patrullando
+20.8,U01,-100.137,5.55,93.63,regresando a base
+20.8,U02,-47.45,2.775,99.36,patrullando
+20.8,U03,194.753,-47.899,96.19,patrullando
+20.9,U01,-93.141,5.163,93.54,regresando a base
+20.9,U02,-50.508,2.725,99.31,patrullando
+20.9,U03,196.695,-43.827,96.13,patrullando
+21.0,U01,-86.466,4.795,93.46,regresando a base
+21.0,U02,-53.246,2.655,99.27,patrullando
+21.0,U03,198.472,-40.102,96.07,patrullando
+21.1,U01,-80.353,4.476,93.38,regresando a base
+21.1,U02,-55.421,2.536,99.22,patrullando
+21.1,U03,200.098,-36.693,96.01,patrullando
+21.2,U01,-74.888,4.241,93.29,regresando a base
+21.2,U02,-57.115,2.343,99.17,patrullando
+21.2,U03,201.585,-33.574,95.94,patrullando
+21.3,U01,-70.261,4.211,93.21,regresando a base
+21.3,U02,-58.434,1.968,99.12,patrullando
+21.3,U03,202.947,-30.721,95.88,patrullando
+21.4,U01,-66.0,5.029,93.13,regresando a base
+21.4,U02,-59.781,0.755,99.08,patrullando
+21.4,U03,204.192,-28.109,95.82,patrullando
+21.5,U01,-59.316,6.295,93.05,regresando a base
+21.5,U02,-63.914,-0.954,99.03,patrullando
+21.5,U03,205.332,-25.72,95.75,patrullando
+21.6,U01,-53.019,6.421,92.96,regresando a base
+21.6,U02,-68.228,-1.596,98.98,patrullando
+21.6,U03,206.375,-23.534,95.69,patrullando
+21.7,U01,-47.712,6.137,92.88,regresando a base
+21.7,U02,-72.087,-1.825,98.93,patrullando
+21.7,U03,207.329,-21.533,95.63,patrullando
+21.8,U01,-43.326,5.693,92.8,regresando a base
+21.8,U02,-75.476,-1.864,98.89,patrullando
+21.8,U03,208.202,-19.703,95.57,patrullando
+21.9,U01,-39.643,5.209,92.71,regresando a base
+21.9,U02,-78.534,-1.824,98.84,patrullando
+21.9,U03,209.063,-17.898,95.5,patrullando
+22.0,U01,-36.274,4.767,92.63,regresando a base
+22.0,U02,-81.592,-1.784,98.79,patrullando
+22.0,U03,209.924,-16.093,95.44,patrullando
+22.1,U01,-33.19,4.361,92.55,regresando a base
+22.1,U02,-84.651,-1.744,98.74,patrullando
+22.1,U03,210.785,-14.288,95.38,patrullando
+22.2,U01,-30.369,3.991,92.47,regresando a base
+22.2,U02,-87.709,-1.704,98.7,patrullando
+22.2,U03,211.646,-12.482,95.32,patrullando
+22.3,U01,-27.788,3.651,92.38,regresando a base
+22.3,U02,-90.768,-1.664,98.65,patrullando
+22.3,U03,212.507,-10.677,95.25,patrullando
+22.4,U01,-25.426,3.341,92.3,regresando a base
+22.4,U02,-93.826,-1.624,98.6,patrullando
+22.4,U03,213.368,-8.872,95.19,patrullando
+22.5,U01,-23.265,3.057,92.22,regresando a base
+22.5,U02,-96.885,-1.584,98.55,patrullando
+22.5,U03,211.56,-3.928,95.13,patrullando
+22.6,U01,-21.282,2.797,92.14,regresando a base
+22.6,U02,-99.943,-1.543,98.51,patrullando
+22.6,U03,209.753,1.015,95.06,patrullando
+22.7,U01,-19.299,2.536,92.05,regresando a base
+22.7,U02,-103.001,-1.503,98.46,patrullando
+22.7,U03,207.945,5.959,95.0,batería baja
+22.8,U01,-17.316,2.275,91.97,regresando a base
+22.8,U02,-106.06,-1.463,98.41,patrullando
+22.8,U03,202.684,5.808,94.93,regresando a base
+22.9,U01,-15.333,2.015,91.89,regresando a base
+22.9,U02,-109.118,-1.423,98.36,patrullando
+22.9,U03,197.422,5.658,94.86,regresando a base
+23.0,U01,-13.35,1.754,91.81,regresando a base
+23.0,U02,-112.177,-1.383,98.32,patrullando
+23.0,U03,192.16,5.507,94.79,regresando a base
+23.1,U01,-11.367,1.494,91.72,regresando a base
+23.1,U02,-115.235,-1.343,98.27,patrullando
+23.1,U03,186.899,5.356,94.73,regresando a base
+23.2,U01,-9.384,1.233,91.64,recargando
+23.2,U02,-118.293,-1.303,98.22,patrullando
+23.2,U03,181.637,5.205,94.66,regresando a base
+23.3,U01,-9.384,1.233,92.24,recargando
+23.3,U02,-121.352,-1.263,98.17,patrullando
+23.3,U03,176.375,5.054,94.59,regresando a base
+23.4,U01,-9.384,1.233,92.84,recargando
+23.4,U02,-124.41,-1.222,98.13,patrullando
+23.4,U03,171.114,4.904,94.52,regresando a base
+23.5,U01,-9.384,1.233,93.44,recargando
+23.5,U02,-127.469,-1.182,98.08,patrullando
+23.5,U03,165.852,4.753,94.46,regresando a base
+23.6,U01,-9.384,1.233,94.04,recargando
+23.6,U02,-130.527,-1.142,98.03,patrullando
+23.6,U03,160.59,4.602,94.39,regresando a base
+23.7,U01,-9.384,1.233,94.64,recargando
+23.7,U02,-133.586,-1.102,97.98,patrullando
+23.7,U03,155.329,4.451,94.32,regresando a base
+23.8,U01,-9.384,1.233,95.24,recargando
+23.8,U02,-136.644,-1.062,97.94,patrullando
+23.8,U03,150.067,4.3,94.26,regresando a base
+23.9,U01,-9.384,1.233,95.84,recargando
+23.9,U02,-139.702,-1.022,97.89,patrullando
+23.9,U03,144.805,4.15,94.19,regresando a base
+24.0,U01,-9.384,1.233,96.44,recargando
+24.0,U02,-142.761,-0.982,97.84,patrullando
+24.0,U03,139.544,3.999,94.12,regresando a base
+24.1,U01,-9.384,1.233,97.04,recargando
+24.1,U02,-145.819,-0.942,97.79,patrullando
+24.1,U03,134.282,3.848,94.05,regresando a base
+24.2,U01,-9.384,1.233,97.64,recargando
+24.2,U02,-148.878,-0.902,97.75,patrullando
+24.2,U03,129.021,3.697,93.99,regresando a base
+24.3,U01,-9.384,1.233,98.24,recargando
+24.3,U02,-151.936,-0.861,97.7,patrullando
+24.3,U03,123.759,3.547,93.92,regresando a base
+24.4,U01,-9.384,1.233,98.84,recargando
+24.4,U02,-154.994,-0.821,97.65,patrullando
+24.4,U03,118.497,3.396,93.85,regresando a base
+24.5,U01,-9.384,1.233,99.44,recargando
+24.5,U02,-158.053,-0.781,97.6,patrullando
+24.5,U03,113.236,3.245,93.78,regresando a base
+24.6,U01,-9.384,1.233,99.98,patrullando
+24.6,U02,-161.111,-0.741,97.56,patrullando
+24.6,U03,107.974,3.094,93.72,regresando a base
+24.7,U01,-16.39,1.192,99.9,patrullando
+24.7,U02,-164.17,-0.701,97.51,patrullando
+24.7,U03,102.712,2.943,93.65,regresando a base
+24.8,U01,-23.397,1.15,99.81,patrullando
+24.8,U02,-167.228,-0.661,97.46,patrullando
+24.8,U03,97.451,2.793,93.58,regresando a base
+24.9,U01,-30.403,1.109,99.73,patrullando
+24.9,U02,-170.287,-0.621,97.41,patrullando
+24.9,U03,92.189,2.642,93.51,regresando a base
+25.0,U01,-37.41,1.067,99.65,patrullando
+25.0,U02,-173.345,-0.581,97.37,patrullando
+25.0,U03,86.927,2.491,93.45,regresando a base
+25.1,U01,-44.416,1.026,99.56,patrullando
+25.1,U02,-176.403,-0.54,97.32,patrullando
+25.1,U03,81.666,2.34,93.38,regresando a base
+25.2,U01,-51.423,0.984,99.48,patrullando
+25.2,U02,-179.462,-0.5,97.27,patrullando
+25.2,U03,76.404,2.19,93.31,regresando a base
+25.3,U01,-58.429,0.943,99.4,patrullando
+25.3,U02,-182.52,-0.46,97.22,patrullando
+25.3,U03,71.142,2.039,93.24,regresando a base
+25.4,U01,-65.436,0.901,99.32,patrullando
+25.4,U02,-185.502,-0.421,97.18,patrullando
+25.4,U03,65.881,1.888,93.18,regresando a base
+25.5,U01,-72.442,0.86,99.23,patrullando
+25.5,U02,-188.23,-0.385,97.13,patrullando
+25.5,U03,60.619,1.737,93.11,regresando a base
+25.6,U01,-79.449,0.818,99.15,patrullando
+25.6,U02,-190.727,-0.353,97.08,patrullando
+25.6,U03,55.466,1.589,93.04,regresando a base
+25.7,U01,-86.455,0.777,99.07,patrullando
+25.7,U02,-193.011,-0.323,97.03,patrullando
+25.7,U03,50.752,1.454,92.98,regresando a base
+25.8,U01,-93.462,0.735,98.98,patrullando
+25.8,U02,-195.101,-0.295,96.99,patrullando
+25.8,U03,46.438,1.331,92.91,regresando a base
+25.9,U01,-100.468,0.694,98.9,patrullando
+25.9,U02,-197.101,-0.269,96.94,patrullando
+25.9,U03,42.491,1.218,92.84,regresando a base
+26.0,U01,-107.475,0.652,98.82,patrullando
+26.0,U02,-199.101,-0.243,96.89,patrullando
+26.0,U03,38.879,1.114,92.77,regresando a base
+26.1,U01,-114.481,0.611,98.73,patrullando
+26.1,U02,-201.1,-0.216,96.84,patrullando
+26.1,U03,35.574,1.019,92.71,regresando a base
+26.2,U01,-121.488,0.569,98.65,patrullando
+26.2,U02,-203.1,-0.19,96.8,patrullando
+26.2,U03,32.55,0.933,92.64,regresando a base
+26.3,U01,-128.494,0.528,98.57,patrullando
+26.3,U02,-205.1,-0.164,96.75,patrullando
+26.3,U03,29.784,0.854,92.57,regresando a base
+26.4,U01,-135.5,0.486,98.48,patrullando
+26.4,U02,-207.1,-0.138,96.7,patrullando
+26.4,U03,27.252,0.781,92.5,regresando a base
+26.5,U01,-142.479,0.445,98.4,patrullando
+26.5,U02,-209.1,-0.112,96.65,patrullando
+26.5,U03,24.936,0.715,92.44,regresando a base
+26.6,U01,-148.864,0.407,98.32,patrullando
+26.6,U02,-208.066,-2.99,96.61,patrullando
+26.6,U03,22.816,0.654,92.37,regresando a base
+26.7,U01,-154.707,0.372,98.24,patrullando
+26.7,U02,-207.032,-5.869,96.56,patrullando
+26.7,U03,20.817,0.597,92.3,regresando a base
+26.8,U01,-160.053,0.341,98.15,patrullando
+26.8,U02,-205.998,-8.747,96.52,patrullando
+26.8,U03,18.818,0.539,92.23,regresando a base
+26.9,U01,-164.944,0.312,98.07,patrullando
+26.9,U02,-204.964,-11.626,96.47,patrullando
+26.9,U03,16.819,0.482,92.17,regresando a base
+27.0,U01,-169.395,0.296,97.99,patrullando
+27.0,U02,-203.955,-14.515,96.42,patrullando
+27.0,U03,14.819,0.425,92.1,regresando a base
+27.1,U01,-173.303,0.384,97.9,patrullando
+27.1,U02,-203.109,-17.507,96.38,patrullando
+27.1,U03,12.82,0.367,92.03,regresando a base
+27.2,U01,-176.814,0.563,97.82,patrullando
+27.2,U02,-202.325,-20.595,96.33,patrullando
+27.2,U03,10.821,0.31,91.97,regresando a base
+27.3,U01,-180.038,0.792,97.74,patrullando
+27.3,U02,-201.522,-23.746,96.29,patrullando
+27.3,U03,8.822,0.253,91.9,recargando
+27.4,U01,-183.05,1.012,97.65,patrullando
+27.4,U02,-200.652,-26.906,96.24,patrullando
+27.4,U03,8.822,0.253,92.5,recargando
+27.5,U01,-185.879,1.169,97.57,patrullando
+27.5,U02,-199.701,-30.019,96.19,patrullando
+27.5,U03,8.822,0.253,93.1,recargando
+27.6,U01,-188.531,1.218,97.49,patrullando
+27.6,U02,-198.684,-33.036,96.15,patrullando
+27.6,U03,8.822,0.253,93.7,recargando
+27.7,U01,-190.998,1.138,97.41,patrullando
+27.7,U02,-197.624,-35.927,96.1,patrullando
+27.7,U03,8.822,0.253,94.3,recargando
+27.8,U01,-193.259,1.041,97.32,patrullando
+27.8,U02,-196.56,-38.795,96.06,patrullando
+27.8,U03,8.822,0.253,94.9,recargando
+27.9,U01,-195.328,0.953,97.24,patrullando
+27.9,U02,-195.496,-41.662,96.01,patrullando
+27.9,U03,8.822,0.253,95.5,recargando
+28.0,U01,-197.326,0.867,97.16,patrullando
+28.0,U02,-194.432,-44.53,95.97,patrullando
+28.0,U03,8.822,0.253,96.1,recargando
+28.1,U01,-199.324,0.782,97.07,patrullando
+28.1,U02,-193.368,-47.398,95.92,patrullando
+28.1,U03,8.822,0.253,96.7,recargando
+28.2,U01,-201.323,0.696,96.99,patrullando
+28.2,U02,-192.304,-50.265,95.87,patrullando
+28.2,U03,8.822,0.253,97.3,recargando
+28.3,U01,-203.321,0.611,96.91,patrullando
+28.3,U02,-191.24,-53.133,95.83,patrullando
+28.3,U03,8.822,0.253,97.9,recargando
+28.4,U01,-205.319,0.525,96.82,patrullando
+28.4,U02,-190.177,-56.001,95.78,patrullando
+28.4,U03,8.822,0.253,98.5,recargando
+28.5,U01,-207.317,0.44,96.74,patrullando
+28.5,U02,-189.113,-58.868,95.74,patrullando
+28.5,U03,8.822,0.253,99.1,recargando
+28.6,U01,-209.315,0.354,96.66,patrullando
+28.6,U02,-188.049,-61.736,95.69,patrullando
+28.6,U03,8.822,0.253,99.7,recargando
+28.7,U01,-206.945,-6.239,96.58,patrullando
+28.7,U02,-186.985,-64.604,95.64,patrullando
+28.7,U03,8.822,0.253,99.98,patrullando
+28.8,U01,-204.574,-12.832,96.5,patrullando
+28.8,U02,-185.921,-67.471,95.6,patrullando
+28.8,U03,12.436,4.08,99.93,patrullando
+28.9,U01,-202.203,-19.426,96.42,patrullando
+28.9,U02,-184.857,-70.339,95.55,patrullando
+28.9,U03,16.049,7.907,99.87,patrullando
+29.0,U01,-199.833,-26.019,96.34,patrullando
+29.0,U02,-183.793,-73.207,95.51,patrullando
+29.0,U03,19.663,11.735,99.82,patrullando
+29.1,U01,-197.462,-32.613,96.26,patrullando
+29.1,U02,-182.729,-76.074,95.46,patrullando
+29.1,U03,23.277,15.562,99.76,patrullando
+29.2,U01,-195.092,-39.206,96.18,patrullando
+29.2,U02,-181.665,-78.942,95.42,patrullando
+29.2,U03,26.891,19.389,99.71,patrullando
+29.3,U01,-192.721,-45.799,96.1,patrullando
+29.3,U02,-180.601,-81.81,95.37,patrullando
+29.3,U03,30.505,23.217,99.65,patrullando
+29.4,U01,-190.426,-52.168,96.02,patrullando
+29.4,U02,-179.462,-84.902,95.32,patrullando
+29.4,U03,34.118,27.044,99.6,patrullando
+29.5,U01,-188.196,-58.338,95.94,patrullando
+29.5,U02,-178.257,-88.193,95.28,patrullando
+29.5,U03,37.732,30.871,99.54,patrullando
+29.6,U01,-186.024,-64.335,95.86,patrullando
+29.6,U02,-176.994,-91.657,95.23,patrullando
+29.6,U03,41.346,34.698,99.49,patrullando
+29.7,U01,-183.902,-70.178,95.79,patrullando
+29.7,U02,-175.682,-95.275,95.19,patrullando
+29.7,U03,44.96,38.526,99.44,patrullando
+29.8,U01,-181.822,-75.886,95.71,patrullando
+29.8,U02,-174.328,-99.029,95.14,patrullando
+29.8,U03,48.574,42.353,99.38,patrullando
+29.9,U01,-179.779,-81.474,95.63,patrullando
+29.9,U02,-172.937,-102.901,95.09,patrullando
+29.9,U03,52.187,46.18,99.33,patrullando
+30.0,U01,-177.919,-86.541,95.55,patrullando
+30.0,U02,-171.523,-106.853,95.05,patrullando
+30.0,U03,55.801,50.008,99.27,patrullando
+30.1,U01,-176.226,-91.134,95.47,patrullando
+30.1,U02,-170.096,-110.846,95.0,patrullando
+30.1,U03,59.415,53.835,99.22,patrullando
+30.2,U01,-174.677,-95.321,95.39,patrullando
+30.2,U02,-168.664,-114.852,94.96,batería baja
+30.2,U03,63.029,57.662,99.16,patrullando
+30.3,U01,-173.566,-99.051,95.31,patrullando
+30.3,U02,-165.478,-114.377,94.91,regresando a base
+30.3,U03,66.643,61.49,99.11,patrullando
+30.4,U01,-172.968,-102.634,95.23,patrullando
+30.4,U02,-161.886,-113.714,94.87,regresando a base
+30.4,U03,70.256,65.317,99.05,patrullando
+30.5,U01,-172.733,-106.413,95.15,patrullando
+30.5,U02,-157.995,-112.533,94.83,regresando a base
+30.5,U03,73.87,69.144,99.0,patrullando
+30.6,U01,-172.471,-110.419,95.07,patrullando
+30.6,U02,-154.161,-110.785,94.79,regresando a base
+30.6,U03,77.484,72.971,98.95,patrullando
+30.7,U01,-171.94,-114.392,94.99,batería baja
+30.7,U02,-150.627,-108.72,94.74,regresando a base
+30.7,U03,81.098,76.799,98.89,patrullando
+30.8,U01,-167.265,-110.742,94.92,regresando a base
+30.8,U02,-146.988,-106.699,94.7,regresando a base
+30.8,U03,84.712,80.626,98.84,patrullando
+30.9,U01,-162.673,-107.02,94.85,regresando a base
+30.9,U02,-143.263,-104.757,94.66,regresando a base
+30.9,U03,88.325,84.453,98.78,patrullando
+31.0,U01,-158.138,-103.187,94.78,regresando a base
+31.0,U02,-139.476,-102.934,94.62,regresando a base
+31.0,U03,91.939,88.281,98.73,patrullando
+31.1,U01,-153.62,-99.202,94.7,regresando a base
+31.1,U02,-135.665,-101.273,94.58,regresando a base
+31.1,U03,95.553,92.108,98.67,patrullando
+31.2,U01,-149.059,-95.032,94.63,regresando a base
+31.2,U02,-131.889,-99.812,94.53,regresando a base
+31.2,U03,99.167,95.935,98.62,patrullando
+31.3,U01,-144.377,-90.666,94.56,regresando a base
+31.3,U02,-128.224,-98.566,94.49,regresando a base
+31.3,U03,102.781,99.763,98.56,patrullando
+31.4,U01,-139.489,-86.132,94.48,regresando a base
+31.4,U02,-124.753,-97.51,94.45,regresando a base
+31.4,U03,106.394,103.59,98.51,patrullando
+31.5,U01,-134.332,-81.503,94.41,regresando a base
+31.5,U02,-121.538,-96.574,94.41,regresando a base
+31.5,U03,110.008,107.417,98.46,patrullando
+31.6,U01,-128.885,-76.877,94.34,regresando a base
+31.6,U02,-118.601,-95.663,94.37,regresando a base
+31.6,U03,113.622,111.244,98.4,patrullando
+31.7,U01,-123.173,-72.347,94.26,regresando a base
+31.7,U02,-115.914,-94.683,94.33,regresando a base
+31.7,U03,117.043,114.867,98.35,patrullando
+31.8,U01,-117.254,-67.98,94.19,regresando a base
+31.8,U02,-113.423,-93.566,94.28,regresando a base
+31.8,U03,120.173,118.182,98.29,patrullando
+31.9,U01,-111.196,-63.815,94.11,regresando a base
+31.9,U02,-111.06,-92.271,94.24,regresando a base
+31.9,U03,123.037,121.215,98.24,patrullando
+32.0,U01,-105.063,-59.863,94.04,regresando a base
+32.0,U02,-108.763,-90.781,94.2,regresando a base
+32.0,U03,125.657,123.991,98.18,patrullando
+32.1,U01,-98.912,-56.118,93.96,regresando a base
+32.1,U02,-106.478,-89.097,94.16,regresando a base
+32.1,U03,128.055,126.53,98.13,patrullando
+32.2,U01,-92.786,-52.562,93.89,regresando a base
+32.2,U02,-104.165,-87.232,94.12,regresando a base
+32.2,U03,130.249,128.854,98.07,patrullando
+32.3,U01,-86.689,-49.109,93.81,regresando a base
+32.3,U02,-101.82,-85.268,94.08,regresando a base
+32.3,U03,132.257,130.98,98.02,patrullando
+32.4,U01,-80.593,-45.655,93.74,regresando a base
+32.4,U02,-99.475,-83.305,94.04,regresando a base
+32.4,U03,134.093,132.925,97.97,patrullando
+32.5,U01,-74.497,-42.202,93.66,regresando a base
+32.5,U02,-97.13,-81.341,94.0,regresando a base
+32.5,U03,135.774,134.705,97.91,patrullando
+32.6,U01,-68.4,-38.748,93.59,regresando a base
+32.6,U02,-94.785,-79.377,93.96,regresando a base
+32.6,U03,137.312,136.334,97.86,patrullando
+32.7,U01,-62.586,-35.455,93.51,regresando a base
+32.7,U02,-92.44,-77.413,93.91,regresando a base
+32.7,U03,138.719,137.824,97.8,patrullando
+32.8,U01,-57.267,-32.441,93.44,regresando a base
+32.8,U02,-90.095,-75.449,93.87,regresando a base
+32.8,U03,140.092,139.278,97.75,patrullando
+32.9,U01,-52.399,-29.684,93.37,regresando a base
+32.9,U02,-87.75,-73.486,93.83,regresando a base
+32.9,U03,141.465,140.733,97.69,patrullando
+33.0,U01,-47.945,-27.16,93.29,regresando a base
+33.0,U02,-85.405,-71.522,93.79,regresando a base
+33.0,U03,142.838,142.187,97.64,patrullando
+33.1,U01,-43.87,-24.852,93.22,regresando a base
+33.1,U02,-83.06,-69.558,93.75,regresando a base
+33.1,U03,144.211,143.641,97.58,patrullando
+33.2,U01,-40.141,-22.739,93.14,regresando a base
+33.2,U02,-80.715,-67.594,93.71,regresando a base
+33.2,U03,145.584,145.095,97.53,patrullando
+33.3,U01,-36.729,-20.807,93.07,regresando a base
+33.3,U02,-78.37,-65.63,93.67,regresando a base
+33.3,U03,146.957,146.549,97.48,patrullando
+33.4,U01,-33.607,-19.038,92.99,regresando a base
+33.4,U02,-76.025,-63.667,93.63,regresando a base
+33.4,U03,148.331,148.004,97.42,patrullando
+33.5,U01,-30.75,-17.42,92.92,regresando a base
+33.5,U02,-73.68,-61.703,93.59,regresando a base
+33.5,U03,143.565,150.239,97.36,patrullando
+33.6,U01,-28.136,-15.939,92.84,regresando a base
+33.6,U02,-71.335,-59.739,93.54,regresando a base
+33.6,U03,138.8,152.475,97.3,patrullando
+33.7,U01,-25.745,-14.584,92.77,regresando a base
+33.7,U02,-68.99,-57.775,93.5,regresando a base
+33.7,U03,134.035,154.711,97.23,patrullando
+33.8,U01,-23.557,-13.345,92.69,regresando a base
+33.8,U02,-66.645,-55.811,93.46,regresando a base
+33.8,U03,129.269,156.947,97.17,patrullando
+33.9,U01,-21.554,-12.21,92.62,regresando a base
+33.9,U02,-64.3,-53.848,93.42,regresando a base
+33.9,U03,124.504,159.183,97.11,patrullando
+34.0,U01,-19.722,-11.172,92.54,regresando a base
+34.0,U02,-61.955,-51.884,93.38,regresando a base
+34.0,U03,119.738,161.419,97.04,patrullando
+34.1,U01,-17.982,-10.187,92.47,regresando a base
+34.1,U02,-59.61,-49.92,93.34,regresando a base
+34.1,U03,114.973,163.655,96.98,patrullando
+34.2,U01,-16.242,-9.201,92.39,regresando a base
+34.2,U02,-57.265,-47.956,93.3,regresando a base
+34.2,U03,110.208,165.891,96.92,patrullando
+34.3,U01,-14.502,-8.215,92.32,regresando a base
+34.3,U02,-54.92,-45.992,93.26,regresando a base
+34.3,U03,105.442,168.127,96.86,patrullando
+34.4,U01,-12.761,-7.229,92.24,regresando a base
+34.4,U02,-52.575,-44.029,93.22,regresando a base
+34.4,U03,100.677,170.362,96.79,patrullando
+34.5,U01,-11.021,-6.243,92.17,regresando a base
+34.5,U02,-50.23,-42.065,93.17,regresando a base
+34.5,U03,95.912,172.598,96.73,patrullando
+34.6,U01,-9.281,-5.258,92.09,regresando a base
+34.6,U02,-47.885,-40.101,93.13,regresando a base
+34.6,U03,91.146,174.834,96.67,patrullando
+34.7,U01,-7.541,-4.272,92.02,recargando
+34.7,U02,-45.54,-38.137,93.09,regresando a base
+34.7,U03,86.381,177.07,96.6,patrullando
+34.8,U01,-7.541,-4.272,92.62,recargando
+34.8,U02,-43.195,-36.173,93.05,regresando a base
+34.8,U03,81.616,179.306,96.54,patrullando
+34.9,U01,-7.541,-4.272,93.22,recargando
+34.9,U02,-40.85,-34.21,93.01,regresando a base
+34.9,U03,76.85,181.542,96.48,patrullando
+35.0,U01,-7.541,-4.272,93.82,recargando
+35.0,U02,-38.505,-32.246,92.97,regresando a base
+35.0,U03,72.085,183.778,96.41,patrullando
+35.1,U01,-7.541,-4.272,94.42,recargando
+35.1,U02,-36.16,-30.282,92.93,regresando a base
+35.1,U03,67.32,186.014,96.35,patrullando
+35.2,U01,-7.435,-4.175,95.02,recargando
+35.2,U02,-33.92,-28.415,92.89,regresando a base
+35.2,U03,62.554,188.25,96.29,patrullando
+35.3,U01,-7.208,-3.966,95.62,recargando
+35.3,U02,-31.803,-26.66,92.85,regresando a base
+35.3,U03,57.789,190.486,96.23,patrullando
+35.4,U01,-6.875,-3.655,96.22,recargando
+35.4,U02,-29.792,-25.006,92.8,regresando a base
+35.4,U03,53.024,192.721,96.16,patrullando
+35.5,U01,-6.45,-3.255,96.82,recargando
+35.5,U02,-27.874,-23.44,92.76,regresando a base
+35.5,U03,48.517,194.836,96.1,patrullando
+35.6,U01,-5.946,-2.773,97.42,recargando
+35.6,U02,-26.038,-21.952,92.72,regresando a base
+35.6,U03,44.393,196.771,96.04,patrullando
+35.7,U01,-5.381,-2.226,98.02,recargando
+35.7,U02,-24.39,-20.634,92.68,regresando a base
+35.7,U03,40.619,198.541,95.97,patrullando
+35.8,U01,-4.771,-1.627,98.62,recargando
+35.8,U02,-22.926,-19.479,92.64,regresando a base
+35.8,U03,37.167,200.161,95.91,patrullando
+35.9,U01,-4.131,-0.987,99.22,recargando
+35.9,U02,-21.618,-18.464,92.6,regresando a base
+35.9,U03,34.008,201.644,95.85,patrullando
+36.0,U01,-3.471,-0.316,99.82,recargando
+36.0,U02,-20.44,-17.565,92.56,regresando a base
+36.0,U03,31.117,203.0,95.79,patrullando
+36.1,U01,-2.8,0.378,99.98,patrullando
+36.1,U02,-19.373,-16.766,92.52,regresando a base
+36.1,U03,28.472,204.241,95.72,patrullando
+36.2,U01,-6.746,-3.606,99.91,patrullando
+36.2,U02,-18.683,-16.363,92.48,regresando a base
+36.2,U03,26.052,205.377,95.66,patrullando
+36.3,U01,-10.492,-7.262,99.85,patrullando
+36.3,U02,-18.251,-16.322,92.44,regresando a base
+36.3,U03,23.837,206.416,95.6,patrullando
+36.4,U01,-14.463,-10.385,99.78,patrullando
+36.4,U02,-17.627,-16.821,92.4,regresando a base
+36.4,U03,21.811,207.366,95.53,patrullando
+36.5,U01,-21.433,-15.423,99.72,patrullando
+36.5,U02,-14.042,-15.379,92.36,regresando a base
+36.5,U03,19.957,208.236,95.47,patrullando
+36.6,U01,-27.513,-21.086,99.65,patrullando
+36.6,U02,-11.457,-13.302,92.31,regresando a base
+36.6,U03,18.147,209.086,95.41,patrullando
+36.7,U01,-32.925,-26.538,99.59,patrullando
+36.7,U02,-9.569,-11.41,92.27,regresando a base
+36.7,U03,16.336,209.935,95.35,patrullando
+36.8,U01,-37.817,-31.668,99.52,patrullando
+36.8,U02,-8.218,-9.828,92.23,regresando a base
+36.8,U03,14.525,210.785,95.28,patrullando
+36.9,U01,-42.642,-36.748,99.46,patrullando
+36.9,U02,-6.935,-8.294,92.19,regresando a base
+36.9,U03,12.715,211.634,95.22,patrullando
+37.0,U01,-47.467,-41.829,99.39,patrullando
+37.0,U02,-5.652,-6.759,92.15,recargando
+37.0,U03,10.904,212.484,95.16,patrullando
+37.1,U01,-52.292,-46.91,99.33,patrullando
+37.1,U02,-5.652,-6.759,92.75,recargando
+37.1,U03,9.094,213.333,95.09,patrullando
+37.2,U01,-57.117,-51.99,99.26,patrullando
+37.2,U02,-5.652,-6.759,93.35,recargando
+37.2,U03,7.283,214.183,95.03,patrullando
+37.3,U01,-61.942,-57.071,99.19,patrullando
+37.3,U02,-5.652,-6.759,93.95,recargando
+37.3,U03,2.353,212.338,94.97,batería baja
+37.4,U01,-66.767,-62.151,99.13,patrullando
+37.4,U02,-5.652,-6.759,94.55,recargando
+37.4,U03,2.295,207.074,94.9,regresando a base
+37.5,U01,-71.591,-67.232,99.06,patrullando
+37.5,U02,-5.652,-6.759,95.15,recargando
+37.5,U03,2.237,201.811,94.83,regresando a base
+37.6,U01,-76.416,-72.312,99.0,patrullando
+37.6,U02,-5.652,-6.759,95.75,recargando
+37.6,U03,2.178,196.547,94.76,regresando a base
+37.7,U01,-81.241,-77.393,98.93,patrullando
+37.7,U02,-5.652,-6.759,96.35,recargando
+37.7,U03,2.12,191.284,94.7,regresando a base
+37.8,U01,-86.066,-82.474,98.87,patrullando
+37.8,U02,-5.652,-6.759,96.95,recargando
+37.8,U03,2.062,186.02,94.63,regresando a base
+37.9,U01,-90.891,-87.554,98.8,patrullando
+37.9,U02,-5.652,-6.759,97.55,recargando
+37.9,U03,2.003,180.757,94.56,regresando a base
+38.0,U01,-95.716,-92.635,98.73,patrullando
+38.0,U02,-5.652,-6.759,98.15,recargando
+38.0,U03,1.945,175.493,94.5,regresando a base
+38.1,U01,-100.541,-97.715,98.67,patrullando
+38.1,U02,-5.652,-6.759,98.75,recargando
+38.1,U03,1.887,170.23,94.43,regresando a base
+38.2,U01,-105.074,-102.488,98.6,patrullando
+38.2,U02,-5.652,-6.759,99.35,recargando
+38.2,U03,1.828,164.966,94.36,regresando a base
+38.3,U01,-109.221,-106.855,98.54,patrullando
+38.3,U02,-5.652,-6.759,99.95,recargando
+38.3,U03,1.77,159.703,94.29,regresando a base
+38.4,U01,-113.016,-110.851,98.47,patrullando
+38.4,U02,-5.652,-6.759,99.98,patrullando
+38.4,U03,1.712,154.439,94.23,regresando a base
+38.5,U01,-116.488,-114.508,98.41,patrullando
+38.5,U02,-7.823,-8.914,99.94,patrullando
+38.5,U03,1.653,149.176,94.16,regresando a base
+38.6,U01,-119.665,-117.853,98.34,patrullando
+38.6,U02,-9.994,-11.069,99.9,patrullando
+38.6,U03,1.595,143.912,94.09,regresando a base
+38.7,U01,-122.572,-120.914,98.27,patrullando
+38.7,U02,-12.164,-13.224,99.86,patrullando
+38.7,U03,1.537,138.649,94.02,regresando a base
+38.8,U01,-125.232,-123.715,98.21,patrullando
+38.8,U02,-14.335,-15.378,99.82,patrullando
+38.8,U03,1.478,133.385,93.96,regresando a base
+38.9,U01,-127.666,-126.278,98.14,patrullando
+38.9,U02,-16.506,-17.533,99.78,patrullando
+38.9,U03,1.42,128.122,93.89,regresando a base
+39.0,U01,-129.893,-128.623,98.08,patrullando
+39.0,U02,-18.677,-19.688,99.74,patrullando
+39.0,U03,1.362,122.858,93.82,regresando a base
+39.1,U01,-131.931,-130.769,98.01,patrullando
+39.1,U02,-20.848,-21.842,99.7,patrullando
+39.1,U03,1.303,117.595,93.75,regresando a base
+39.2,U01,-133.796,-132.732,97.95,patrullando
+39.2,U02,-23.019,-23.997,99.66,patrullando
+39.2,U03,1.245,112.331,93.69,regresando a base
+39.3,U01,-135.502,-134.528,97.88,patrullando
+39.3,U02,-25.19,-26.152,99.62,patrullando
+39.3,U03,1.187,107.068,93.62,regresando a base
+39.4,U01,-137.063,-136.172,97.81,patrullando
+39.4,U02,-27.361,-28.306,99.58,patrullando
+39.4,U03,1.128,101.804,93.55,regresando a base
+39.5,U01,-138.491,-137.676,97.75,patrullando
+39.5,U02,-29.532,-30.461,99.55,patrullando
+39.5,U03,1.07,96.541,93.48,regresando a base
+39.6,U01,-139.868,-139.126,97.68,patrullando
+39.6,U02,-31.703,-32.616,99.51,patrullando
+39.6,U03,1.012,91.277,93.42,regresando a base
+39.7,U01,-141.245,-140.577,97.62,patrullando
+39.7,U02,-33.874,-34.77,99.47,patrullando
+39.7,U03,0.953,86.014,93.35,regresando a base
+39.8,U01,-142.623,-142.027,97.55,patrullando
+39.8,U02,-36.044,-36.925,99.43,patrullando
+39.8,U03,0.895,80.75,93.28,regresando a base
+39.9,U01,-144.0,-143.477,97.49,patrullando
+39.9,U02,-38.215,-39.08,99.39,patrullando
+39.9,U03,0.837,75.487,93.22,regresando a base
+40.0,U01,-145.377,-144.927,97.42,patrullando
+40.0,U02,-40.386,-41.234,99.35,patrullando
+40.0,U03,0.778,70.223,93.15,regresando a base
+40.1,U01,-146.754,-146.378,97.35,patrullando
+40.1,U02,-42.557,-43.389,99.31,patrullando
+40.1,U03,0.72,64.96,93.08,regresando a base
+40.2,U01,-148.132,-147.828,97.29,patrullando
+40.2,U02,-44.728,-45.544,99.27,patrullando
+40.2,U03,0.662,59.696,93.01,regresando a base
+40.3,U01,-141.793,-150.813,97.21,patrullando
+40.3,U02,-46.899,-47.698,99.23,patrullando
+40.3,U03,0.605,54.622,92.95,regresando a base
+40.4,U01,-135.454,-153.799,97.13,patrullando
+40.4,U02,-49.07,-49.853,99.19,patrullando
+40.4,U03,0.554,49.979,92.88,regresando a base
+40.5,U01,-129.116,-156.785,97.06,patrullando
+40.5,U02,-51.241,-52.008,99.15,patrullando
+40.5,U03,0.507,45.731,92.81,regresando a base
+40.6,U01,-122.777,-159.77,96.98,patrullando
+40.6,U02,-53.412,-54.163,99.11,patrullando
+40.6,U03,0.464,41.844,92.74,regresando a base
+40.7,U01,-116.438,-162.756,96.9,patrullando
+40.7,U02,-55.583,-56.317,99.07,patrullando
+40.7,U03,0.424,38.287,92.68,regresando a base
+40.8,U01,-110.1,-165.741,96.83,patrullando
+40.8,U02,-57.754,-58.472,99.03,patrullando
+40.8,U03,0.388,35.033,92.61,regresando a base
+40.9,U01,-103.761,-168.727,96.75,patrullando
+40.9,U02,-59.924,-60.627,98.99,patrullando
+40.9,U03,0.355,32.055,92.54,regresando a base
+41.0,U01,-97.422,-171.713,96.67,patrullando
+41.0,U02,-62.095,-62.781,98.95,patrullando
+41.0,U03,0.325,29.33,92.47,regresando a base
+41.1,U01,-91.084,-174.698,96.59,patrullando
+41.1,U02,-64.266,-64.936,98.91,patrullando
+41.1,U03,0.297,26.837,92.41,regresando a base
+41.2,U01,-84.745,-177.684,96.52,patrullando
+41.2,U02,-66.437,-67.091,98.87,patrullando
+41.2,U03,0.272,24.556,92.34,regresando a base
+41.3,U01,-78.406,-180.669,96.44,patrullando
+41.3,U02,-68.608,-69.245,98.83,patrullando
+41.3,U03,0.249,22.469,92.27,regresando a base
+41.4,U01,-72.068,-183.655,96.36,patrullando
+41.4,U02,-70.779,-71.4,98.79,patrullando
+41.4,U03,0.227,20.469,92.2,regresando a base
+41.5,U01,-65.942,-186.54,96.29,patrullando
+41.5,U02,-72.95,-73.555,98.75,patrullando
+41.5,U03,0.205,18.469,92.14,regresando a base
+41.6,U01,-60.337,-189.18,96.21,patrullando
+41.6,U02,-75.121,-75.709,98.71,patrullando
+41.6,U03,0.183,16.469,92.07,regresando a base
+41.7,U01,-55.208,-191.596,96.13,patrullando
+41.7,U02,-77.292,-77.864,98.68,patrullando
+41.7,U03,0.16,14.469,92.0,regresando a base
+41.8,U01,-50.516,-193.806,96.06,patrullando
+41.8,U02,-79.463,-80.019,98.64,patrullando
+41.8,U03,0.138,12.469,91.94,regresando a base
+41.9,U01,-46.222,-195.829,95.98,patrullando
+41.9,U02,-81.634,-82.173,98.6,patrullando
+41.9,U03,0.116,10.47,91.87,regresando a base
+42.0,U01,-42.293,-197.679,95.9,patrullando
+42.0,U02,-83.804,-84.328,98.56,patrullando
+42.0,U03,0.094,8.47,91.8,recargando
+42.1,U01,-38.698,-199.373,95.82,patrullando
+42.1,U02,-85.975,-86.483,98.52,patrullando
+42.1,U03,0.094,8.47,92.4,recargando
+42.2,U01,-35.409,-200.922,95.75,patrullando
+42.2,U02,-88.146,-88.637,98.48,patrullando
+42.2,U03,0.094,8.47,93.0,recargando
+42.3,U01,-32.399,-202.34,95.67,patrullando
+42.3,U02,-90.317,-90.792,98.44,patrullando
+42.3,U03,0.094,8.47,93.6,recargando
+42.4,U01,-29.645,-203.637,95.59,patrullando
+42.4,U02,-92.488,-92.947,98.4,patrullando
+42.4,U03,0.094,8.47,94.2,recargando
+42.5,U01,-27.125,-204.824,95.52,patrullando
+42.5,U02,-94.659,-95.102,98.36,patrullando
+42.5,U03,0.094,8.47,94.8,recargando
+42.6,U01,-24.82,-205.91,95.44,patrullando
+42.6,U02,-96.83,-97.256,98.32,patrullando
+42.6,U03,0.094,8.47,95.4,recargando
+42.7,U01,-22.71,-206.903,95.36,patrullando
+42.7,U02,-99.001,-99.411,98.28,patrullando
+42.7,U03,0.094,8.47,96.0,recargando
+42.8,U01,-20.78,-207.813,95.28,patrullando
+42.8,U02,-101.172,-101.566,98.24,patrullando
+42.8,U03,0.094,8.47,96.6,recargando
+42.9,U01,-18.97,-208.665,95.21,patrullando
+42.9,U02,-103.343,-103.72,98.2,patrullando
+42.9,U03,0.094,8.47,97.2,recargando
+43.0,U01,-17.161,-209.517,95.13,patrullando
+43.0,U02,-105.514,-105.875,98.16,patrullando
+43.0,U03,0.094,8.47,97.8,recargando
+43.1,U01,-15.352,-210.369,95.05,patrullando
+43.1,U02,-107.684,-108.03,98.12,patrullando
+43.1,U03,0.094,8.47,98.4,recargando
+43.2,U01,-13.542,-211.221,94.98,batería baja
+43.2,U02,-109.855,-110.184,98.08,patrullando
+43.2,U03,0.094,8.47,99.0,recargando
+43.3,U01,-13.094,-204.229,94.89,regresando a base
+43.3,U02,-112.026,-112.339,98.04,patrullando
+43.3,U03,0.094,8.47,99.6,recargando
+43.4,U01,-12.646,-197.237,94.81,regresando a base
+43.4,U02,-114.197,-114.494,98.0,patrullando
+43.4,U03,0.094,8.47,99.98,patrullando
+43.5,U01,-12.197,-190.245,94.73,regresando a base
+43.5,U02,-116.368,-116.648,97.96,patrullando
+43.5,U03,-3.733,12.084,99.93,patrullando
+43.6,U01,-11.749,-183.252,94.64,regresando a base
+43.6,U02,-118.539,-118.803,97.92,patrullando
+43.6,U03,-7.56,15.698,99.87,patrullando
+43.7,U01,-11.301,-176.26,94.56,regresando a base
+43.7,U02,-120.71,-120.958,97.88,patrullando
+43.7,U03,-11.387,19.312,99.82,patrullando
+43.8,U01,-10.852,-169.268,94.48,regresando a base
+43.8,U02,-122.881,-123.112,97.84,patrullando
+43.8,U03,-15.214,22.926,99.76,patrullando
+43.9,U01,-10.404,-162.276,94.4,regresando a base
+43.9,U02,-125.052,-125.267,97.81,patrullando
+43.9,U03,-19.041,26.54,99.71,patrullando
+44.0,U01,-9.956,-155.283,94.31,regresando a base
+44.0,U02,-127.223,-127.422,97.77,patrullando
+44.0,U03,-22.868,30.154,99.65,patrullando
+44.1,U01,-9.508,-148.291,94.23,regresando a base
+44.1,U02,-129.394,-129.576,97.73,patrullando
+44.1,U03,-26.695,33.769,99.6,patrullando
+44.2,U01,-9.059,-141.299,94.15,regresando a base
+44.2,U02,-131.474,-131.641,97.69,patrullando
+44.2,U03,-30.522,37.383,99.54,patrullando
+44.3,U01,-8.611,-134.307,94.06,regresando a base
+44.3,U02,-133.377,-133.53,97.65,patrullando
+44.3,U03,-34.349,40.997,99.49,patrullando
+44.4,U01,-8.163,-127.315,93.98,regresando a base
+44.4,U02,-135.119,-135.259,97.61,patrullando
+44.4,U03,-38.176,44.611,99.44,patrullando
+44.5,U01,-7.714,-120.322,93.9,regresando a base
+44.5,U02,-136.712,-136.84,97.57,patrullando
+44.5,U03,-42.003,48.225,99.38,patrullando
+44.6,U01,-7.266,-113.33,93.82,regresando a base
+44.6,U02,-138.17,-138.288,97.53,patrullando
+44.6,U03,-45.83,51.839,99.33,patrullando
+44.7,U01,-6.818,-106.338,93.73,regresando a base
+44.7,U02,-139.59,-139.697,97.49,patrullando
+44.7,U03,-49.657,55.453,99.27,patrullando
+44.8,U01,-6.369,-99.346,93.65,regresando a base
+44.8,U02,-141.009,-141.106,97.45,patrullando
+44.8,U03,-53.484,59.067,99.22,patrullando
+44.9,U01,-5.921,-92.353,93.57,regresando a base
+44.9,U02,-142.429,-142.514,97.41,patrullando
+44.9,U03,-57.311,62.682,99.16,patrullando
+45.0,U01,-5.473,-85.361,93.48,regresando a base
+45.0,U02,-143.848,-143.923,97.37,patrullando
+45.0,U03,-61.138,66.296,99.11,patrullando
+45.1,U01,-5.025,-78.369,93.4,regresando a base
+45.1,U02,-145.268,-145.332,97.33,patrullando
+45.1,U03,-64.965,69.91,99.05,patrullando
+45.2,U01,-4.597,-71.707,93.32,regresando a base
+45.2,U02,-146.687,-146.741,97.29,patrullando
+45.2,U03,-68.792,73.524,99.0,patrullando
+45.3,U01,-4.207,-65.612,93.23,regresando a base
+45.3,U02,-148.107,-148.15,97.25,patrullando
+45.3,U03,-72.619,77.138,98.95,patrullando
+45.4,U01,-3.849,-60.035,93.15,regresando a base
+45.4,U02,-145.338,-149.449,97.21,patrullando
+45.4,U03,-76.446,80.752,98.89,patrullando
+45.5,U01,-3.522,-54.932,93.07,regresando a base
+45.5,U02,-142.568,-150.747,97.16,patrullando
+45.5,U03,-80.273,84.366,98.84,patrullando
+45.6,U01,-3.223,-50.263,92.99,regresando a base
+45.6,U02,-139.799,-152.046,97.12,patrullando
+45.6,U03,-84.1,87.98,98.78,patrullando
+45.7,U01,-2.949,-45.991,92.9,regresando a base
+45.7,U02,-137.03,-153.344,97.07,patrullando
+45.7,U03,-87.927,91.595,98.73,patrullando
+45.8,U01,-2.698,-42.081,92.82,regresando a base
+45.8,U02,-134.26,-154.643,97.03,patrullando
+45.8,U03,-91.754,95.209,98.67,patrullando
+45.9,U01,-2.469,-38.505,92.74,regresando a base
+45.9,U02,-131.491,-155.942,96.98,patrullando
+45.9,U03,-95.581,98.823,98.62,patrullando
+46.0,U01,-2.259,-35.232,92.65,regresando a base
+46.0,U02,-128.722,-157.24,96.94,patrullando
+46.0,U03,-99.408,102.437,98.56,patrullando
+46.1,U01,-2.067,-32.237,92.57,regresando a base
+46.1,U02,-125.952,-158.539,96.89,patrullando
+46.1,U03,-103.235,106.051,98.51,patrullando
+46.2,U01,-1.891,-29.497,92.49,regresando a base
+46.2,U02,-123.183,-159.837,96.85,patrullando
+46.2,U03,-107.062,109.665,98.46,patrullando
+46.3,U01,-1.73,-26.99,92.41,regresando a base
+46.3,U02,-120.414,-161.136,96.8,patrullando
+46.3,U03,-110.889,113.279,98.4,patrullando
+46.4,U01,-1.583,-24.695,92.32,regresando a base
+46.4,U02,-117.644,-162.434,96.76,patrullando
+46.4,U03,-114.542,116.729,98.35,patrullando
+46.5,U01,-1.449,-22.596,92.24,regresando a base
+46.5,U02,-114.875,-163.733,96.71,patrullando
+46.5,U03,-117.885,119.886,98.29,patrullando
+46.6,U01,-1.321,-20.6,92.16,regresando a base
+46.6,U02,-112.106,-165.032,96.67,patrullando
+46.6,U03,-120.943,122.774,98.24,patrullando
+46.7,U01,-1.193,-18.605,92.07,regresando a base
+46.7,U02,-109.336,-166.33,96.62,patrullando
+46.7,U03,-123.741,125.417,98.18,patrullando
+46.8,U01,-1.065,-16.609,91.99,regresando a base
+46.8,U02,-106.567,-167.629,96.58,patrullando
+46.8,U03,-126.302,127.835,98.13,patrullando
+46.9,U01,-0.937,-14.613,91.91,regresando a base
+46.9,U02,-103.798,-168.927,96.53,patrullando
+46.9,U03,-128.645,130.048,98.07,patrullando
+47.0,U01,-0.809,-12.617,91.83,regresando a base
+47.0,U02,-101.028,-170.226,96.49,patrullando
+47.0,U03,-130.789,132.072,98.02,patrullando
+47.1,U01,-0.681,-10.621,91.74,regresando a base
+47.1,U02,-98.259,-171.525,96.44,patrullando
+47.1,U03,-132.75,133.925,97.97,patrullando
+47.2,U01,-0.553,-8.625,91.66,recargando
+47.2,U02,-95.49,-172.823,96.4,patrullando
+47.2,U03,-134.545,135.62,97.91,patrullando
+47.3,U01,-0.553,-8.625,92.26,recargando
+47.3,U02,-92.72,-174.122,96.35,patrullando
+47.3,U03,-136.188,137.171,97.86,patrullando
+47.4,U01,-0.553,-8.625,92.86,recargando
+47.4,U02,-89.951,-175.42,96.31,patrullando
+47.4,U03,-137.69,138.59,97.8,patrullando
+47.5,U01,-0.553,-8.625,93.46,recargando
+47.5,U02,-87.182,-176.719,96.26,patrullando
+47.5,U03,-139.144,139.963,97.75,patrullando
+47.6,U01,-0.553,-8.625,94.06,recargando
+47.6,U02,-84.412,-178.018,96.22,patrullando
+47.6,U03,-140.598,141.336,97.69,patrullando
+47.7,U01,-0.553,-8.625,94.66,recargando
+47.7,U02,-81.643,-179.316,96.17,patrullando
+47.7,U03,-142.053,142.71,97.64,patrullando
+47.8,U01,-0.553,-8.625,95.26,recargando
+47.8,U02,-78.874,-180.615,96.13,patrullando
+47.8,U03,-143.507,144.083,97.58,patrullando
+47.9,U01,-0.553,-8.625,95.86,recargando
+47.9,U02,-76.104,-181.913,96.08,patrullando
+47.9,U03,-144.961,145.456,97.53,patrullando
+48.0,U01,-0.553,-8.625,96.46,recargando
+48.0,U02,-73.335,-183.212,96.04,patrullando
+48.0,U03,-146.415,146.829,97.48,patrullando
+48.1,U01,-0.553,-8.625,97.06,recargando
+48.1,U02,-70.566,-184.51,95.99,patrullando
+48.1,U03,-147.869,148.202,97.42,patrullando
+48.2,U01,-0.553,-8.625,97.66,recargando
+48.2,U02,-67.796,-185.809,95.95,patrullando
+48.2,U03,-150.11,143.44,97.36,patrullando
+48.3,U01,-0.553,-8.625,98.26,recargando
+48.3,U02,-65.027,-187.108,95.9,patrullando
+48.3,U03,-152.351,138.677,97.3,patrullando
+48.4,U01,-0.553,-8.625,98.86,recargando
+48.4,U02,-62.258,-188.406,95.86,patrullando
+48.4,U03,-154.592,133.914,97.23,patrullando
+48.5,U01,-0.553,-8.625,99.46,recargando
+48.5,U02,-59.488,-189.705,95.81,patrullando
+48.5,U03,-156.833,129.151,97.17,patrullando
+48.6,U01,-0.553,-8.625,99.98,patrullando
+48.6,U02,-56.719,-191.003,95.77,patrullando
+48.6,U03,-159.074,124.388,97.11,patrullando
+48.7,U01,-0.534,-15.632,99.9,patrullando
+48.7,U02,-53.95,-192.302,95.72,patrullando
+48.7,U03,-161.315,119.625,97.04,patrullando
+48.8,U01,-0.516,-22.638,99.81,patrullando
+48.8,U02,-51.18,-193.601,95.68,patrullando
+48.8,U03,-163.556,114.862,96.98,patrullando
+48.9,U01,-0.497,-29.645,99.73,patrullando
+48.9,U02,-48.411,-194.899,95.63,patrullando
+48.9,U03,-165.797,110.099,96.92,patrullando
+49.0,U01,-0.479,-36.651,99.65,patrullando
+49.0,U02,-45.642,-196.198,95.59,patrullando
+49.0,U03,-168.038,105.336,96.86,patrullando
+49.1,U01,-0.46,-43.658,99.56,patrullando
+49.1,U02,-42.872,-197.496,95.54,patrullando
+49.1,U03,-170.279,100.573,96.79,patrullando
+49.2,U01,-0.442,-50.664,99.48,patrullando
+49.2,U02,-40.103,-198.795,95.5,patrullando
+49.2,U03,-172.52,95.81,96.73,patrullando
+49.3,U01,-0.423,-57.671,99.4,patrullando
+49.3,U02,-37.334,-200.094,95.45,patrullando
+49.3,U03,-174.761,91.047,96.67,patrullando
+49.4,U01,-0.405,-64.678,99.32,patrullando
+49.4,U02,-34.564,-201.392,95.41,patrullando
+49.4,U03,-177.002,86.284,96.6,patrullando
+49.5,U01,-0.386,-71.684,99.23,patrullando
+49.5,U02,-31.795,-202.691,95.37,patrullando
+49.5,U03,-179.243,81.521,96.54,patrullando
+49.6,U01,-0.368,-78.691,99.15,patrullando
+49.6,U02,-29.093,-203.958,95.32,patrullando
+49.6,U03,-181.484,76.758,96.48,patrullando
+49.7,U01,-0.349,-85.697,99.07,patrullando
+49.7,U02,-26.62,-205.118,95.28,patrullando
+49.7,U03,-183.725,71.995,96.42,patrullando
+49.8,U01,-0.33,-92.704,98.98,patrullando
+49.8,U02,-24.357,-206.179,95.23,patrullando
+49.8,U03,-185.966,67.232,96.35,patrullando
+49.9,U01,-0.312,-99.711,98.9,patrullando
+49.9,U02,-22.287,-207.149,95.19,patrullando
+49.9,U03,-188.207,62.47,96.29,patrullando
+50.0,U01,-0.293,-106.717,98.82,patrullando
+50.0,U02,-20.392,-208.038,95.14,patrullando
+50.0,U03,-190.448,57.707,96.23,patrullando
+50.1,U01,-0.275,-113.724,98.73,patrullando
+50.1,U02,-18.582,-208.887,95.1,patrullando
+50.1,U03,-192.689,52.944,96.16,patrullando
+50.2,U01,-0.256,-120.73,98.65,patrullando
+50.2,U02,-16.771,-209.736,95.05,patrullando
+50.2,U03,-194.807,48.443,96.1,patrullando
+50.3,U01,-0.238,-127.737,98.57,patrullando
+50.3,U02,-14.96,-210.585,95.01,patrullando
+50.3,U03,-196.744,44.326,96.04,patrullando
+50.4,U01,-0.219,-134.743,98.48,patrullando
+50.4,U02,-13.149,-211.434,94.96,batería baja
+50.4,U03,-198.517,40.558,95.98,patrullando
+50.5,U01,-0.201,-141.75,98.4,patrullando
+50.5,U02,-12.959,-208.381,94.91,regresando a base
+50.5,U03,-200.139,37.111,95.91,patrullando
+50.6,U01,-0.184,-148.197,98.32,patrullando
+50.6,U02,-12.769,-205.329,94.87,regresando a base
+50.6,U03,-201.623,33.956,95.85,patrullando
+50.7,U01,-0.168,-154.096,98.24,patrullando
+50.7,U02,-12.58,-202.276,94.82,regresando a base
+50.7,U03,-202.981,31.07,95.79,patrullando
+50.8,U01,-0.154,-159.494,98.15,patrullando
+50.8,U02,-12.39,-199.223,94.77,regresando a base
+50.8,U03,-204.224,28.429,95.72,patrullando
+50.9,U01,-0.054,-164.206,98.07,patrullando
+50.9,U02,-12.286,-196.397,94.72,regresando a base
+50.9,U03,-205.361,26.013,95.66,patrullando
+51.0,U01,0.23,-168.173,97.99,patrullando
+51.0,U02,-12.375,-193.916,94.68,regresando a base
+51.0,U03,-206.401,23.801,95.6,patrullando
+51.1,U01,0.736,-171.59,97.9,patrullando
+51.1,U02,-12.706,-191.649,94.63,regresando a base
+51.1,U03,-207.353,21.778,95.54,patrullando

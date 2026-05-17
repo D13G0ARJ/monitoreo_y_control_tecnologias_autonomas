@@ -54,10 +54,17 @@ Explicación sugerida:
 ### 1.8 Explicar batería y alertas
 Explicación sugerida:
 
-“El sistema supervisa batería, estado y distancia al objetivo. Cuando ocurre un evento relevante, genera alertas con severidad y, si está activado, con señal sonora.”
+“El sistema supervisa batería, estado y distancia al objetivo. Cuando la batería baja, la unidad puede iniciar retorno automático a base, recargar y reanudar su misión. Cuando ocurre un evento relevante, genera alertas con severidad y, si está activado, con señal sonora.”
 
-### 1.9 Cierre
-“En síntesis, el sistema demuestra una propuesta académica funcional de monitoreo y control mediante radar, con escenarios simulados, organización por enjambres, control básico y alertas, sin necesidad de hardware real.”
+### 1.9 Mostrar métricas e informe
+Mostrar la pestaña `Gráficos` o el botón `Exportar informe`.
+
+Explicación sugerida:
+
+“Además de la visualización en tiempo real, el sistema genera evidencia de la corrida. El CSV registra datos por tick y unidad, mientras que el JSON resume distancias, batería, estados y alertas.”
+
+### 1.10 Cierre
+“En síntesis, el sistema demuestra una propuesta académica funcional de monitoreo y control mediante radar, con escenarios simulados, organización por enjambres, control básico, alertas y métricas exportables, sin necesidad de hardware real.”
 
 ---
 
@@ -70,7 +77,7 @@ Porque el objetivo de la tesis es diseñar y validar una solución de software e
 Está en la capacidad de asignar objetivos, cambiar modos, organizar escenarios, intervenir sobre unidades y modificar parámetros operativos.
 
 ### ¿Qué controla exactamente el sistema?
-Controla variables y comportamientos simulados: movimiento, rutas, velocidad limitada, tareas temporales, control manual y respuesta a condiciones operativas.
+Controla variables y comportamientos simulados: movimiento, rutas, velocidad limitada, tareas temporales, control manual, retorno a base, recarga y respuesta a condiciones operativas.
 
 ### ¿Qué significa monitoreo en este proyecto?
 Significa observar continuamente el estado del sistema y de sus unidades.
@@ -91,10 +98,10 @@ Se aplica como propuesta académica para vigilancia, supervisión de zonas estra
 
 ### ¿Qué mejoras futuras podrían hacerse?
 - persistencia de sesiones;
-- exportación de reportes;
 - editor de rutas;
 - integración con mapas;
-- métricas históricas;
+- comparador de corridas históricas;
+- reproducción visual de corridas exportadas;
 - coordinación más avanzada entre grupos.
 
 ---
@@ -129,4 +136,5 @@ Durante la defensa conviene seguir este orden:
 5. explicar enjambres;
 6. mostrar control sobre una unidad;
 7. explicar alertas y batería;
-8. cerrar con valor académico y mejoras futuras.
+8. mostrar métricas o exportación;
+9. cerrar con valor académico y mejoras futuras.

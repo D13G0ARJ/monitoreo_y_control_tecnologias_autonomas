@@ -26,6 +26,7 @@ from PySide6.QtWidgets import (
 
 from app.config import settings
 from app.domain.autonomous_unit import AutonomousUnit
+from app.ui.charts_panel import ChartsPanel
 
 
 class ProgressBarMixin:
@@ -37,6 +38,25 @@ class ProgressBarMixin:
         bar.setFormat("--")
         bar.setTextVisible(True)
         return bar
+
+
+class MetricCard(QFrame):
+    def __init__(self, label: str) -> None:
+        super().__init__()
+        self.setObjectName("metricCard")
+        self.label = QLabel(label)
+        self.label.setProperty("role", "metricLabel")
+        self.value = QLabel("--")
+        self.value.setProperty("role", "metricValue")
+        self.value.setWordWrap(True)
+
+        layout = QVBoxLayout()
+        layout.setContentsMargins(10, 8, 10, 8)
+        layout.setSpacing(5)
+        layout.addWidget(self.label)
+        layout.addWidget(self.value)
+        self.setLayout(layout)
+
 
 class UnitInfoPanel(QGroupBox):
     def __init__(self) -> None:
@@ -189,6 +209,7 @@ class GlobalStatusPanel(QGroupBox):
         for row, (key, label) in enumerate(
             (
                 ("scenario", "Escenario"),
+                ("config_source", "Fuente"),
                 ("mode", "Modo"),
                 ("units", "Unidades activas"),
                 ("configured_units", "Unidades configuradas"),
@@ -202,17 +223,12 @@ class GlobalStatusPanel(QGroupBox):
                 ("low_battery_threshold", "Batería baja"),
             )
         ):
-            card = QGroupBox(label)
-            card_layout = QVBoxLayout()
-            value = QLabel("--")
-            value.setProperty("role", "value")
-            value.setWordWrap(True)
-            card_layout.addWidget(value)
-            card.setLayout(card_layout)
-            self._values[key] = value
+            card = MetricCard(label)
+            self._values[key] = card.value
             grid.addWidget(card, row // 2, row % 2)
 
         layout = QVBoxLayout()
+        layout.setSpacing(10)
         layout.addLayout(grid)
         overview_title = QLabel("Resumen de enjambres:")
         overview_title.setProperty("role", "field")
@@ -221,6 +237,13 @@ class GlobalStatusPanel(QGroupBox):
         self.swarm_overview_label.setProperty("role", "value")
         layout.addWidget(overview_title)
         layout.addWidget(self.swarm_overview_label)
+        active_config_title = QLabel("Configuración activa:")
+        active_config_title.setProperty("role", "field")
+        self.active_config_label = QLabel("--")
+        self.active_config_label.setWordWrap(True)
+        self.active_config_label.setProperty("role", "value")
+        layout.addWidget(active_config_title)
+        layout.addWidget(self.active_config_label)
         description_title = QLabel("Descripción del escenario:")
         description_title.setProperty("role", "field")
         layout.addWidget(description_title)
@@ -231,6 +254,7 @@ class GlobalStatusPanel(QGroupBox):
         for key, value in self._values.items():
             value.setText(status.get(key, "--"))
         self.swarm_overview_label.setText(status.get("swarm_overview", "--"))
+        self.active_config_label.setText(status.get("active_config", "--"))
         self.description_label.setText(status.get("description", "--"))
 
 
@@ -249,14 +273,19 @@ class SwarmStatusPanel(QGroupBox):
         grid.setHorizontalSpacing(14)
         grid.setVerticalSpacing(10)
         for index in range(2):
-            card = QGroupBox(f"Enjambre {index + 1}")
+            card = QFrame()
+            card.setObjectName("swarmCard")
             card_layout = QFormLayout()
+            card_layout.setContentsMargins(10, 8, 10, 8)
+            title = QLabel(f"Enjambre {index + 1}")
+            title.setProperty("role", "title")
             count_value = QLabel("--")
             role_value = QLabel("--")
             status_value = QLabel("--")
             for value in (count_value, role_value, status_value):
                 value.setProperty("role", "value")
                 value.setWordWrap(True)
+            card_layout.addRow(title)
             card_layout.addRow("Unidades:", count_value)
             card_layout.addRow("Rol:", role_value)
             card_layout.addRow("Estado:", status_value)
@@ -334,6 +363,11 @@ class ParametersPanel(QGroupBox):
         self.alert_sound_checkbox = QCheckBox("Sonido de alertas")
         self.alert_sound_checkbox.setChecked(True)
 
+        self.time_scale_combo = QComboBox()
+        for scale in settings.AVAILABLE_TIME_SCALES:
+            self.time_scale_combo.addItem(f"{scale}x")
+        self.time_scale_combo.setMaximumWidth(150)
+
         for widget in (
             self.max_speed_spin,
             self.altitude_spin,
@@ -363,6 +397,12 @@ class ParametersPanel(QGroupBox):
             grid.addWidget(title, row, column)
             grid.addWidget(widget, row, column + 1)
 
+        time_scale_row = len(parameter_rows) // 2
+        time_scale_label = QLabel("Escala de tiempo:")
+        time_scale_label.setProperty("role", "field")
+        grid.addWidget(time_scale_label, time_scale_row, 0)
+        grid.addWidget(self.time_scale_combo, time_scale_row, 1)
+
         layout = QVBoxLayout()
         layout.addLayout(grid)
         layout.addWidget(self.alert_sound_checkbox)
@@ -383,6 +423,12 @@ class ScenarioPanel(QGroupBox):
         self.scenario_description = QLabel(settings.SCENARIO_CONFIG[settings.SCENARIO_ZONE_PROTECTION]["description"])
         self.scenario_description.setWordWrap(True)
         self.scenario_description.setProperty("role", "field")
+        self.source_label = QLabel(f"Fuente: {settings.SCENARIO_SOURCE_PREDEFINED}")
+        self.source_label.setWordWrap(True)
+        self.source_label.setProperty("role", "value")
+        self.active_config_label = QLabel("Configuración activa: --")
+        self.active_config_label.setWordWrap(True)
+        self.active_config_label.setProperty("role", "value")
         self.help_label = QLabel("Cambiar escenario abre la configuración operativa antes de aplicar cambios.")
         self.help_label.setWordWrap(True)
         self.help_label.setProperty("role", "empty")
@@ -391,14 +437,34 @@ class ScenarioPanel(QGroupBox):
         form.addRow("Escenario:", self.scenario_selector)
         form.addRow("Asignación manual:", self.assignment_mode_selector)
 
+        self.save_config_button = QPushButton("Guardar configuración")
+        self.load_config_button = QPushButton("Cargar configuración")
+        self.restore_config_button = QPushButton("Restaurar valores del escenario")
+        self.recalculate_routes_button = QPushButton("Recalcular rutas")
+
+        button_row = QHBoxLayout()
+        button_row.addWidget(self.save_config_button)
+        button_row.addWidget(self.load_config_button)
+        action_row = QHBoxLayout()
+        action_row.addWidget(self.restore_config_button)
+        action_row.addWidget(self.recalculate_routes_button)
+
         layout = QVBoxLayout()
         layout.addLayout(form)
         layout.addWidget(self.scenario_description)
+        layout.addWidget(self.source_label)
+        layout.addWidget(self.active_config_label)
         layout.addWidget(self.help_label)
+        layout.addLayout(button_row)
+        layout.addLayout(action_row)
         self.setLayout(layout)
 
     def set_description(self, text: str) -> None:
         self.scenario_description.setText(text)
+
+    def set_config_state(self, source: str, summary: str) -> None:
+        self.source_label.setText(f"Fuente: {source}")
+        self.active_config_label.setText(f"Configuración activa: {summary}")
 
 
 class ControlPanel(QGroupBox):
@@ -410,6 +476,9 @@ class ControlPanel(QGroupBox):
         self.start_button = QPushButton("Iniciar")
         self.pause_button = QPushButton("Pausar")
         self.reset_button = QPushButton("Reiniciar")
+        self.start_button.setProperty("variant", "primary")
+        self.pause_button.setProperty("variant", "warning")
+        self.reset_button.setProperty("variant", "danger")
         self.mode_selector = QComboBox()
         self.mode_selector.addItems(settings.AVAILABLE_MODES)
         self.mode_selector.setMaximumWidth(220)
@@ -424,6 +493,9 @@ class ControlPanel(QGroupBox):
         mode_row.addWidget(self.mode_selector)
         mode_row.addStretch(1)
 
+        self.export_button = QPushButton("Exportar informe")
+        self.export_button.setProperty("variant", "utility")
+
         button_grid = QGridLayout()
         button_grid.setHorizontalSpacing(10)
         button_grid.setVerticalSpacing(10)
@@ -432,6 +504,7 @@ class ControlPanel(QGroupBox):
         button_grid.addWidget(self.start_button, 1, 0)
         button_grid.addWidget(self.pause_button, 1, 1)
         button_grid.addWidget(self.reset_button, 2, 0, 1, 2)
+        button_grid.addWidget(self.export_button, 3, 0, 1, 2)
 
         layout = QVBoxLayout()
         layout.addLayout(mode_row)
@@ -456,9 +529,17 @@ class AlertsPanel(QGroupBox):
         header.addStretch(1)
         header.addWidget(self.clear_button)
 
+        history_title = QLabel("Historial completo")
+        history_title.setProperty("role", "title")
+        self.history_list = QListWidget()
+        self.history_list.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
+        self.history_list.setAlternatingRowColors(True)
+
         layout = QVBoxLayout()
         layout.addLayout(header)
         layout.addWidget(self.list_widget)
+        layout.addWidget(history_title)
+        layout.addWidget(self.history_list, 1)
         self.setLayout(layout)
 
     def update_alerts(self, alerts: list[dict[str, str]], active_count: int) -> None:
@@ -486,6 +567,63 @@ class AlertsPanel(QGroupBox):
                 item.setForeground(QColor(settings.COLOR_OBSERVATION))
                 item.setBackground(QColor(settings.COLOR_ALERT_BG_INFO))
             self.list_widget.addItem(item)
+
+    def update_history(self, alert_items: list) -> None:
+        self.history_list.clear()
+        for a in alert_items:
+            self.history_list.addItem(
+                f"[{a['timestamp']}] {a['prefix']} {a['unit_id']}: {a['message']}"
+            )
+
+
+class UnitListPanel(QGroupBox):
+    def __init__(self) -> None:
+        super().__init__("Lista de unidades")
+        title_label = QLabel("Unidades activas")
+        title_label.setProperty("role", "title")
+
+        self.unit_list = QListWidget()
+        self.unit_list.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
+        self.unit_list.setAlternatingRowColors(True)
+        self._items_by_unit_id: dict[str, QListWidgetItem] = {}
+
+        layout = QVBoxLayout()
+        layout.addWidget(title_label)
+        layout.addWidget(self.unit_list)
+        self.setLayout(layout)
+
+    def update_units(self, units: list, selected_id: str | None) -> None:
+        self.unit_list.blockSignals(True)
+        present_ids = {u.identifier for u in units}
+        for unit_id in list(self._items_by_unit_id):
+            if unit_id not in present_ids:
+                item = self._items_by_unit_id.pop(unit_id)
+                row = self.unit_list.row(item)
+                if row >= 0:
+                    self.unit_list.takeItem(row)
+
+        for u in units:
+            text = f"{u.identifier}  |  {u.swarm_id}  |  {u.state.title()}"
+            item = self._items_by_unit_id.get(u.identifier)
+            if item is None:
+                item = QListWidgetItem()
+                item.setData(Qt.UserRole, u.identifier)
+                self._items_by_unit_id[u.identifier] = item
+                self.unit_list.addItem(item)
+            item.setText(text)
+            if u.state in {settings.STATUS_CRITICO, settings.STATUS_SIN_BATERIA, settings.STATUS_FUERA_DE_ZONA}:
+                item.setForeground(QColor(settings.COLOR_ALERT))
+            elif u.state in {settings.STATUS_BATERIA_BAJA, settings.STATUS_EN_RUTA, settings.STATUS_REGRESANDO}:
+                item.setForeground(QColor(settings.COLOR_WARNING))
+            elif u.state == settings.STATUS_RECONOCIMIENTO:
+                item.setForeground(QColor(settings.COLOR_ROLE_RECON))
+            else:
+                item.setForeground(QColor(settings.COLOR_OK))
+            if u.identifier == selected_id:
+                self.unit_list.setCurrentItem(item)
+        if selected_id is None:
+            self.unit_list.setCurrentItem(None)
+        self.unit_list.blockSignals(False)
 
 
 class LegendPanel(QGroupBox):
@@ -535,13 +673,16 @@ class ControlTabsWidget(QWidget):
         self.scenario = ScenarioPanel()
         self.parameters = ParametersPanel()
         self.unit_info = UnitInfoPanel()
+        self.unit_list_panel = UnitListPanel()
         self.controls = ControlPanel()
         self.legend = LegendPanel()
         self.alerts = AlertsPanel()
 
+        self.charts_panel = ChartsPanel()
+
         self.tabs = QTabWidget()
         self.tabs.addTab(
-            self._wrap_scroll([self.global_status, self.swarm_status, self.unit_info]),
+            self._wrap_scroll([self.global_status, self.swarm_status, self.unit_list_panel, self.unit_info]),
             "Estado",
         )
         self.tabs.addTab(
@@ -556,6 +697,7 @@ class ControlTabsWidget(QWidget):
             self._wrap_scroll([self.alerts]),
             "Alertas",
         )
+        self.tabs.addTab(self.charts_panel, "Gráficos")
 
         layout = QVBoxLayout()
         layout.addWidget(self.tabs)

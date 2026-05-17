@@ -23,6 +23,8 @@ La estructura principal del proyecto es la siguiente:
 - `app/domain/`
 - `app/services/`
 - `app/simulation/`
+- `app/io/`
+- `app/runtime/`
 - `app/ui/`
 
 Cada carpeta cumple una función específica.
@@ -90,6 +92,9 @@ Define la estructura de una unidad autónoma.
 - waypoint;
 - ruta;
 - trayectoria.
+- estado de retorno a base;
+- estado de recarga;
+- distancia al objetivo.
 
 ### Por qué es importante
 Porque representa el objeto central del sistema.
@@ -170,6 +175,37 @@ Aplica la configuración de escenarios.
 ### Por qué es importante
 Separa la lógica de escenarios del resto de la interfaz.
 
+## 6.5 `battery_service.py`
+
+### Qué hace
+Controla la lógica de retorno a base y recarga.
+
+### Qué decide
+- cuándo una unidad debe iniciar retorno a base;
+- cuándo una unidad llegó a la base;
+- cómo se recarga;
+- cuándo se restaura la misión anterior.
+
+### Por qué es importante
+Permite que el comportamiento de batería sea más realista y no dependa directamente de la interfaz.
+
+## 6.6 `metrics_service.py`
+
+### Qué hace
+Acumula métricas de la corrida.
+
+### Qué registra
+- distancia recorrida por unidad;
+- objetivos alcanzados;
+- tiempo al primer objetivo;
+- muestras de batería;
+- tiempo por estado;
+- alertas por tipo y severidad;
+- datos de serie temporal para exportación.
+
+### Por qué es importante
+Convierte la simulación en evidencia medible para análisis y defensa académica.
+
 ---
 
 ## 7. Carpeta `app/simulation`
@@ -188,9 +224,13 @@ Es el núcleo del sistema.
 - registrar alertas;
 - controlar selección;
 - iniciar, pausar y reiniciar.
+- avanzar la simulación por pasos lógicos;
+- integrar unidades nuevas al escenario activo.
 
 ### Por qué es importante
 Es la pieza central sobre la que trabajan todas las demás.
+
+El método de paso lógico permite que la simulación avance tanto desde el temporizador de la interfaz como desde el modo headless.
 
 ## 7.2 `control.py`
 
@@ -262,6 +302,8 @@ Contiene los paneles y pestañas que forman el Centro de Control.
 - panel de enjambres;
 - panel de parámetros;
 - panel de alertas;
+- panel de lista de unidades;
+- panel de gráficos;
 - controles de simulación.
 
 ## 8.5 `scenario_dialog.py`
@@ -278,6 +320,56 @@ Muestra el diálogo **Configurar escenario**.
 
 ### Por qué es importante
 Hace que el escenario sea una decisión confirmada por el operador, no un cambio automático.
+
+---
+
+## 9. Carpeta `app/io`
+
+## 9.1 `exporter.py`
+
+### Qué hace
+Exporta informes de simulación.
+
+### Qué genera
+- `timeseries.csv`;
+- `summary.json`.
+
+### Por qué es importante
+Permite conservar resultados de una corrida y usarlos como evidencia técnica.
+
+## 9.2 `scenario_io.py`
+
+### Qué hace
+Guarda y carga configuraciones de escenario en JSON.
+
+### Por qué es importante
+Permite reutilizar escenarios sin volver a configurarlos manualmente.
+
+---
+
+## 10. Carpeta `app/runtime`
+
+## 10.1 `engine_builder.py`
+
+### Qué hace
+Construye un motor de simulación configurado para un escenario.
+
+### Por qué es importante
+Centraliza la creación del motor para corridas automáticas.
+
+## 10.2 `headless.py`
+
+### Qué hace
+Ejecuta la simulación sin abrir ventanas.
+
+### Qué permite
+- corridas deterministas con semilla;
+- duración configurable;
+- escala de tiempo;
+- exportación automática de informes.
+
+### Por qué es importante
+Permite usar el sistema como herramienta de prueba y comparación, no solo como aplicación visual.
 
 ---
 

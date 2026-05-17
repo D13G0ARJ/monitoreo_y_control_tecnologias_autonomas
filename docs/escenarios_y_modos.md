@@ -26,6 +26,7 @@ Representa la vigilancia continua de una zona central protegida.
 ### ¿Cómo se configura?
 Normalmente:
 
+- 8 unidades por defecto;
 - un solo enjambre;
 - todas las unidades en `E1`;
 - rol principal: patrullaje defensivo.
@@ -52,6 +53,7 @@ Representa una misión de exploración o supervisión de puntos específicos.
 ### ¿Cómo se configura?
 Normalmente:
 
+- 7 unidades por defecto;
 - un solo enjambre;
 - todas las unidades en `E1`;
 - rol principal: reconocimiento.
@@ -77,6 +79,7 @@ Representa una operación mixta donde un grupo patrulla y otro grupo reconoce.
 ### ¿Cómo se configura?
 Normalmente:
 
+- 10 unidades por defecto;
 - dos enjambres;
 - `E1` en patrullaje;
 - `E2` en reconocimiento.
@@ -113,6 +116,36 @@ Allí el operador define:
 
 ### ¿Por qué esto es importante?
 Porque da control real al operador y hace que el sistema sea más profesional y defendible.
+
+### Configuraciones reutilizables
+El sistema permite guardar y cargar configuraciones de escenario en JSON. Estos archivos conservan:
+
+- escenario;
+- cantidad de unidades;
+- cantidad de enjambres;
+- distribución;
+- modo;
+- velocidad máxima;
+- altitud;
+- radio de vigilancia;
+- separación mínima;
+- umbral de batería baja;
+- radio protegido;
+- puntos de observación;
+- opción de inicio automático.
+
+Al cargar una configuración, el sistema aplica estos valores y vuelve a organizar unidades, enjambres y rutas.
+
+### Agregar unidades después de aplicar un escenario
+Si el operador usa `Crear unidad` después de cargar o aplicar un escenario, la nueva unidad no queda aislada. El sistema la integra a la misión activa:
+
+- actualiza el número de unidades configuradas;
+- reasigna enjambres;
+- aplica el modo vigente;
+- asigna ruta y waypoint;
+- calcula la distancia inicial al objetivo.
+
+Esto permite escalar una demostración sin tener que cerrar ni volver a crear el escenario completo.
 
 ---
 

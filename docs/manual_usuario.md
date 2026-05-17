@@ -65,7 +65,9 @@ En la ventana `Configurar escenario` debes revisar estos campos:
 ### Recomendación práctica
 Si estás haciendo una demostración sencilla:
 
-- usa 6 unidades;
+- usa 8 unidades en protección de zona;
+- usa 7 unidades en reconocimiento;
+- usa 10 unidades en escenario combinado;
 - usa 2 enjambres en escenario combinado;
 - deja la distribución en `Mitad y mitad`;
 - no actives inicio automático si quieres explicar primero.
@@ -120,6 +122,8 @@ Si ves `M`, significa control manual.
 1. Ve al Radar Operativo.
 2. Haz clic sobre una unidad.
 
+También puedes seleccionarla desde la pestaña `Estado`, en la lista **Unidades activas**.
+
 ### Qué ocurre
 - la unidad queda seleccionada;
 - en la pestaña `Estado` aparece su información detallada.
@@ -135,6 +139,8 @@ Si ves `M`, significa control manual.
 - batería;
 - estado;
 - distancia al objetivo.
+
+La distancia al objetivo se calcula automáticamente a partir de la posición actual de la unidad y su waypoint activo. Por eso no se guarda como dato fijo del escenario: cambia durante la simulación.
 
 ---
 
@@ -200,10 +206,15 @@ Si no hay unidades activas, el sistema mostrará un mensaje indicando que primer
 - radio de vigilancia;
 - batería baja;
 - unidades activas;
+- escala de tiempo;
 - sonido de alertas.
 
 ### Qué pasa al cambiar parámetros
 Los cambios se aplican al comportamiento general del sistema sin necesidad de cerrar la aplicación.
+
+Si agregas una unidad desde `Crear unidad`, la nueva unidad se integra al escenario activo: recibe enjambre, rol, ruta y waypoint según el modo actual. No queda detenida ni aislada del resto de la misión.
+
+La escala de tiempo permite acelerar el avance lógico de la simulación (`1x`, `2x`, `4x`, `8x`) sin cambiar la estructura del escenario.
 
 ---
 
@@ -252,20 +263,52 @@ Haz clic en `Limpiar alertas`.
 
 ---
 
+## Paso 13. Guardar, cargar y exportar información
+
+### Guardar configuración
+En la pestaña `Control`, usa `Guardar configuración` para escribir un archivo JSON con la configuración operativa actual del escenario.
+
+### Cargar configuración
+Usa `Cargar configuración` para abrir un JSON previamente guardado. Al cargarlo, el sistema aplica unidades, enjambres, modo, parámetros y puntos de observación según ese archivo.
+
+### Exportar informe
+El botón `Exportar informe` genera dos archivos:
+
+- `timeseries.csv`: datos por tick y por unidad.
+- `summary.json`: resumen de la corrida.
+
+El CSV incluye unidad, enjambre, rol, tarea, posición, altitud, velocidad, batería, estado, objetivo activo, distancia al objetivo y alertas activas.
+
+El JSON resume distancia recorrida, objetivos alcanzados, tiempo al primer objetivo, batería mínima/promedio/final, tiempo por estado y alertas por tipo y severidad.
+
+---
+
+## Paso 14. Revisar gráficos
+
+La pestaña `Gráficos` muestra métricas en vivo:
+
+- batería promedio;
+- cantidad de alertas activas.
+
+Si el módulo de gráficos de Qt no está disponible en el entorno, la aplicación muestra un aviso y conserva el resto de funciones, incluyendo la exportación CSV/JSON.
+
+---
+
 ## 4. Uso recomendado para una demostración
 
 Si vas a mostrar el sistema en una exposición, sigue este orden:
 
 1. abre la aplicación;
 2. elige `Vigilancia y reconocimiento combinado`;
-3. configura 6 unidades y 2 enjambres;
+3. configura 10 unidades y 2 enjambres;
 4. aplica el escenario;
 5. inicia la simulación;
 6. explica el radar;
 7. selecciona una unidad;
 8. asigna una tarea temporal;
 9. muestra el panel de alertas;
-10. pausa y explica el estado global.
+10. muestra los gráficos o exporta el informe;
+11. pausa y explica el estado global.
 
 ---
 
@@ -290,4 +333,5 @@ Si quieres resumir el uso en una sola secuencia:
 6. selecciona una unidad;
 7. asigna objetivo si hace falta;
 8. revisa alertas;
-9. pausa o reinicia.
+9. revisa gráficos o exporta informe;
+10. pausa o reinicia.

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import TYPE_CHECKING
 
 from app.config import settings
@@ -18,11 +18,14 @@ class ScenarioApplicationConfig:
     swarm_count: int
     distribution: str
     use_existing_units: bool
+    mode: str
     max_speed: float
     target_altitude: float
     zone_radius: float
     min_separation: float
     low_battery_threshold: float
+    protected_radius: float
+    observation_points: list[tuple[float, float]]
     auto_start: bool
 
 
@@ -31,40 +34,82 @@ class ScenarioService:
         self._swarm_service = swarm_service
 
     def build_dialog_defaults(self, engine: "SimulationEngine", scenario_name: str) -> dict[str, float | int | str | bool]:
-        scenario = settings.SCENARIO_CONFIG.get(scenario_name, {})
-        recommended_units = int(scenario.get("units", max(1, len(engine.units) or settings.DEFAULT_ACTIVE_UNITS)))
-        recommended_swarms = 2 if scenario_name == settings.SCENARIO_COMBINED else 1
+        profile = self.profile_for(scenario_name)
 
         return {
-            "unit_count": len(engine.units) or recommended_units,
-            "swarm_count": recommended_swarms,
-            "distribution": "Mitad y mitad" if scenario_name == settings.SCENARIO_COMBINED else "Automática",
-            "max_speed": engine.max_speed,
-            "target_altitude": engine.target_altitude,
-            "zone_radius": float(scenario.get("zone_radius", engine.zone_radius)),
-            "min_separation": engine.min_separation,
-            "low_battery_threshold": engine.low_battery_threshold,
+            "unit_count": profile.unit_count,
+            "swarm_count": profile.swarm_count,
+            "distribution": profile.distribution,
+            "mode": profile.mode,
+            "max_speed": profile.max_speed,
+            "target_altitude": profile.target_altitude,
+            "zone_radius": profile.zone_radius,
+            "min_separation": profile.min_separation,
+            "low_battery_threshold": profile.low_battery_threshold,
+            "protected_radius": profile.protected_radius,
             "auto_start": False,
         }
 
+    def profile_for(
+        self,
+        scenario_name: str,
+        *,
+        use_existing_units: bool = False,
+        auto_start: bool = False,
+    ) -> ScenarioApplicationConfig:
+        scenario = settings.SCENARIO_CONFIG.get(scenario_name, {})
+        return ScenarioApplicationConfig(
+            scenario_name=scenario_name,
+            unit_count=int(scenario.get("units", settings.DEFAULT_ACTIVE_UNITS)),
+            swarm_count=int(scenario.get("swarms", 2 if scenario_name == settings.SCENARIO_COMBINED else 1)),
+            distribution=str(
+                scenario.get(
+                    "distribution",
+                    settings.DISTRIBUTION_HALF
+                    if scenario_name == settings.SCENARIO_COMBINED
+                    else settings.DISTRIBUTION_AUTO,
+                )
+            ),
+            use_existing_units=use_existing_units,
+            mode=str(scenario.get("mode", settings.MODE_DEFENSIVE)),
+            max_speed=float(scenario.get("max_speed", settings.MAX_SPEED)),
+            target_altitude=float(scenario.get("target_altitude", settings.DEFAULT_ALTITUDE)),
+            zone_radius=float(scenario.get("zone_radius", settings.DEFAULT_ZONE_RADIUS)),
+            min_separation=float(scenario.get("min_separation", settings.DEFAULT_MIN_SEPARATION)),
+            low_battery_threshold=float(
+                scenario.get("low_battery_threshold", settings.DEFAULT_LOW_BATTERY_THRESHOLD)
+            ),
+            protected_radius=float(scenario.get("protected_radius", 0.0)),
+            observation_points=[
+                (float(x), float(y))
+                for x, y in scenario.get("observation_points", [])
+            ],
+            auto_start=auto_start,
+        )
+
     def from_dialog(self, dialog_result: "ScenarioDialogResult") -> ScenarioApplicationConfig:
+        profile = self.profile_for(dialog_result.scenario_name)
         return ScenarioApplicationConfig(
             scenario_name=dialog_result.scenario_name,
             unit_count=dialog_result.unit_count,
             swarm_count=dialog_result.swarm_count,
             distribution=dialog_result.distribution,
             use_existing_units=dialog_result.use_existing_units,
+            mode=profile.mode,
             max_speed=dialog_result.max_speed,
             target_altitude=dialog_result.target_altitude,
             zone_radius=dialog_result.zone_radius,
             min_separation=dialog_result.min_separation,
             low_battery_threshold=dialog_result.low_battery_threshold,
+            protected_radius=profile.protected_radius,
+            observation_points=profile.observation_points,
             auto_start=dialog_result.auto_start,
         )
 
     def apply(self, engine: "SimulationEngine", config: ScenarioApplicationConfig) -> str:
-        normalized = self._normalize_config(config)
+        normalized = self.normalize_config(config)
 
+        engine.mode = normalized.mode
         engine.max_speed = normalized.max_speed
         engine.target_altitude = normalized.target_altitude
         engine.zone_radius = normalized.zone_radius
@@ -80,6 +125,8 @@ class ScenarioService:
         engine.current_scenario_description = str(scenario.get("description", ""))
         engine.current_scenario_visuals = dict(scenario)
         engine.current_scenario_visuals["zone_radius"] = normalized.zone_radius
+        engine.current_scenario_visuals["protected_radius"] = normalized.protected_radius
+        engine.current_scenario_visuals["observation_points"] = list(normalized.observation_points)
         engine.current_scenario_visuals["configured_units"] = normalized.unit_count
         engine.current_scenario_visuals["configured_swarms"] = normalized.swarm_count
 
@@ -96,7 +143,7 @@ class ScenarioService:
             distribution=normalized.distribution,
         )
 
-        engine.apply_mode_configuration(normalized.scenario_name)
+        engine.apply_mode_configuration()
 
         if normalized.auto_start:
             engine.start()
@@ -104,19 +151,13 @@ class ScenarioService:
         engine.updated.emit()
         return "Escenario aplicado correctamente."
 
-    def _normalize_config(self, config: ScenarioApplicationConfig) -> ScenarioApplicationConfig:
+    def normalize_config(self, config: ScenarioApplicationConfig) -> ScenarioApplicationConfig:
         if config.scenario_name == settings.SCENARIO_COMBINED and config.swarm_count < 2:
-            return ScenarioApplicationConfig(
-                scenario_name=config.scenario_name,
-                unit_count=config.unit_count,
-                swarm_count=2,
-                distribution=config.distribution,
-                use_existing_units=config.use_existing_units,
-                max_speed=config.max_speed,
-                target_altitude=config.target_altitude,
-                zone_radius=config.zone_radius,
-                min_separation=config.min_separation,
-                low_battery_threshold=config.low_battery_threshold,
-                auto_start=config.auto_start,
-            )
-        return config
+            config = replace(config, swarm_count=2)
+        return replace(
+            config,
+            unit_count=max(1, config.unit_count),
+            swarm_count=max(1, config.swarm_count),
+            mode=config.mode if config.mode in settings.AVAILABLE_MODES else settings.MODE_DEFENSIVE,
+            observation_points=[(float(x), float(y)) for x, y in config.observation_points],
+        )
