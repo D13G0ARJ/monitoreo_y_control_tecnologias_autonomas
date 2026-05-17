@@ -36,6 +36,12 @@ class RadarView(QGraphicsView):
         self._scenario_visuals: dict[str, object] = {}
         self._display_zone_radius = settings.RADAR_RADIUS
 
+        # Incremental redraw state
+        self._unit_items: dict[str, dict[str, object]] = {}
+        self._dynamic_items: list = []
+        self._static_items: list = []
+        self._last_scenario_visuals: dict | None = None
+
         self._sweep_timer = QTimer(self)
         self._sweep_timer.setInterval(settings.RADAR_SWEEP_INTERVAL_MS)
         self._sweep_timer.timeout.connect(self._advance_sweep)
@@ -58,16 +64,110 @@ class RadarView(QGraphicsView):
         self._selected_unit_id = selected_unit_id
         self._scenario_visuals = scenario_visuals or {}
         self._display_zone_radius = float(self._scenario_visuals.get("zone_radius", settings.RADAR_RADIUS))
-        self._scene.clear()
 
-        self._draw_scenario_visuals()
+        # HUD counters change every tick, so treat them as dynamic; rebuild HUD each tick.
+        # Structural scenario visuals (zone, obs points, legend) are rebuilt only when they change.
+        _HUD_KEYS = {"alerts_count", "units_count", "mode", "name"}
+        static_snapshot = {k: v for k, v in self._scenario_visuals.items() if k not in _HUD_KEYS}
+        last_static = (
+            {k: v for k, v in self._last_scenario_visuals.items() if k not in _HUD_KEYS}
+            if self._last_scenario_visuals is not None
+            else None
+        )
+        if static_snapshot != last_static:
+            self._remove_items(self._static_items)
+            self._static_items = []
+            self._draw_scenario_visuals()
+        self._last_scenario_visuals = dict(self._scenario_visuals)
 
+        # Remove all dynamic items (routes, trajectories, waypoints, HUD) from previous tick
+        self._remove_items(self._dynamic_items)
+        self._dynamic_items = []
+        # HUD changes every tick (alerts_count, units_count, mode) — always rebuild as dynamic
+        self._draw_hud()
+
+        # Draw dynamic per-unit elements and sync persistent unit items
         for unit in units:
             self._draw_route(unit)
             self._draw_trajectory(unit)
             if unit.waypoint is not None:
                 self._draw_waypoint(unit)
-            self._draw_unit(unit)
+            self._sync_unit_item(unit)
+
+        # Remove items for units that are no longer present
+        present = {unit.identifier for unit in units}
+        for uid in list(self._unit_items):
+            if uid not in present:
+                stored = self._unit_items.pop(uid)
+                self._remove_items(list(stored.values()))
+
+    def _remove_items(self, items: list) -> None:
+        for item in items:
+            if item.scene() is self._scene:
+                self._scene.removeItem(item)
+
+    def _sync_unit_item(self, unit: AutonomousUnit) -> None:
+        radius = settings.RADAR_UNIT_RADIUS
+        selected = unit.identifier == self._selected_unit_id
+        brush_color = self._resolve_unit_color(unit)
+
+        if unit.identifier not in self._unit_items:
+            # Create all items for this unit
+            pen = QPen(QColor(settings.COLOR_SELECTED if selected else brush_color))
+            pen.setWidth(2 if selected else 1)
+            body = self._scene.addEllipse(
+                unit.x - radius, unit.y - radius, radius * 2, radius * 2,
+                pen, QBrush(QColor(brush_color)),
+            )
+            body.setData(0, unit.identifier)
+            body.setZValue(10)
+
+            ring_pen = QPen(QColor(settings.COLOR_SELECTED))
+            ring_pen.setWidth(2)
+            ring = self._scene.addEllipse(
+                unit.x - settings.RADAR_SELECTED_RING_RADIUS,
+                unit.y - settings.RADAR_SELECTED_RING_RADIUS,
+                settings.RADAR_SELECTED_RING_RADIUS * 2,
+                settings.RADAR_SELECTED_RING_RADIUS * 2,
+                ring_pen,
+            )
+            ring.setZValue(9)
+            ring.setVisible(selected)
+
+            label = QGraphicsTextItem(f"{unit.identifier} {self._role_suffix(unit)}")
+            label.setDefaultTextColor(QColor(settings.COLOR_SELECTED if selected else settings.COLOR_TEXT))
+            label.setScale(1.08 if selected else 1.02)
+            label.setPos(unit.x + 12, unit.y - 28)
+            label.setData(0, unit.identifier)
+            label.setZValue(11)
+            self._scene.addItem(label)
+
+            self._unit_items[unit.identifier] = {"body": body, "label": label, "ring": ring}
+        else:
+            # Update existing items in place
+            stored = self._unit_items[unit.identifier]
+            body = stored["body"]
+            label = stored["label"]
+            ring = stored["ring"]
+
+            body.setRect(unit.x - radius, unit.y - radius, radius * 2, radius * 2)
+            pen = QPen(QColor(settings.COLOR_SELECTED if selected else brush_color))
+            pen.setWidth(2 if selected else 1)
+            body.setPen(pen)
+            body.setBrush(QBrush(QColor(brush_color)))
+
+            ring.setRect(
+                unit.x - settings.RADAR_SELECTED_RING_RADIUS,
+                unit.y - settings.RADAR_SELECTED_RING_RADIUS,
+                settings.RADAR_SELECTED_RING_RADIUS * 2,
+                settings.RADAR_SELECTED_RING_RADIUS * 2,
+            )
+            ring.setVisible(selected)
+
+            label.setPlainText(f"{unit.identifier} {self._role_suffix(unit)}")
+            label.setDefaultTextColor(QColor(settings.COLOR_SELECTED if selected else settings.COLOR_TEXT))
+            label.setScale(1.08 if selected else 1.02)
+            label.setPos(unit.x + 12, unit.y - 28)
 
     def drawBackground(self, painter: QPainter, rect) -> None:  # type: ignore[override]
         painter.fillRect(rect, QColor(settings.COLOR_BACKGROUND))
@@ -144,37 +244,6 @@ class RadarView(QGraphicsView):
 
         super().mousePressEvent(event)
 
-    def _draw_unit(self, unit: AutonomousUnit) -> None:
-        radius = settings.RADAR_UNIT_RADIUS
-        selected = unit.identifier == self._selected_unit_id
-
-        brush_color = self._resolve_unit_color(unit)
-        pen = QPen(QColor(settings.COLOR_SELECTED if selected else brush_color))
-        pen.setWidth(2 if selected else 1)
-
-        unit_item = self._scene.addEllipse(unit.x - radius, unit.y - radius, radius * 2, radius * 2, pen, QBrush(QColor(brush_color)))
-        unit_item.setData(0, unit.identifier)
-        unit_item.setZValue(10)
-
-        if selected:
-            selected_pen = QPen(QColor(settings.COLOR_SELECTED))
-            selected_pen.setWidth(2)
-            self._scene.addEllipse(
-                unit.x - settings.RADAR_SELECTED_RING_RADIUS,
-                unit.y - settings.RADAR_SELECTED_RING_RADIUS,
-                settings.RADAR_SELECTED_RING_RADIUS * 2,
-                settings.RADAR_SELECTED_RING_RADIUS * 2,
-                selected_pen,
-            ).setZValue(9)
-
-        label = QGraphicsTextItem(f"{unit.identifier} {self._role_suffix(unit)}")
-        label.setDefaultTextColor(QColor(settings.COLOR_SELECTED if selected else settings.COLOR_TEXT))
-        label.setScale(1.08 if selected else 1.02)
-        label.setPos(unit.x + 12, unit.y - 28)
-        label.setData(0, unit.identifier)
-        label.setZValue(11)
-        self._scene.addItem(label)
-
     def _draw_waypoint(self, unit: AutonomousUnit) -> None:
         waypoint = unit.waypoint
         if waypoint is None:
@@ -188,15 +257,17 @@ class RadarView(QGraphicsView):
         link_pen.setStyle(Qt.DashLine)
         link_pen.setWidth(1)
         link_pen.setColor(QColor(color))
-        self._scene.addLine(unit.x, unit.y, waypoint.x, waypoint.y, link_pen)
-        self._scene.addLine(waypoint.x - size, waypoint.y, waypoint.x + size, waypoint.y, pen)
-        self._scene.addLine(waypoint.x, waypoint.y - size, waypoint.x, waypoint.y + size, pen)
+        link_item = self._scene.addLine(unit.x, unit.y, waypoint.x, waypoint.y, link_pen)
+        cross_h = self._scene.addLine(waypoint.x - size, waypoint.y, waypoint.x + size, waypoint.y, pen)
+        cross_v = self._scene.addLine(waypoint.x, waypoint.y - size, waypoint.x, waypoint.y + size, pen)
 
         label = QGraphicsTextItem(waypoint.identifier)
         label.setDefaultTextColor(QColor(color))
         label.setPos(waypoint.x + 8, waypoint.y + 4)
         label.setZValue(5)
         self._scene.addItem(label)
+
+        self._dynamic_items.extend([link_item, cross_h, cross_v, label])
 
     def _draw_scenario_visuals(self) -> None:
         if not self._scenario_visuals:
@@ -215,12 +286,14 @@ class RadarView(QGraphicsView):
                 protected_pen,
             )
             zone_item.setZValue(-1)
+            self._static_items.append(zone_item)
 
             protected_label = QGraphicsTextItem("Zona estratégica")
             protected_label.setDefaultTextColor(QColor(settings.COLOR_ZONE_PROTECTED))
             protected_label.setPos(-54, -12)
             protected_label.setZValue(3)
             self._scene.addItem(protected_label)
+            self._static_items.append(protected_label)
 
         for index, point in enumerate(self._scenario_visuals.get("observation_points", []), start=1):
             x, y = point
@@ -229,13 +302,14 @@ class RadarView(QGraphicsView):
             brush = QBrush(QColor(settings.COLOR_OBSERVATION))
             item = self._scene.addEllipse(x - 4.5, y - 4.5, 9.0, 9.0, pen, brush)
             item.setZValue(2)
+            self._static_items.append(item)
             label = QGraphicsTextItem(f"Obs {index}")
             label.setDefaultTextColor(QColor(settings.COLOR_OBSERVATION))
             label.setPos(x + 7, y - 16)
             label.setZValue(3)
             self._scene.addItem(label)
+            self._static_items.append(label)
 
-        self._draw_hud()
         self._draw_compact_legend()
 
     def _draw_route(self, unit: AutonomousUnit) -> None:
@@ -261,6 +335,7 @@ class RadarView(QGraphicsView):
         route_item.setOpacity(0.28 if unit.identifier != self._selected_unit_id else 0.45)
         route_item.setZValue(0)
         self._scene.addItem(route_item)
+        self._dynamic_items.append(route_item)
 
         for index, waypoint in enumerate(active_points):
             point_radius = 4.0 if index == 0 else 2.8
@@ -274,6 +349,7 @@ class RadarView(QGraphicsView):
             )
             point_item.setOpacity(0.85 if index == 0 else 0.45)
             point_item.setZValue(2)
+            self._dynamic_items.append(point_item)
 
     def _draw_trajectory(self, unit: AutonomousUnit) -> None:
         if len(unit.trajectory) < 2:
@@ -290,6 +366,7 @@ class RadarView(QGraphicsView):
         trajectory_item.setOpacity(0.38 if unit.identifier != self._selected_unit_id else 0.62)
         trajectory_item.setZValue(1)
         self._scene.addItem(trajectory_item)
+        self._dynamic_items.append(trajectory_item)
 
     @staticmethod
     def _resolve_unit_color(unit: AutonomousUnit) -> str:
@@ -355,11 +432,13 @@ class RadarView(QGraphicsView):
             y = origin_y + (index * 18)
             marker = self._scene.addEllipse(origin_x, y, 8, 8, QPen(QColor(color)), QBrush(QColor(color)))
             marker.setZValue(20)
+            self._static_items.append(marker)
             text = QGraphicsTextItem(label)
             text.setDefaultTextColor(QColor(settings.COLOR_TEXT))
             text.setPos(origin_x + 14, y - 6)
             text.setZValue(20)
             self._scene.addItem(text)
+            self._static_items.append(text)
 
     def _draw_hud(self) -> None:
         hud_items = [
@@ -377,3 +456,4 @@ class RadarView(QGraphicsView):
             label.setPos(origin_x, origin_y + (index * 19))
             label.setZValue(20)
             self._scene.addItem(label)
+            self._dynamic_items.append(label)
