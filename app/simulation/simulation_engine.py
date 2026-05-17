@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import random
+from dataclasses import replace
 from math import cos, hypot, pi, sin
 
 from PySide6.QtCore import QObject, QTimer, Signal
@@ -10,6 +11,8 @@ from app.domain.alert import Alert
 from app.domain.autonomous_unit import AutonomousUnit
 from app.domain.waypoint import Waypoint
 from app.services.alert_service import AlertService
+from app.services.battery_service import BatteryService
+from app.services.metrics_service import MetricsService
 from app.services.mode_service import ModeService
 from app.services.scenario_service import ScenarioApplicationConfig, ScenarioService
 from app.services.swarm_service import SwarmService, SwarmSummary
@@ -43,13 +46,20 @@ class SimulationEngine(QObject):
         self.current_swarm_count = 1
         self.current_distribution = "Automática"
         self.configured_unit_count = settings.DEFAULT_ACTIVE_UNITS
+        self.scenario_config_source = settings.SCENARIO_SOURCE_PREDEFINED
+        self.scenario_config_dirty = False
+        self.active_scenario_profile: ScenarioApplicationConfig | None = None
         self._next_unit_number = 1
         self._next_waypoint_number = 1
 
+        self.metrics = MetricsService()
         self._alert_service = AlertService()
         self._mode_service = ModeService()
         self._swarm_service = SwarmService()
         self._scenario_service = ScenarioService(self._swarm_service)
+        self._battery_service = BatteryService()
+        self.active_scenario_profile = self._scenario_service.profile_for(self.current_scenario_name)
+        self.time_scale: int = settings.DEFAULT_TIME_SCALE
         self._timer = QTimer(self)
         self._timer.setInterval(settings.SIMULATION_INTERVAL_MS)
         self._timer.timeout.connect(self.update_simulation)
@@ -71,6 +81,21 @@ class SimulationEngine(QObject):
             battery=100.0,
         )
         self.units[identifier] = unit
+        self.updated.emit()
+        return unit
+
+    def create_configured_unit(self) -> AutonomousUnit:
+        unit = self.create_unit()
+        self.configured_unit_count = len(self.units)
+        self.active_unit_target = len(self.units)
+        self._mark_scenario_config_dirty()
+        self._swarm_service.assign_swarms(
+            units=list(self.units.values()),
+            scenario_name=self.current_scenario_name,
+            swarm_count=self.current_swarm_count,
+            distribution=self.current_distribution,
+        )
+        self._mode_service.apply_mode(self.mode, list(self.units.values()), self.zone_radius)
         self.updated.emit()
         return unit
 
@@ -108,6 +133,7 @@ class SimulationEngine(QObject):
 
     def set_mode(self, mode: str) -> None:
         self.mode = mode
+        self._mark_scenario_config_dirty()
         self._mode_service.apply_mode(mode, list(self.units.values()), self.zone_radius)
         for unit in self.units.values():
             unit.altitude = self.target_altitude
@@ -116,23 +142,6 @@ class SimulationEngine(QObject):
             if unit.waypoint is not None:
                 unit.waypoint.altitude = self.target_altitude
         self.updated.emit()
-
-    def apply_scenario(self, scenario_name: str) -> None:
-        defaults = self._scenario_service.build_dialog_defaults(self, scenario_name)
-        config = ScenarioApplicationConfig(
-            scenario_name=scenario_name,
-            unit_count=int(defaults["unit_count"]),
-            swarm_count=int(defaults["swarm_count"]),
-            distribution=str(defaults["distribution"]),
-            use_existing_units=bool(self.units),
-            max_speed=float(defaults["max_speed"]),
-            target_altitude=float(defaults["target_altitude"]),
-            zone_radius=float(defaults["zone_radius"]),
-            min_separation=float(defaults["min_separation"]),
-            low_battery_threshold=float(defaults["low_battery_threshold"]),
-            auto_start=False,
-        )
-        self._scenario_service.apply(self, config)
 
     def ensure_unit_count(self, target_count: int) -> None:
         target_count = max(0, target_count)
@@ -184,16 +193,17 @@ class SimulationEngine(QObject):
 
     def configure_scenario_from_dialog(self, dialog_result) -> str:
         config = self._scenario_service.from_dialog(dialog_result)
-        self.current_swarm_count = config.swarm_count
-        self.current_distribution = config.distribution
-        self.configured_unit_count = config.unit_count
-        return self._scenario_service.apply(self, config)
+        return self._apply_scenario_configuration(config, source=settings.SCENARIO_SOURCE_PREDEFINED)
 
     def start(self) -> None:
         self.is_running = True
         self.simulation_status = "En ejecución"
         if not self._timer.isActive():
             self._timer.start()
+        for unit in self.units.values():
+            if unit.state_before_pause is not None:
+                unit.state = unit.state_before_pause
+                unit.state_before_pause = None
         self.updated.emit()
 
     def pause(self) -> None:
@@ -207,6 +217,7 @@ class SimulationEngine(QObject):
                 settings.STATUS_PATRULLANDO,
                 settings.STATUS_RECONOCIMIENTO,
             }:
+                unit.state_before_pause = unit.state
                 unit.state = settings.STATUS_DETENIDO
         self.updated.emit()
 
@@ -217,6 +228,7 @@ class SimulationEngine(QObject):
         self.simulation_time = 0.0
         for unit in self.units.values():
             unit.reset()
+        self.metrics.reset()
         self.recent_alerts.clear()
         self.active_pair_alerts.clear()
         self.alerts_updated.emit([])
@@ -227,7 +239,7 @@ class SimulationEngine(QObject):
                 swarm_count=self.current_swarm_count,
                 distribution=self.current_distribution,
             )
-            self.apply_mode_configuration(self.current_scenario_name)
+            self.apply_mode_configuration()
         self.updated.emit()
 
     def clear_alert_history(self) -> None:
@@ -242,6 +254,7 @@ class SimulationEngine(QObject):
 
     def update_max_speed(self, value: float) -> None:
         self.max_speed = value
+        self._mark_scenario_config_dirty()
         for unit in self.units.values():
             unit.nominal_speed = min(unit.nominal_speed, self.max_speed)
             unit.speed = min(unit.speed, self.max_speed)
@@ -249,6 +262,7 @@ class SimulationEngine(QObject):
 
     def update_target_altitude(self, value: float) -> None:
         self.target_altitude = value
+        self._mark_scenario_config_dirty()
         for unit in self.units.values():
             unit.altitude = value
             if unit.waypoint is not None:
@@ -259,18 +273,23 @@ class SimulationEngine(QObject):
 
     def update_min_separation(self, value: float) -> None:
         self.min_separation = value
+        self._mark_scenario_config_dirty()
         self.updated.emit()
 
     def update_zone_radius(self, value: float) -> None:
         self.zone_radius = value
+        self._mark_scenario_config_dirty()
         self.current_scenario_visuals["zone_radius"] = value
+        self.recalculate_routes()
         self.updated.emit()
 
     def update_low_battery_threshold(self, value: float) -> None:
         self.low_battery_threshold = value
+        self._mark_scenario_config_dirty()
         self.updated.emit()
 
     def update_active_unit_target(self, value: int) -> None:
+        self._mark_scenario_config_dirty()
         self.ensure_unit_count(value)
         self.configured_unit_count = value
         if self.units:
@@ -280,11 +299,25 @@ class SimulationEngine(QObject):
                 swarm_count=self.current_swarm_count,
                 distribution=self.current_distribution,
             )
-            self.apply_mode_configuration(self.current_scenario_name)
+            self.apply_mode_configuration()
+
+    def recalculate_routes(self) -> None:
+        if not self.units:
+            return
+        self.prepare_units_for_scenario()
+        self._mode_service.apply_mode(self.mode, list(self.units.values()), self.zone_radius)
+
+    def restore_active_scenario_profile(self) -> str:
+        if self.active_scenario_profile is None:
+            self.active_scenario_profile = self._scenario_service.profile_for(self.current_scenario_name)
+        profile = replace(self.active_scenario_profile, auto_start=False)
+        return self._apply_scenario_configuration(profile, source=self.scenario_config_source)
 
     def get_global_status(self) -> dict[str, str]:
         return {
             "scenario": self.current_scenario_name,
+            "config_source": self.get_scenario_source_label(),
+            "active_config": self.get_active_config_summary(),
             "description": self.current_scenario_description,
             "mode": self.mode,
             "units": str(len(self.units)),
@@ -307,7 +340,39 @@ class SimulationEngine(QObject):
         return self._scenario_service.build_dialog_defaults(self, scenario_name)
 
     def apply_scenario_configuration(self, config: ScenarioApplicationConfig) -> str:
-        return self._scenario_service.apply(self, config)
+        return self._apply_scenario_configuration(config, source=settings.SCENARIO_SOURCE_FILE)
+
+    def apply_scenario_profile(self, scenario_name: str, *, auto_start: bool = False) -> str:
+        config = self._scenario_service.profile_for(scenario_name, auto_start=auto_start)
+        return self._apply_scenario_configuration(config, source=settings.SCENARIO_SOURCE_PREDEFINED)
+
+    def apply_loaded_scenario_configuration(self, config: ScenarioApplicationConfig) -> str:
+        return self._apply_scenario_configuration(config, source=settings.SCENARIO_SOURCE_FILE)
+
+    def get_scenario_source_label(self) -> str:
+        if self.scenario_config_dirty:
+            return settings.SCENARIO_SOURCE_MANUAL
+        return self.scenario_config_source
+
+    def get_active_config_summary(self) -> str:
+        return (
+            f"{self.current_scenario_name} | {self.mode} | "
+            f"{self.configured_unit_count} unidades | {self.current_swarm_count} enjambre(s) | "
+            f"{self.max_speed:0.1f} u/s | {self.target_altitude:0.1f} m | "
+            f"radio {self.zone_radius:0.1f} u | separación {self.min_separation:0.1f} u | "
+            f"batería baja {self.low_battery_threshold:0.1f}%"
+        )
+
+    def _apply_scenario_configuration(self, config: ScenarioApplicationConfig, *, source: str) -> str:
+        normalized = self._scenario_service.normalize_config(config)
+        self.active_scenario_profile = normalized
+        self.scenario_config_source = source
+        self.scenario_config_dirty = False
+        return self._scenario_service.apply(self, normalized)
+
+    def _mark_scenario_config_dirty(self) -> None:
+        if self.active_scenario_profile is not None:
+            self.scenario_config_dirty = True
 
     @property
     def active_alert_count(self) -> int:
@@ -315,17 +380,69 @@ class SimulationEngine(QObject):
         return unit_alerts + len(self.active_pair_alerts)
 
     def format_simulation_time(self) -> str:
-        total_seconds = int(self.simulation_time)
+        total_seconds = int(self.simulation_time + 1e-9)
         minutes, seconds = divmod(total_seconds, 60)
         return f"{minutes:02d}:{seconds:02d}"
 
     def update_simulation(self) -> None:
-        dt = settings.SIMULATION_INTERVAL_MS / 1000.0
-        self.simulation_time += dt
+        base_dt = settings.SIMULATION_INTERVAL_MS / 1000.0
+        dt = base_dt * self.time_scale
+        self.step(dt)
+        self.updated.emit()
 
+    def step(self, dt: float) -> None:
+        """Advance the simulation by a logical time delta without depending on QTimer."""
+        self.simulation_time += dt
+        self._tick_units(dt)
+
+    def _tick_units(self, dt: float) -> None:
         for unit in self.units.values():
             reached_target = False
-            self._apply_battery_speed_policy(unit)
+            if not unit.is_charging:
+                self._apply_battery_speed_policy(unit)
+
+            rtb_action = self._battery_service.evaluate(unit, self.low_battery_threshold, dt)
+            if rtb_action == "rtb_start":
+                if unit.task_label != settings.TASK_TEMPORARY:
+                    unit.mission_snapshot = self._build_mission_snapshot(unit)
+                self._register_alerts([
+                    Alert(
+                        alert_type=settings.ALERT_RTB_START,
+                        unit_id=unit.identifier,
+                        swarm_id=unit.swarm_id,
+                        message=f"La unidad {unit.identifier} inició retorno a base por batería baja.",
+                        severity=settings.SEVERITY_INFO,
+                        prefix="INFO",
+                        key=f"{unit.identifier}:{settings.ALERT_RTB_START}",
+                    )
+                ])
+            elif rtb_action == "recharge_done":
+                self._restore_mission(unit)
+                self._register_alerts([
+                    Alert(
+                        alert_type=settings.ALERT_RECHARGE_DONE,
+                        unit_id=unit.identifier,
+                        swarm_id=unit.swarm_id,
+                        message=f"La unidad {unit.identifier} completó recarga y reanudó su misión.",
+                        severity=settings.SEVERITY_INFO,
+                        prefix="INFO",
+                        key=f"{unit.identifier}:{settings.ALERT_RECHARGE_DONE}",
+                    )
+                ])
+
+            if unit.is_charging:
+                unit.active_alerts = [
+                    alert for alert in unit.active_alerts
+                    if alert not in {
+                        settings.ALERT_BATTERY_LOW,
+                        settings.ALERT_BATTERY_CRITICAL,
+                        settings.ALERT_NO_BATTERY,
+                    }
+                ]
+                unit.direction_x = 0.0
+                unit.direction_y = 0.0
+                unit.append_trajectory()
+                continue
 
             if unit.battery <= 0.0:
                 unit.direction_x = 0.0
@@ -354,7 +471,9 @@ class SimulationEngine(QObject):
                     kp=settings.CONTROL_KP,
                 )
 
-            if unit.waypoint is not None and reached_target and unit.task_label == settings.TASK_TEMPORARY:
+            if unit.waypoint is not None and reached_target and unit.is_returning and unit.waypoint.kind == "base":
+                self._battery_service.notify_base_reached(unit)
+            elif unit.waypoint is not None and reached_target and unit.task_label == settings.TASK_TEMPORARY:
                 self._restore_mission(unit)
             elif unit.waypoint is not None and reached_target and unit.route:
                 self._mode_service.advance_unit_route(unit)
@@ -385,7 +504,17 @@ class SimulationEngine(QObject):
         if proximity_alerts:
             self._register_alerts(proximity_alerts)
 
-        self.updated.emit()
+        self.metrics.record_tick(
+            self.simulation_time,
+            list(self.units.values()),
+            self.active_alert_count,
+            dt=dt,
+        )
+
+    def set_time_scale(self, value: int) -> None:
+        if value in settings.AVAILABLE_TIME_SCALES:
+            self.time_scale = value
+            self.updated.emit()
 
     def _handle_proximity_monitoring(self) -> list[Alert]:
         new_alerts: list[Alert] = []
@@ -426,16 +555,19 @@ class SimulationEngine(QObject):
         dx = (left_unit.x - right_unit.x) / distance
         dy = (left_unit.y - right_unit.y) / distance
 
-        left_unit.x += dx * overlap * 0.12
-        left_unit.y += dy * overlap * 0.12
-        right_unit.x -= dx * overlap * 0.12
-        right_unit.y -= dy * overlap * 0.12
+        left_unit.x += dx * overlap * settings.SEPARATION_CORRECTION_GAIN
+        left_unit.y += dy * overlap * settings.SEPARATION_CORRECTION_GAIN
+        right_unit.x -= dx * overlap * settings.SEPARATION_CORRECTION_GAIN
+        right_unit.y -= dy * overlap * settings.SEPARATION_CORRECTION_GAIN
 
     def _register_alerts(self, alerts: list[Alert]) -> None:
+        self.metrics.record_alerts(alerts)
         self.recent_alerts = (alerts + self.recent_alerts)[:100]
         self.alerts_updated.emit(alerts)
 
     def _restore_mission(self, unit: AutonomousUnit) -> None:
+        unit.is_returning = False
+        unit.is_charging = False
         if not unit.mission_snapshot:
             unit.task_label = settings.TASK_AUTOMATIC
             unit.state = settings.STATUS_OBJETIVO_ALCANZADO
@@ -477,9 +609,15 @@ class SimulationEngine(QObject):
     def _drain_battery(self, unit: AutonomousUnit, dt: float) -> None:
         moving_factor = max(abs(unit.direction_x), abs(unit.direction_y))
         drain = settings.BATTERY_DRAIN_IDLE + (unit.speed * moving_factor * settings.BATTERY_DRAIN_MOVING_FACTOR)
-        unit.battery = max(0.0, unit.battery - drain * (dt * 10.0))
+        unit.battery = max(0.0, unit.battery - drain * (dt * settings.BATTERY_DRAIN_DT_SCALE))
 
     def _apply_state_overrides(self, unit: AutonomousUnit) -> None:
+        if unit.is_charging:
+            unit.state = settings.STATUS_RECARGANDO
+            return
+        if unit.is_returning:
+            unit.state = settings.STATUS_REGRESANDO
+            return
         if unit.battery <= 0.0:
             unit.state = settings.STATUS_SIN_BATERIA
         elif hypot(unit.x, unit.y) > self.zone_radius:
@@ -493,6 +631,9 @@ class SimulationEngine(QObject):
 
     def _apply_battery_speed_policy(self, unit: AutonomousUnit) -> None:
         nominal_speed = min(unit.nominal_speed, self.max_speed)
+        if unit.is_returning:
+            unit.speed = nominal_speed
+            return
         if unit.battery <= 0.0:
             unit.speed = 0.0
             return
@@ -516,7 +657,7 @@ class SimulationEngine(QObject):
     def _generate_spawn_position(self) -> tuple[float, float]:
         for _ in range(50):
             angle = random.uniform(0.0, 2 * pi)
-            radius = random.uniform(25.0, self.zone_radius * 0.45)
+            radius = random.uniform(settings.SPAWN_MIN_RADIUS, self.zone_radius * settings.SPAWN_MAX_RADIUS_FACTOR)
             x = radius * cos(angle)
             y = radius * sin(angle)
             if self._is_position_available(x, y):

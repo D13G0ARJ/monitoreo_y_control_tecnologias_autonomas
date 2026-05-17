@@ -38,7 +38,7 @@ class SwarmService:
 
         if swarm_count <= 1:
             split_index = len(units)
-        elif normalized_distribution == "mitad y mitad":
+        elif normalized_distribution == settings.DISTRIBUTION_HALF.lower():
             split_index = max(1, len(units) // 2)
         else:
             split_index = max(1, round(len(units) * 0.5))

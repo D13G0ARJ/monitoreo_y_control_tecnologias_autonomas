@@ -1,0 +1,35 @@
+{
+  "scenario": {
+    "scenario": "Protección de zona estratégica",
+    "description": "Escenario centrado en supervisión perimetral continua alrededor de una zona estratégica protegida.",
+    "mode": "Defensivo",
+    "units": "3",
+    "configured_units": "3",
+    "swarms": "1",
+    "alerts": "2",
+    "simulation": "Pausada",
+    "time": "00:51",
+    "max_speed": "80.0 u/s",
+    "zone_radius": "320.0 u",
+    "min_separation": "38.0 u",
+    "low_battery_threshold": "95.0 %",
+    "swarm_overview": "E1: Patrullaje Defensivo"
+  },
+  "units": {
+    "U01": {
+      "distance": 2317.834,
+      "objectives_reached": 0,
+      "time_to_first_objective": null
+    },
+    "U02": {
+      "distance": 1423.111,
+      "objectives_reached": 0,
+      "time_to_first_objective": null
+    },
+    "U03": {
+      "distance": 2041.415,
+      "objectives_reached": 0,
+      "time_to_first_objective": null
+    }
+  }
+}

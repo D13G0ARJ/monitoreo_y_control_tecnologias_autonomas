@@ -61,8 +61,8 @@ class ScenarioConfigDialog(QDialog):
         self.swarm_count_combo.setCurrentText(str(current_values.get("swarm_count", 1)))
 
         self.distribution_combo = QComboBox()
-        self.distribution_combo.addItems(["Automática", "Mitad y mitad"])
-        self.distribution_combo.setCurrentText(str(current_values.get("distribution", "Automática")))
+        self.distribution_combo.addItems([settings.DISTRIBUTION_AUTO, settings.DISTRIBUTION_HALF])
+        self.distribution_combo.setCurrentText(str(current_values.get("distribution", settings.DISTRIBUTION_AUTO)))
 
         self.units_mode_combo = QComboBox()
         self.units_mode_combo.addItem("Usar unidades existentes")

@@ -21,6 +21,7 @@ El sistema se apoya en tres grandes componentes:
 | Radar Operativo | Visualizar la situación espacial |
 | Centro de Control | Gestionar operación, configuración y alertas |
 | Motor de simulación compartido | Mantener el estado y ejecutar la lógica |
+| Runtime headless | Ejecutar corridas reproducibles sin abrir interfaz |
 
 ---
 
@@ -51,7 +52,10 @@ Contiene:
 - parámetros operativos;
 - alertas;
 - detalle de unidad seleccionada;
-- resumen de enjambres.
+- resumen de enjambres;
+- lista de unidades activas;
+- gráficos en vivo;
+- exportación de informes.
 
 Su función es concentrar la interacción sin saturar el radar.
 
@@ -66,6 +70,7 @@ Esto significa que:
 - si se selecciona una unidad en el radar, el Centro de Control muestra esa unidad;
 - si se cambia un parámetro en el Centro de Control, el radar se actualiza;
 - si se genera una alerta, ambas vistas quedan sincronizadas.
+- si se crea una unidad desde el Centro de Control, se integra al escenario activo.
 
 La ventaja de esta arquitectura es que evita inconsistencias.
 
@@ -87,6 +92,7 @@ Gestiona:
 - la batería;
 - las alertas;
 - la selección de unidades.
+- las métricas de la corrida.
 
 ### ¿Por qué es compartido?
 Porque garantiza una única fuente de verdad. De esta forma:
@@ -105,6 +111,8 @@ Porque garantiza una única fuente de verdad. De esta forma:
 | Servicios | Aplicar reglas de escenarios, modos, enjambres y alertas |
 | Dominio | Definir entidades como unidad, alerta y waypoint |
 | Simulación | Actualizar posiciones, tiempos y estados |
+| Entrada/salida | Guardar configuraciones y exportar informes |
+| Runtime | Ejecutar corridas headless |
 | Configuración | Contener parámetros globales |
 
 ### 6.1 Interfaz
@@ -117,6 +125,8 @@ Aquí se agrupan decisiones específicas como:
 - asignación de enjambres;
 - evaluación de alertas;
 - organización de modos operativos.
+- retorno a base y recarga;
+- acumulación de métricas.
 
 ### 6.3 Dominio
 Define qué es cada elemento esencial del sistema:
@@ -133,6 +143,8 @@ Es donde evoluciona el sistema con el tiempo:
 - batería;
 - estado;
 - alertas dinámicas.
+
+La simulación puede avanzar por temporizador Qt en la interfaz o por pasos lógicos en modo headless. Esto permite reutilizar la lógica sin depender de clics manuales.
 
 ### 6.5 Configuración
 Agrupa valores comunes como:
@@ -179,6 +191,8 @@ Porque es más coherente que el operador:
 
 Esto hace que el sistema parezca más controlado y menos automático.
 
+Cuando se agrega una unidad después de aplicar un escenario, el motor vuelve a asignar enjambre y modo para que la nueva unidad reciba ruta y waypoint. Así se evita que quede detenida o fuera de misión.
+
 ---
 
 ## 9. Gestión de enjambres
@@ -196,7 +210,39 @@ Esto aporta claridad, organización y mejor interpretación del escenario mixto.
 
 ---
 
-## 10. Conclusión arquitectónica
+## 10. Métricas, exportación y modo headless
+
+El sistema incorpora un servicio de métricas que registra información de cada corrida.
+
+### Qué registra
+- distancia recorrida;
+- batería mínima, promedio y final;
+- tiempo por estado;
+- alertas por tipo;
+- alertas por severidad;
+- series temporales por unidad.
+
+### Exportación
+La exportación genera:
+
+- `timeseries.csv`;
+- `summary.json`.
+
+El CSV sirve para análisis detallado por tick. El JSON sirve para resumen y comparación entre corridas.
+
+### Modo headless
+El modo headless permite ejecutar la simulación sin ventanas gráficas.
+
+Esto permite:
+
+- repetir pruebas con semilla;
+- validar escenarios;
+- generar informes automáticamente;
+- comparar configuraciones sin intervención manual.
+
+---
+
+## 11. Conclusión arquitectónica
 
 La arquitectura puede resumirse así:
 
@@ -204,6 +250,8 @@ La arquitectura puede resumirse así:
 2. un motor compartido;
 3. servicios especializados;
 4. lógica separada de la interfaz;
-5. estructura modular y mantenible.
+5. estructura modular y mantenible;
+6. exportación de evidencia;
+7. ejecución visual y headless.
 
 Esta arquitectura es suficiente para el alcance del proyecto y sólida para una defensa de tesis.

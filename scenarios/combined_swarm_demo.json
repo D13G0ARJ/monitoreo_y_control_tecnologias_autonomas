@@ -1,0 +1,33 @@
+{
+  "scenario_name": "Vigilancia y reconocimiento combinado",
+  "unit_count": 10,
+  "swarm_count": 2,
+  "distribution": "Mitad y mitad",
+  "use_existing_units": false,
+  "mode": "Mixto",
+  "max_speed": 75.0,
+  "target_altitude": 160.0,
+  "zone_radius": 320.0,
+  "min_separation": 42.0,
+  "low_battery_threshold": 20.0,
+  "protected_radius": 85.0,
+  "observation_points": [
+    [
+      -180.0,
+      -120.0
+    ],
+    [
+      180.0,
+      -30.0
+    ],
+    [
+      -170.0,
+      85.0
+    ],
+    [
+      170.0,
+      160.0
+    ]
+  ],
+  "auto_start": false
+}

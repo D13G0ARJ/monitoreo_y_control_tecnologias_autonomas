@@ -67,6 +67,8 @@ El sistema usa una tolerancia. Si la unidad está suficientemente cerca del wayp
 - puede detenerse;
 - o puede pasar al siguiente punto si forma parte de una ruta.
 
+La distancia al objetivo se calcula con la posición actual de la unidad y el waypoint activo. En escenarios cargados, esa distancia aparece desde la asignación inicial de la ruta y se actualiza durante el movimiento.
+
 ---
 
 ## 5. Tipos de control
@@ -148,8 +150,9 @@ Se activa por debajo del umbral configurable.
 
 ### Qué ocurre
 - se genera advertencia;
-- la unidad sigue operando;
-- queda visualmente marcada.
+- la unidad inicia retorno automático a base si no está en control manual;
+- conserva una referencia de su misión original;
+- queda visualmente marcada como `regresando a base`.
 
 ## 7.3 Batería crítica
 Se activa en un nivel muy bajo.
@@ -158,6 +161,8 @@ Se activa en un nivel muy bajo.
 - se genera alerta crítica;
 - la velocidad se reduce automáticamente;
 - la capacidad operativa se degrada.
+
+Si la unidad ya está regresando a base, no se aplica el freno adicional de batería crítica. Esto evita que una unidad que intenta volver a la base quede demasiado lenta para completar el retorno.
 
 ## 7.4 Sin batería
 Se activa cuando la batería llega a cero.
@@ -172,6 +177,18 @@ Se activa cuando la batería llega a cero.
 ### ¿Por qué es importante?
 Porque le da coherencia realista al sistema.
 
+## 7.5 Retorno a base y recarga
+Cuando una unidad cruza el umbral de batería baja:
+
+1. el sistema guarda su misión actual si corresponde;
+2. asigna la base `(0, 0)` como waypoint temporal;
+3. cambia su estado a `regresando a base`;
+4. al llegar, cambia a `recargando`;
+5. recarga hasta 100 %;
+6. restaura la misión previa.
+
+El control manual tiene prioridad: una unidad en `Control manual` no es tomada automáticamente por el retorno a base.
+
 ---
 
 ## 8. Sistema de alertas
@@ -185,7 +202,9 @@ Cuando el motor detecta condiciones relevantes durante la simulación.
 - batería crítica;
 - sin batería;
 - fuera de zona;
-- proximidad entre unidades.
+- proximidad entre unidades;
+- retorno a base iniciado;
+- recarga completada.
 
 ### Severidad
 | Nivel | Significado |
@@ -217,6 +236,8 @@ El sistema evita repetir infinitamente la misma alerta para no saturar al operad
 | Distancia | Distancia al objetivo |
 | Rol | Función operativa actual |
 | Tarea | Tipo de control aplicado |
+| Waypoint activo | Objetivo actual de la unidad |
+| Distancia al objetivo | Distancia calculada hacia el waypoint activo |
 
 ## 9.2 Variables internas
 
@@ -230,10 +251,47 @@ El sistema evita repetir infinitamente la misma alerta para no saturar al operad
 | Enjambre | Grupo operativo |
 | Rol de enjambre | Función grupal |
 | Tiempo de simulación | Tiempo interno del sistema |
+| Escala de tiempo | Multiplicador del avance lógico |
 
 ---
 
-## 10. Justificación técnica
+## 10. Métricas e informes
+
+El sistema acumula métricas durante cada corrida.
+
+### Métricas principales
+- distancia recorrida por unidad;
+- objetivos alcanzados;
+- tiempo al primer objetivo;
+- batería mínima, promedio y final;
+- tiempo acumulado por estado;
+- alertas agrupadas por tipo;
+- alertas agrupadas por severidad.
+
+### Exportación
+El operador puede exportar un informe desde el Centro de Control.
+
+El archivo `timeseries.csv` contiene muestras por tick y por unidad:
+
+- tiempo de simulación;
+- unidad;
+- enjambre;
+- rol;
+- tarea;
+- posición;
+- altitud;
+- velocidad;
+- batería;
+- estado;
+- waypoint activo;
+- distancia al objetivo;
+- alertas activas.
+
+El archivo `summary.json` contiene el resumen de la corrida y sirve como evidencia para comparar escenarios o repetir pruebas.
+
+---
+
+## 11. Justificación técnica
 
 ### ¿Por qué simulación?
 Porque reduce costo, riesgo y dependencia de infraestructura real.
