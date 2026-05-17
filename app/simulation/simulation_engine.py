@@ -84,6 +84,21 @@ class SimulationEngine(QObject):
         self.updated.emit()
         return unit
 
+    def create_configured_unit(self) -> AutonomousUnit:
+        unit = self.create_unit()
+        self.configured_unit_count = len(self.units)
+        self.active_unit_target = len(self.units)
+        self._mark_scenario_config_dirty()
+        self._swarm_service.assign_swarms(
+            units=list(self.units.values()),
+            scenario_name=self.current_scenario_name,
+            swarm_count=self.current_swarm_count,
+            distribution=self.current_distribution,
+        )
+        self._mode_service.apply_mode(self.mode, list(self.units.values()), self.zone_radius)
+        self.updated.emit()
+        return unit
+
     def set_waypoint_for_unit(self, unit_id: str, x: float, y: float, temporary: bool = True) -> None:
         unit = self.units.get(unit_id)
         if unit is None:
@@ -365,16 +380,20 @@ class SimulationEngine(QObject):
         return unit_alerts + len(self.active_pair_alerts)
 
     def format_simulation_time(self) -> str:
-        total_seconds = int(self.simulation_time)
+        total_seconds = int(self.simulation_time + 1e-9)
         minutes, seconds = divmod(total_seconds, 60)
         return f"{minutes:02d}:{seconds:02d}"
 
     def update_simulation(self) -> None:
         base_dt = settings.SIMULATION_INTERVAL_MS / 1000.0
         dt = base_dt * self.time_scale
+        self.step(dt)
+        self.updated.emit()
+
+    def step(self, dt: float) -> None:
+        """Advance the simulation by a logical time delta without depending on QTimer."""
         self.simulation_time += dt
         self._tick_units(dt)
-        self.updated.emit()
 
     def _tick_units(self, dt: float) -> None:
         for unit in self.units.values():
@@ -485,8 +504,12 @@ class SimulationEngine(QObject):
         if proximity_alerts:
             self._register_alerts(proximity_alerts)
 
-        self.metrics.record_tick(self.simulation_time, list(self.units.values()),
-                                 self.active_alert_count)
+        self.metrics.record_tick(
+            self.simulation_time,
+            list(self.units.values()),
+            self.active_alert_count,
+            dt=dt,
+        )
 
     def set_time_scale(self, value: int) -> None:
         if value in settings.AVAILABLE_TIME_SCALES:
@@ -538,6 +561,7 @@ class SimulationEngine(QObject):
         right_unit.y -= dy * overlap * settings.SEPARATION_CORRECTION_GAIN
 
     def _register_alerts(self, alerts: list[Alert]) -> None:
+        self.metrics.record_alerts(alerts)
         self.recent_alerts = (alerts + self.recent_alerts)[:100]
         self.alerts_updated.emit(alerts)
 
@@ -607,6 +631,9 @@ class SimulationEngine(QObject):
 
     def _apply_battery_speed_policy(self, unit: AutonomousUnit) -> None:
         nominal_speed = min(unit.nominal_speed, self.max_speed)
+        if unit.is_returning:
+            unit.speed = nominal_speed
+            return
         if unit.battery <= 0.0:
             unit.speed = 0.0
             return

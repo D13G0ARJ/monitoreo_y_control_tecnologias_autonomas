@@ -1,6 +1,6 @@
 {
   "scenario_name": "Protección de zona estratégica",
-  "unit_count": 6,
+  "unit_count": 8,
   "swarm_count": 1,
   "distribution": "Automática",
   "use_existing_units": false,

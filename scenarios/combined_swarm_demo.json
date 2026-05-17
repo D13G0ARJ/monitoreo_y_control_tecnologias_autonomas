@@ -1,6 +1,6 @@
 {
   "scenario_name": "Vigilancia y reconocimiento combinado",
-  "unit_count": 6,
+  "unit_count": 10,
   "swarm_count": 2,
   "distribution": "Mitad y mitad",
   "use_existing_units": false,

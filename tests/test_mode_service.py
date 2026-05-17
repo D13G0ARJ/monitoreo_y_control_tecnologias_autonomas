@@ -14,6 +14,9 @@ def test_defensive_assigns_patrol_loop_route():
         assert u.role == settings.ROLE_PATROL
         assert u.route_loop is True
         assert len(u.route) >= 8
+        assert u.waypoint is not None
+        assert u.distance_to_target is not None
+        assert u.distance_to_target > 0.0
 
 
 def test_recon_assigns_non_loop_route():
@@ -33,3 +36,4 @@ def test_advance_route_loop_wraps():
     u.current_waypoint_index = len(u.route) - 1
     svc.advance_unit_route(u)
     assert u.current_waypoint_index == 0
+    assert u.distance_to_target is not None

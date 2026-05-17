@@ -62,6 +62,18 @@ Ejecutar la aplicación:
 ./run.sh
 ```
 
+Ejecutar pruebas:
+
+```bash
+./test.sh
+```
+
+Ejecutar una corrida headless reproducible:
+
+```bash
+uv run python main.py --headless --scenario "Protección de zona estratégica" --duration 30 --seed 1 --out run_output
+```
+
 Activar el entorno para desarrollo manual:
 
 ```bash
@@ -88,6 +100,12 @@ Ejecución sin activar manualmente el entorno:
 
 ```bash
 uv run python main.py
+```
+
+Corrida headless con exportación:
+
+```bash
+uv run python main.py --headless --scenario "Protección de zona estratégica" --duration 30 --seed 1 --time-scale 1 --out run_output
 ```
 
 ---
@@ -185,6 +203,12 @@ Uso diario:
 uv run python main.py
 ```
 
+Pruebas:
+
+```powershell
+uv run --group dev pytest
+```
+
 Cuando cambie `requirements.txt`:
 
 ```powershell
@@ -216,6 +240,21 @@ Resultado esperado:
 .../.venv/bin/python
 Python 3.12.x
 ```
+
+### Verificación del proyecto
+
+Desde la raíz del proyecto:
+
+```bash
+./test.sh
+uv run --group dev ruff check app tests
+uv run python main.py --headless --scenario "Protección de zona estratégica" --duration 5 --seed 1 --out /tmp/radar_check
+```
+
+La corrida headless debe crear:
+
+- `timeseries.csv`;
+- `summary.json`.
 
 ---
 

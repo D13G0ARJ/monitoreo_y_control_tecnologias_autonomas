@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from math import cos, pi, sin
+from math import cos, hypot, pi, sin
 
 from app.config import settings
 from app.domain.autonomous_unit import AutonomousUnit
@@ -109,7 +109,7 @@ class ModeService:
                 unit.current_waypoint_index = 1 if len(unit.route) > 1 else 0
 
         unit.waypoint = unit.route[unit.current_waypoint_index]
-        unit.distance_to_target = None
+        unit.distance_to_target = hypot(unit.waypoint.x - unit.x, unit.waypoint.y - unit.y)
 
     def _assign_route(
         self,
@@ -131,7 +131,11 @@ class ModeService:
         unit.current_waypoint_index = start_index if route else None
         unit.waypoint = route[start_index] if route else None
         unit.state = state
-        unit.distance_to_target = None
+        unit.distance_to_target = (
+            hypot(unit.waypoint.x - unit.x, unit.waypoint.y - unit.y)
+            if unit.waypoint is not None
+            else None
+        )
 
     def _build_recon_route(
         self,

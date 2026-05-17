@@ -216,6 +216,25 @@ def test_control_center_reflects_config_source_and_restore_state():
         window.close()
 
 
+def test_unit_list_refresh_preserves_items_for_reliable_clicks():
+    QApplication.instance() or QApplication([])
+    engine = SimulationEngine()
+    engine.apply_scenario_profile(settings.SCENARIO_ZONE_PROTECTION)
+    window = ControlWindow(engine)
+    try:
+        first_unit = next(iter(engine.units.values()))
+        window.panels.unit_list_panel.update_units(list(engine.units.values()), None)
+        first_item = window.panels.unit_list_panel.unit_list.item(0)
+
+        first_unit.state = settings.STATUS_BATERIA_BAJA
+        window.panels.unit_list_panel.update_units(list(engine.units.values()), first_unit.identifier)
+
+        assert window.panels.unit_list_panel.unit_list.item(0) is first_item
+        assert window.panels.unit_list_panel.unit_list.currentItem() is first_item
+    finally:
+        window.close()
+
+
 def test_temporary_and_manual_assignment_paths_restore_or_override_mission():
     engine = _apply("zone_protection_baseline.json")
     unit = next(iter(engine.units.values()))
@@ -236,6 +255,23 @@ def test_temporary_and_manual_assignment_paths_restore_or_override_mission():
     assert unit.task_label == settings.TASK_MANUAL
     assert unit.role == settings.ROLE_MANUAL
     assert unit.route == []
+
+
+def test_added_unit_after_loaded_scenario_inherits_active_mission():
+    engine = _apply("zone_protection_baseline.json")
+    original_count = len(engine.units)
+
+    unit = engine.create_configured_unit()
+
+    assert len(engine.units) == original_count + 1
+    assert engine.configured_unit_count == original_count + 1
+    assert engine.active_unit_target == original_count + 1
+    assert engine.scenario_config_dirty
+    assert unit.swarm_id == "E1"
+    assert unit.role == settings.ROLE_PATROL
+    assert unit.state == settings.STATUS_PATRULLANDO
+    assert unit.route
+    assert unit.waypoint is not None
 
 
 def test_rtb_fixture_exercises_low_battery_return_to_base_and_recharge():

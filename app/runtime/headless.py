@@ -13,7 +13,6 @@ def run_headless(scenario_name: str, duration_s: float, out_dir: str,
     # headless drives ticks manually; QTimer is never started, so set the flag directly
     engine.is_running = True
     for _ in range(steps):
-        engine.simulation_time += dt * time_scale
-        engine._tick_units(dt * time_scale)  # _tick_units extracted in Phase 4
+        engine.step(dt * time_scale)
     summary = engine.metrics.build_summary(engine.get_global_status())
     return export_run(out_dir, engine.metrics.timeseries_rows(), summary)

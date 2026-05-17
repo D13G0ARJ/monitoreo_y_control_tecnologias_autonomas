@@ -585,6 +585,7 @@ class UnitListPanel(QGroupBox):
         self.unit_list = QListWidget()
         self.unit_list.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
         self.unit_list.setAlternatingRowColors(True)
+        self._items_by_unit_id: dict[str, QListWidgetItem] = {}
 
         layout = QVBoxLayout()
         layout.addWidget(title_label)
@@ -593,11 +594,23 @@ class UnitListPanel(QGroupBox):
 
     def update_units(self, units: list, selected_id: str | None) -> None:
         self.unit_list.blockSignals(True)
-        self.unit_list.clear()
+        present_ids = {u.identifier for u in units}
+        for unit_id in list(self._items_by_unit_id):
+            if unit_id not in present_ids:
+                item = self._items_by_unit_id.pop(unit_id)
+                row = self.unit_list.row(item)
+                if row >= 0:
+                    self.unit_list.takeItem(row)
+
         for u in units:
             text = f"{u.identifier}  |  {u.swarm_id}  |  {u.state.title()}"
-            item = QListWidgetItem(text)
-            item.setData(Qt.UserRole, u.identifier)
+            item = self._items_by_unit_id.get(u.identifier)
+            if item is None:
+                item = QListWidgetItem()
+                item.setData(Qt.UserRole, u.identifier)
+                self._items_by_unit_id[u.identifier] = item
+                self.unit_list.addItem(item)
+            item.setText(text)
             if u.state in {settings.STATUS_CRITICO, settings.STATUS_SIN_BATERIA, settings.STATUS_FUERA_DE_ZONA}:
                 item.setForeground(QColor(settings.COLOR_ALERT))
             elif u.state in {settings.STATUS_BATERIA_BAJA, settings.STATUS_EN_RUTA, settings.STATUS_REGRESANDO}:
@@ -606,9 +619,10 @@ class UnitListPanel(QGroupBox):
                 item.setForeground(QColor(settings.COLOR_ROLE_RECON))
             else:
                 item.setForeground(QColor(settings.COLOR_OK))
-            self.unit_list.addItem(item)
             if u.identifier == selected_id:
                 self.unit_list.setCurrentItem(item)
+        if selected_id is None:
+            self.unit_list.setCurrentItem(None)
         self.unit_list.blockSignals(False)
 
 

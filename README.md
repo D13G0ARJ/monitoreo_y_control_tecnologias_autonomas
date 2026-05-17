@@ -69,7 +69,7 @@ No está orientado a:
 - Alertas con severidad `INFO`, `WARN` y `CRIT`.
 - Sonido opcional de alertas.
 - Retorno automático a base por batería baja y recarga simulada.
-- Exportación de informes en CSV/JSON.
+- Exportación de informes en CSV/JSON con métricas por unidad, batería, alertas, estado, rol, objetivo y distancia.
 - Ejecución headless determinista para pruebas de regresión.
 
 ---
@@ -124,7 +124,9 @@ uv run python main.py --headless --scenario "Protección de zona estratégica" -
 uv run --group dev ruff check app tests
 ```
 
-El modo `--headless` ejecuta la simulación sin abrir ventanas Qt y escribe `timeseries.csv` y `summary.json` en la carpeta indicada por `--out`.
+El modo `--headless` ejecuta la simulación sin abrir ventanas Qt y escribe `timeseries.csv` y `summary.json` en la carpeta indicada por `--out`. La opción `--seed` permite repetir corridas de forma determinista y `--time-scale` permite acelerar el tiempo lógico.
+
+El archivo `timeseries.csv` registra por tick datos como unidad, enjambre, rol, tarea, posición, altitud, velocidad, batería, estado, objetivo activo, distancia al objetivo y alertas activas. El archivo `summary.json` resume escenario, distancias recorridas, batería mínima/promedio/final, tiempo por estado y conteos de alertas por tipo y severidad.
 
 ---
 
@@ -134,7 +136,7 @@ El modo `--headless` ejecuta la simulación sin abrir ventanas Qt y escribe `tim
 3. Configurar cantidad de unidades, enjambres y parámetros principales.
 4. Aplicar el escenario.
 5. Iniciar la simulación.
-6. Seleccionar una unidad en el radar.
+6. Seleccionar una unidad en el radar o desde la lista de unidades activas.
 7. Asignar una tarea temporal o control manual si es necesario.
 8. Supervisar alertas, batería y estado operativo.
 9. Pausar o reiniciar según la demostración requerida.
@@ -181,6 +183,9 @@ La versión actual del sistema incluye:
 - retorno a base y recarga simulada;
 - métricas e informes exportables;
 - modo headless para corridas reproducibles;
+- control de escala de tiempo;
+- gráficos en vivo;
+- guardado y carga de configuración de escenarios;
 - documentación académica y técnica.
 
 No incluye actualmente:

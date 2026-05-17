@@ -62,7 +62,7 @@ class ControlWindow(QMainWindow):
 
         self.panels.alerts.clear_button.clicked.connect(self.engine.clear_alert_history)
         controls.export_button.clicked.connect(self._export_report)
-        self.panels.unit_list_panel.unit_list.itemClicked.connect(
+        self.panels.unit_list_panel.unit_list.itemPressed.connect(
             lambda item: self.engine.set_selected_unit(item.data(Qt.UserRole))
         )
 
@@ -83,7 +83,7 @@ class ControlWindow(QMainWindow):
         )
 
     def _create_unit(self) -> None:
-        unit = self.engine.create_unit()
+        unit = self.engine.create_configured_unit()
         self.engine.set_selected_unit(unit.identifier)
         self.panels.parameters.active_units_spin.blockSignals(True)
         self.panels.parameters.active_units_spin.setValue(len(self.engine.units))

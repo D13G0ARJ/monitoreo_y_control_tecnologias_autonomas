@@ -82,6 +82,8 @@ Los colores ayudan a identificar roles y estados:
 | Amarillo / naranja | Advertencia |
 | Rojo | Crítico o sin batería |
 | Gris | Detenido o fuera de operación |
+| Naranja | Retorno a base |
+| Verde agua | Recargando |
 
 ### 2.13 Leyenda
 Resume el significado básico de colores y tipos de rol.
@@ -151,6 +153,11 @@ Cada enjambre muestra:
 - rol;
 - estado general.
 
+### Lista de unidades
+La pestaña `Estado` incluye una lista de unidades activas.
+
+Esta lista permite seleccionar una unidad directamente desde el Centro de Control. La lista se mantiene sincronizada con el radar y conserva la selección aunque la simulación esté actualizándose.
+
 ---
 
 ## 5. Pestaña Control
@@ -178,6 +185,17 @@ Permite elegir entre:
 | Iniciar | Activa la simulación |
 | Pausar | Detiene temporalmente la simulación |
 | Reiniciar | Restablece la simulación del escenario actual |
+| Exportar informe | Genera archivos CSV y JSON de la corrida |
+
+Al crear una unidad dentro de un escenario activo, el sistema la integra automáticamente al modo vigente. La nueva unidad recibe enjambre, rol, ruta, waypoint y distancia al objetivo.
+
+### Configuración de escenario
+La pestaña `Control` también permite:
+
+- guardar configuración;
+- cargar configuración;
+- restaurar valores del escenario;
+- recalcular rutas.
 
 ---
 
@@ -191,6 +209,7 @@ Permite elegir entre:
 | Radio de vigilancia | Tamaño del área de operación | Define límites de zona |
 | Batería baja | Umbral de advertencia | Permite monitoreo preventivo |
 | Unidades activas | Cantidad de unidades | Ajusta la escala del escenario |
+| Escala de tiempo | Multiplicador del tiempo lógico | Permite acelerar la simulación |
 | Sonido de alertas | Activa o desactiva aviso sonoro | Mejora percepción de incidencias |
 
 ---
@@ -228,11 +247,37 @@ Las alertas se generan por:
 - sin batería;
 - fuera de zona;
 - proximidad entre unidades;
-- objetivo alcanzado.
+- objetivo alcanzado;
+- retorno a base iniciado;
+- recarga completada.
 
 ---
 
-## 8. Interpretación global de la interfaz
+## 8. Pestaña Gráficos
+
+La pestaña `Gráficos` muestra métricas en vivo.
+
+Actualmente muestra:
+
+- batería promedio;
+- alertas activas.
+
+Estos datos se alimentan desde el servicio de métricas del motor. Si el entorno no tiene disponible `PySide6.QtCharts`, el panel muestra un aviso y el resto de la aplicación sigue funcionando.
+
+---
+
+## 9. Informes exportables
+
+El botón `Exportar informe` crea:
+
+- `timeseries.csv`;
+- `summary.json`.
+
+El CSV registra datos por tick y unidad. El JSON resume la corrida completa con métricas por unidad, batería, tiempo por estado y alertas.
+
+---
+
+## 10. Interpretación global de la interfaz
 
 La lectura correcta del sistema es:
 

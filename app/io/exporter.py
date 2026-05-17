@@ -4,7 +4,23 @@ import csv
 import json
 from pathlib import Path
 
-_CSV_FIELDS = ["sim_time", "unit_id", "x", "y", "battery", "state"]
+_CSV_FIELDS = [
+    "sim_time",
+    "unit_id",
+    "swarm_id",
+    "role",
+    "task",
+    "x",
+    "y",
+    "altitude",
+    "speed",
+    "battery",
+    "state",
+    "target_x",
+    "target_y",
+    "distance_to_target",
+    "active_alerts",
+]
 
 
 def export_run(out_dir: str | Path, timeseries_rows: list[dict[str, object]],

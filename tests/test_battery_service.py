@@ -75,3 +75,18 @@ def test_engine_full_rtb_cycle_restores_mission():
     # battery was set to RECHARGE_FULL inside evaluate, then may drain one tick — still very high
     assert unit.battery > settings.RECHARGE_FULL * 0.95, f"expected near-full battery after recharge, got {unit.battery}"
     assert unit.route, "patrol mission should be restored after recharge"
+
+
+def test_returning_unit_keeps_nominal_speed_even_when_battery_is_critical():
+    from app.simulation.simulation_engine import SimulationEngine
+
+    engine = SimulationEngine()
+    unit = engine.create_unit()
+    unit.battery = settings.CRITICAL_BATTERY_THRESHOLD
+    unit.is_returning = True
+    unit.nominal_speed = 60.0
+    unit.speed = 1.0
+
+    engine._apply_battery_speed_policy(unit)
+
+    assert unit.speed == 60.0

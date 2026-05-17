@@ -161,7 +161,7 @@ SCENARIO_CONFIG = {
     SCENARIO_ZONE_PROTECTION: {
         "description": "Escenario centrado en supervisión perimetral continua alrededor de una zona estratégica protegida.",
         "mode": MODE_DEFENSIVE,
-        "units": 6,
+        "units": 8,
         "swarms": 1,
         "distribution": DISTRIBUTION_AUTO,
         "max_speed": MAX_SPEED,
@@ -175,7 +175,7 @@ SCENARIO_CONFIG = {
     SCENARIO_RECON_AREA: {
         "description": "Escenario orientado al reconocimiento secuencial de puntos de observación sobre un área de interés.",
         "mode": MODE_RECON,
-        "units": 5,
+        "units": 7,
         "swarms": 1,
         "distribution": DISTRIBUTION_AUTO,
         "max_speed": 70.0,
@@ -189,7 +189,7 @@ SCENARIO_CONFIG = {
     SCENARIO_COMBINED: {
         "description": "Escenario combinado donde un grupo mantiene vigilancia perimetral mientras otro ejecuta reconocimiento secuencial.",
         "mode": MODE_MIXED,
-        "units": 7,
+        "units": 10,
         "swarms": 2,
         "distribution": DISTRIBUTION_HALF,
         "max_speed": 75.0,
