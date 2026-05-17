@@ -156,8 +156,8 @@ class ControlWindow(QMainWindow):
         self._update_control_states()
 
     def _refresh_alerts(self) -> None:
-        alert_items = [
-            {
+        def _to_dict(alert):
+            return {
                 "timestamp": alert.timestamp,
                 "unit_id": alert.unit_id,
                 "swarm_id": alert.swarm_id,
@@ -165,9 +165,11 @@ class ControlWindow(QMainWindow):
                 "severity": alert.severity,
                 "prefix": alert.prefix,
             }
-            for alert in self.engine.recent_alerts[:10]
-        ]
+
+        alert_items = [_to_dict(a) for a in self.engine.recent_alerts[:10]]
         self.panels.alerts.update_alerts(alert_items, self.engine.active_alert_count)
+        history_items = [_to_dict(a) for a in self.engine.recent_alerts]
+        self.panels.alerts.update_history(history_items)
 
     def _update_control_states(self) -> None:
         controls = self.panels.controls

@@ -467,9 +467,17 @@ class AlertsPanel(QGroupBox):
         header.addStretch(1)
         header.addWidget(self.clear_button)
 
+        history_title = QLabel("Historial completo")
+        history_title.setProperty("role", "title")
+        self.history_list = QListWidget()
+        self.history_list.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
+        self.history_list.setAlternatingRowColors(True)
+
         layout = QVBoxLayout()
         layout.addLayout(header)
         layout.addWidget(self.list_widget)
+        layout.addWidget(history_title)
+        layout.addWidget(self.history_list, 1)
         self.setLayout(layout)
 
     def update_alerts(self, alerts: list[dict[str, str]], active_count: int) -> None:
@@ -497,6 +505,13 @@ class AlertsPanel(QGroupBox):
                 item.setForeground(QColor(settings.COLOR_OBSERVATION))
                 item.setBackground(QColor(settings.COLOR_ALERT_BG_INFO))
             self.list_widget.addItem(item)
+
+    def update_history(self, alert_items: list) -> None:
+        self.history_list.clear()
+        for a in alert_items:
+            self.history_list.addItem(
+                f"[{a['timestamp']}] {a['prefix']} {a['unit_id']}: {a['message']}"
+            )
 
 
 class UnitListPanel(QGroupBox):
