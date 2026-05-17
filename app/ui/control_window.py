@@ -28,6 +28,11 @@ class ControlWindow(QMainWindow):
         self._refresh_ui()
         self.statusBar().showMessage("Centro de control listo.")
 
+        from PySide6.QtGui import QKeySequence, QShortcut
+        QShortcut(QKeySequence("Space"), self, activated=self._toggle_run)
+        QShortcut(QKeySequence("R"), self, activated=self._reset_simulation)
+        QShortcut(QKeySequence("A"), self, activated=self._request_assign_mode)
+
     def _connect_signals(self) -> None:
         controls = self.panels.controls
         controls.create_button.clicked.connect(self._create_unit)
@@ -105,6 +110,12 @@ class ControlWindow(QMainWindow):
     def _reset_simulation(self) -> None:
         self.engine.reset()
         self.statusBar().showMessage("Simulación reiniciada.")
+
+    def _toggle_run(self) -> None:
+        if self.engine.is_running:
+            self._pause_simulation()
+        else:
+            self._start_simulation()
 
     def _change_mode(self, mode: str) -> None:
         if not self.engine.units:

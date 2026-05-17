@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from PySide6.QtCore import Qt, Signal
+from PySide6.QtGui import QKeySequence, QShortcut
 from PySide6.QtWidgets import QMainWindow
 
 from app.config import settings
@@ -25,6 +26,8 @@ class RadarOperationalWindow(QMainWindow):
         self.radar_view.waypoint_requested.connect(self.waypoint_requested.emit)
         self.engine.updated.connect(self._refresh_ui)
         self.engine.selection_changed.connect(self._sync_selection)
+
+        QShortcut(QKeySequence("Escape"), self, activated=lambda: self.radar_view.set_waypoint_assignment_enabled(False))
 
         self.statusBar().showMessage("Radar operativo listo.")
         self._refresh_ui()
