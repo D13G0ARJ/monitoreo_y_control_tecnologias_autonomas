@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from math import cos, radians, sin
 
-from PySide6.QtCore import QPointF, Qt, QTimer, Signal
-from PySide6.QtGui import QColor, QPainter, QPainterPath, QPen, QBrush, QPolygonF
+from PySide6.QtCore import QPointF, QRectF, Qt, QTimer, Signal
+from PySide6.QtGui import QColor, QPainter, QPainterPath, QPen, QBrush, QPolygonF, QRadialGradient
 from PySide6.QtWidgets import QGraphicsPathItem, QGraphicsScene, QGraphicsTextItem, QGraphicsView
 
 from app.config import settings
@@ -106,6 +106,20 @@ class RadarView(QGraphicsView):
             if item.scene() is self._scene:
                 self._scene.removeItem(item)
 
+    def _add_overlay_rect(self, x: float, y: float, width: float, height: float, radius: float):
+        bg_color = QColor(settings.COLOR_PANEL_ALT)
+        bg_color.setAlpha(210)
+        border_color = QColor(settings.COLOR_BORDER)
+        border_color.setAlpha(155)
+        path = QPainterPath()
+        path.addRoundedRect(QRectF(x, y, width, height), radius, radius)
+        item = QGraphicsPathItem(path)
+        item.setPen(QPen(border_color))
+        item.setBrush(QBrush(bg_color))
+        item.setZValue(19)
+        self._scene.addItem(item)
+        return item
+
     def _sync_unit_item(self, unit: AutonomousUnit) -> None:
         radius = settings.RADAR_UNIT_RADIUS
         selected = unit.identifier == self._selected_unit_id
@@ -134,9 +148,10 @@ class RadarView(QGraphicsView):
             ring.setZValue(9)
             ring.setVisible(selected)
 
-            label = QGraphicsTextItem(f"{unit.identifier} {self._role_suffix(unit)}")
-            label.setDefaultTextColor(QColor(settings.COLOR_SELECTED if selected else settings.COLOR_TEXT))
-            label.setScale(1.08 if selected else 1.02)
+            label = QGraphicsTextItem(self._unit_label_text(unit, selected))
+            label.setDefaultTextColor(QColor(settings.COLOR_SELECTED if selected else settings.COLOR_MUTED))
+            label.setOpacity(1.0 if selected else 0.82)
+            label.setScale(1.08 if selected else 0.92)
             label.setPos(unit.x + 12, unit.y - 28)
             label.setData(0, unit.identifier)
             label.setZValue(11)
@@ -164,9 +179,10 @@ class RadarView(QGraphicsView):
             )
             ring.setVisible(selected)
 
-            label.setPlainText(f"{unit.identifier} {self._role_suffix(unit)}")
-            label.setDefaultTextColor(QColor(settings.COLOR_SELECTED if selected else settings.COLOR_TEXT))
-            label.setScale(1.08 if selected else 1.02)
+            label.setPlainText(self._unit_label_text(unit, selected))
+            label.setDefaultTextColor(QColor(settings.COLOR_SELECTED if selected else settings.COLOR_MUTED))
+            label.setOpacity(1.0 if selected else 0.82)
+            label.setScale(1.08 if selected else 0.92)
             label.setPos(unit.x + 12, unit.y - 28)
 
     def drawBackground(self, painter: QPainter, rect) -> None:  # type: ignore[override]
@@ -174,16 +190,36 @@ class RadarView(QGraphicsView):
         painter.setRenderHint(QPainter.Antialiasing, True)
 
         center = QPointF(0.0, 0.0)
+        gradient = QRadialGradient(center, self._display_zone_radius + 120)
+        gradient.setColorAt(0.0, QColor("#0d252a"))
+        gradient.setColorAt(0.62, QColor(settings.COLOR_BACKGROUND))
+        gradient.setColorAt(1.0, QColor("#030b0d"))
+        painter.fillRect(rect, QBrush(gradient))
+
         grid_pen = QPen(QColor(settings.COLOR_GRID))
         grid_pen.setWidth(1)
-        painter.setPen(grid_pen)
 
         for ring_index in range(1, settings.RADAR_CONCENTRIC_RINGS + 1):
             radius = (self._display_zone_radius / settings.RADAR_CONCENTRIC_RINGS) * ring_index
+            grid_color = QColor(settings.COLOR_GRID)
+            grid_color.setAlpha(88 if ring_index < settings.RADAR_CONCENTRIC_RINGS else 132)
+            grid_pen.setColor(grid_color)
+            painter.setPen(grid_pen)
             painter.drawEllipse(center, radius, radius)
 
+        axis_color = QColor(settings.COLOR_GRID)
+        axis_color.setAlpha(118)
+        grid_pen.setColor(axis_color)
+        painter.setPen(grid_pen)
         painter.drawLine(-self._display_zone_radius, 0, self._display_zone_radius, 0)
         painter.drawLine(0, -self._display_zone_radius, 0, self._display_zone_radius)
+
+        glow_color = QColor(settings.COLOR_SWEEP_GLOW)
+        glow_color.setAlpha(70)
+        glow_pen = QPen(glow_color)
+        glow_pen.setWidth(6)
+        painter.setPen(glow_pen)
+        painter.drawEllipse(center, self._display_zone_radius, self._display_zone_radius)
 
         zone_pen = QPen(QColor(settings.COLOR_ZONE))
         zone_pen.setWidth(2)
@@ -290,7 +326,8 @@ class RadarView(QGraphicsView):
 
             protected_label = QGraphicsTextItem("Zona estratégica")
             protected_label.setDefaultTextColor(QColor(settings.COLOR_ZONE_PROTECTED))
-            protected_label.setPos(-54, -12)
+            protected_label.setOpacity(0.82)
+            protected_label.setPos(-56, protected_radius + 8)
             protected_label.setZValue(3)
             self._scene.addItem(protected_label)
             self._static_items.append(protected_label)
@@ -415,6 +452,11 @@ class RadarView(QGraphicsView):
             return f"[{swarm_tag}-M]"
         return ""
 
+    def _unit_label_text(self, unit: AutonomousUnit, selected: bool) -> str:
+        if selected:
+            return f"{unit.identifier} {self._role_suffix(unit)}"
+        return unit.identifier
+
     def _advance_sweep(self) -> None:
         self._sweep_angle = (self._sweep_angle + settings.RADAR_SWEEP_STEP_DEGREES) % 360.0
         self.viewport().update()
@@ -427,6 +469,14 @@ class RadarView(QGraphicsView):
         ]
         origin_x = self._display_zone_radius - 135
         origin_y = self._display_zone_radius - 72
+        background = self._add_overlay_rect(
+            origin_x - 12,
+            origin_y - 12,
+            132,
+            70,
+            8,
+        )
+        self._static_items.append(background)
 
         for index, (label, color) in enumerate(legend_items):
             y = origin_y + (index * 18)
@@ -449,10 +499,19 @@ class RadarView(QGraphicsView):
         ]
         origin_x = -self._display_zone_radius + 12
         origin_y = -self._display_zone_radius + 8
+        background = self._add_overlay_rect(
+            origin_x - 12,
+            origin_y - 8,
+            225,
+            86,
+            9,
+        )
+        self._dynamic_items.append(background)
 
         for index, text_value in enumerate(hud_items):
             label = QGraphicsTextItem(text_value)
             label.setDefaultTextColor(QColor(settings.COLOR_TEXT if index == 0 else settings.COLOR_MUTED))
+            label.setScale(1.02 if index == 0 else 0.94)
             label.setPos(origin_x, origin_y + (index * 19))
             label.setZValue(20)
             self._scene.addItem(label)

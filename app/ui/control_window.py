@@ -44,6 +44,10 @@ class ControlWindow(QMainWindow):
 
         scenario_panel = self.panels.scenario
         scenario_panel.scenario_selector.activated.connect(self._handle_scenario_selection)
+        scenario_panel.save_config_button.clicked.connect(self._save_config)
+        scenario_panel.load_config_button.clicked.connect(self._load_config)
+        scenario_panel.restore_config_button.clicked.connect(self._restore_scenario_defaults)
+        scenario_panel.recalculate_routes_button.clicked.connect(self._recalculate_routes)
 
         params = self.panels.parameters
         params.max_speed_spin.valueChanged.connect(self.engine.update_max_speed)
@@ -164,8 +168,13 @@ class ControlWindow(QMainWindow):
         self.panels.global_status.update_status(self.engine.get_global_status())
         self.panels.swarm_status.update_summaries(self.engine.get_swarm_summaries())
         self.panels.scenario.set_description(self.engine.current_scenario_description)
+        self.panels.scenario.set_config_state(
+            self.engine.get_scenario_source_label(),
+            self.engine.get_active_config_summary(),
+        )
         self._refresh_alerts()
         self._update_control_states()
+        self.panels.charts_panel.update_charts(self.engine.metrics.battery_window, self.engine.metrics.alert_window)
 
     def _refresh_alerts(self) -> None:
         def _to_dict(alert):
@@ -193,6 +202,8 @@ class ControlWindow(QMainWindow):
         controls.pause_button.setEnabled(has_units and self.engine.is_running)
         controls.reset_button.setEnabled(has_units)
         controls.export_button.setEnabled(has_units)
+        self.panels.scenario.restore_config_button.setEnabled(self.engine.active_scenario_profile is not None)
+        self.panels.scenario.recalculate_routes_button.setEnabled(has_units)
 
     def _handle_alerts_updated(self, new_alerts: list[Alert]) -> None:
         self._refresh_alerts()
@@ -257,6 +268,56 @@ class ControlWindow(QMainWindow):
         summary = self.engine.metrics.build_summary(self.engine.get_global_status())
         paths = export_run(directory, self.engine.metrics.timeseries_rows(), summary)
         self.statusBar().showMessage(f"Informe exportado en {paths['timeseries']}")
+
+    def _save_config(self) -> None:
+        from PySide6.QtWidgets import QFileDialog
+        from app.io.scenario_io import save_scenario_config
+        from app.services.scenario_service import ScenarioApplicationConfig
+        path, _ = QFileDialog.getSaveFileName(self, "Guardar configuración", "escenario.json", "JSON (*.json)")
+        if not path:
+            return
+        cfg = ScenarioApplicationConfig(
+            scenario_name=self.engine.current_scenario_name,
+            unit_count=self.engine.configured_unit_count,
+            swarm_count=self.engine.current_swarm_count,
+            distribution=self.engine.current_distribution,
+            use_existing_units=False,
+            mode=self.engine.mode,
+            max_speed=self.engine.max_speed,
+            target_altitude=self.engine.target_altitude,
+            zone_radius=self.engine.zone_radius,
+            min_separation=self.engine.min_separation,
+            low_battery_threshold=self.engine.low_battery_threshold,
+            protected_radius=float(self.engine.current_scenario_visuals.get("protected_radius", 0.0)),
+            observation_points=list(self.engine.current_scenario_visuals.get("observation_points", [])),
+            auto_start=False)
+        save_scenario_config(path, cfg)
+        self.statusBar().showMessage(f"Configuración guardada: {path}")
+
+    def _load_config(self) -> None:
+        from PySide6.QtWidgets import QFileDialog
+        from app.io.scenario_io import load_scenario_config
+        path, _ = QFileDialog.getOpenFileName(self, "Cargar configuración", "", "JSON (*.json)")
+        if not path:
+            return
+        cfg = load_scenario_config(path)
+        message = self.engine.apply_loaded_scenario_configuration(cfg)
+        self._sync_parameters_from_engine()
+        self._sync_mode_selector()
+        self._refresh_ui()
+        self.statusBar().showMessage(message)
+
+    def _restore_scenario_defaults(self) -> None:
+        message = self.engine.restore_active_scenario_profile()
+        self._sync_parameters_from_engine()
+        self._sync_mode_selector()
+        self._refresh_ui()
+        self.statusBar().showMessage(f"{message} Valores del escenario restaurados.")
+
+    def _recalculate_routes(self) -> None:
+        self.engine.recalculate_routes()
+        self._refresh_ui()
+        self.statusBar().showMessage("Rutas recalculadas con el radio de vigilancia actual.")
 
     def _sync_mode_selector(self) -> None:
         self.panels.controls.mode_selector.blockSignals(True)

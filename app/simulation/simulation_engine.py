@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import random
+from dataclasses import replace
 from math import cos, hypot, pi, sin
 
 from PySide6.QtCore import QObject, QTimer, Signal
@@ -45,6 +46,9 @@ class SimulationEngine(QObject):
         self.current_swarm_count = 1
         self.current_distribution = "Automática"
         self.configured_unit_count = settings.DEFAULT_ACTIVE_UNITS
+        self.scenario_config_source = settings.SCENARIO_SOURCE_PREDEFINED
+        self.scenario_config_dirty = False
+        self.active_scenario_profile: ScenarioApplicationConfig | None = None
         self._next_unit_number = 1
         self._next_waypoint_number = 1
 
@@ -54,6 +58,7 @@ class SimulationEngine(QObject):
         self._swarm_service = SwarmService()
         self._scenario_service = ScenarioService(self._swarm_service)
         self._battery_service = BatteryService()
+        self.active_scenario_profile = self._scenario_service.profile_for(self.current_scenario_name)
         self.time_scale: int = settings.DEFAULT_TIME_SCALE
         self._timer = QTimer(self)
         self._timer.setInterval(settings.SIMULATION_INTERVAL_MS)
@@ -113,6 +118,7 @@ class SimulationEngine(QObject):
 
     def set_mode(self, mode: str) -> None:
         self.mode = mode
+        self._mark_scenario_config_dirty()
         self._mode_service.apply_mode(mode, list(self.units.values()), self.zone_radius)
         for unit in self.units.values():
             unit.altitude = self.target_altitude
@@ -172,10 +178,7 @@ class SimulationEngine(QObject):
 
     def configure_scenario_from_dialog(self, dialog_result) -> str:
         config = self._scenario_service.from_dialog(dialog_result)
-        self.current_swarm_count = config.swarm_count
-        self.current_distribution = config.distribution
-        self.configured_unit_count = config.unit_count
-        return self._scenario_service.apply(self, config)
+        return self._apply_scenario_configuration(config, source=settings.SCENARIO_SOURCE_PREDEFINED)
 
     def start(self) -> None:
         self.is_running = True
@@ -221,7 +224,7 @@ class SimulationEngine(QObject):
                 swarm_count=self.current_swarm_count,
                 distribution=self.current_distribution,
             )
-            self.apply_mode_configuration(self.current_scenario_name)
+            self.apply_mode_configuration()
         self.updated.emit()
 
     def clear_alert_history(self) -> None:
@@ -236,6 +239,7 @@ class SimulationEngine(QObject):
 
     def update_max_speed(self, value: float) -> None:
         self.max_speed = value
+        self._mark_scenario_config_dirty()
         for unit in self.units.values():
             unit.nominal_speed = min(unit.nominal_speed, self.max_speed)
             unit.speed = min(unit.speed, self.max_speed)
@@ -243,6 +247,7 @@ class SimulationEngine(QObject):
 
     def update_target_altitude(self, value: float) -> None:
         self.target_altitude = value
+        self._mark_scenario_config_dirty()
         for unit in self.units.values():
             unit.altitude = value
             if unit.waypoint is not None:
@@ -253,18 +258,23 @@ class SimulationEngine(QObject):
 
     def update_min_separation(self, value: float) -> None:
         self.min_separation = value
+        self._mark_scenario_config_dirty()
         self.updated.emit()
 
     def update_zone_radius(self, value: float) -> None:
         self.zone_radius = value
+        self._mark_scenario_config_dirty()
         self.current_scenario_visuals["zone_radius"] = value
+        self.recalculate_routes()
         self.updated.emit()
 
     def update_low_battery_threshold(self, value: float) -> None:
         self.low_battery_threshold = value
+        self._mark_scenario_config_dirty()
         self.updated.emit()
 
     def update_active_unit_target(self, value: int) -> None:
+        self._mark_scenario_config_dirty()
         self.ensure_unit_count(value)
         self.configured_unit_count = value
         if self.units:
@@ -274,11 +284,25 @@ class SimulationEngine(QObject):
                 swarm_count=self.current_swarm_count,
                 distribution=self.current_distribution,
             )
-            self.apply_mode_configuration(self.current_scenario_name)
+            self.apply_mode_configuration()
+
+    def recalculate_routes(self) -> None:
+        if not self.units:
+            return
+        self.prepare_units_for_scenario()
+        self._mode_service.apply_mode(self.mode, list(self.units.values()), self.zone_radius)
+
+    def restore_active_scenario_profile(self) -> str:
+        if self.active_scenario_profile is None:
+            self.active_scenario_profile = self._scenario_service.profile_for(self.current_scenario_name)
+        profile = replace(self.active_scenario_profile, auto_start=False)
+        return self._apply_scenario_configuration(profile, source=self.scenario_config_source)
 
     def get_global_status(self) -> dict[str, str]:
         return {
             "scenario": self.current_scenario_name,
+            "config_source": self.get_scenario_source_label(),
+            "active_config": self.get_active_config_summary(),
             "description": self.current_scenario_description,
             "mode": self.mode,
             "units": str(len(self.units)),
@@ -301,7 +325,39 @@ class SimulationEngine(QObject):
         return self._scenario_service.build_dialog_defaults(self, scenario_name)
 
     def apply_scenario_configuration(self, config: ScenarioApplicationConfig) -> str:
-        return self._scenario_service.apply(self, config)
+        return self._apply_scenario_configuration(config, source=settings.SCENARIO_SOURCE_FILE)
+
+    def apply_scenario_profile(self, scenario_name: str, *, auto_start: bool = False) -> str:
+        config = self._scenario_service.profile_for(scenario_name, auto_start=auto_start)
+        return self._apply_scenario_configuration(config, source=settings.SCENARIO_SOURCE_PREDEFINED)
+
+    def apply_loaded_scenario_configuration(self, config: ScenarioApplicationConfig) -> str:
+        return self._apply_scenario_configuration(config, source=settings.SCENARIO_SOURCE_FILE)
+
+    def get_scenario_source_label(self) -> str:
+        if self.scenario_config_dirty:
+            return settings.SCENARIO_SOURCE_MANUAL
+        return self.scenario_config_source
+
+    def get_active_config_summary(self) -> str:
+        return (
+            f"{self.current_scenario_name} | {self.mode} | "
+            f"{self.configured_unit_count} unidades | {self.current_swarm_count} enjambre(s) | "
+            f"{self.max_speed:0.1f} u/s | {self.target_altitude:0.1f} m | "
+            f"radio {self.zone_radius:0.1f} u | separación {self.min_separation:0.1f} u | "
+            f"batería baja {self.low_battery_threshold:0.1f}%"
+        )
+
+    def _apply_scenario_configuration(self, config: ScenarioApplicationConfig, *, source: str) -> str:
+        normalized = self._scenario_service.normalize_config(config)
+        self.active_scenario_profile = normalized
+        self.scenario_config_source = source
+        self.scenario_config_dirty = False
+        return self._scenario_service.apply(self, normalized)
+
+    def _mark_scenario_config_dirty(self) -> None:
+        if self.active_scenario_profile is not None:
+            self.scenario_config_dirty = True
 
     @property
     def active_alert_count(self) -> int:

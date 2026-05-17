@@ -68,6 +68,9 @@ No está orientado a:
 - Batería, velocidad, posición, distancia al objetivo y rol.
 - Alertas con severidad `INFO`, `WARN` y `CRIT`.
 - Sonido opcional de alertas.
+- Retorno automático a base por batería baja y recarga simulada.
+- Exportación de informes en CSV/JSON.
+- Ejecución headless determinista para pruebas de regresión.
 
 ---
 
@@ -91,48 +94,37 @@ tesis/
 │  └─ ui/
 ├─ docs/
 ├─ requirements.txt
-├─ run.bat
-├─ run.ps1
 └─ README.md
 ```
 
 ---
 
 ## Requisitos
-- Python 3.11 o superior recomendado
+- Python 3.12 recomendado
+- uv (manejo de entornos y dependencias)
 - PySide6
-- Windows PowerShell o terminal compatible para los scripts de arranque
+- Terminal Bash o PowerShell
 
 ---
 
 ## Instalación
+Consulta la guía de setup para los pasos detallados en Linux y Windows:
 
-### Opción 1. Instalación manual
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-python main.py
+- [Setup de desarrollo](docs/setup-dev.md)
+
+---
+
+## Comandos principales
+```bash
+./setup.sh
+./run.sh
+./test.sh
+uv run python main.py
+uv run python main.py --headless --scenario "Protección de zona estratégica" --duration 30 --seed 1 --out run_output
+uv run --group dev ruff check app tests
 ```
 
-### Opción 2. Ejecución rápida recomendada
-Sin activar manualmente el entorno:
-
-```powershell
-.\run.bat
-```
-
-Si deseas forzar reinstalación de dependencias:
-
-```powershell
-.\run.bat --reinstall
-```
-
-También puedes usar:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\run.ps1
-```
+El modo `--headless` ejecuta la simulación sin abrir ventanas Qt y escribe `timeseries.csv` y `summary.json` en la carpeta indicada por `--out`.
 
 ---
 
@@ -166,6 +158,7 @@ El repositorio incluye documentación académica y operativa en la carpeta [`doc
 - [Manual de usuario](docs/manual_usuario.md)
 - [Descripción de módulos](docs/descripcion_modulos.md)
 - [Defensa](docs/defensa.md)
+- [Setup de desarrollo](docs/setup-dev.md)
 
 ### Uso recomendado de la documentación
 - Si deseas entender el sistema desde cero: comienza por `sistema_general.md`.
@@ -185,12 +178,14 @@ La versión actual del sistema incluye:
 - enjambres simples;
 - alertas;
 - batería y estados operativos;
+- retorno a base y recarga simulada;
+- métricas e informes exportables;
+- modo headless para corridas reproducibles;
 - documentación académica y técnica.
 
 No incluye actualmente:
 
 - base de datos;
-- exportación de reportes;
 - mapas reales;
 - hardware real;
 - comunicación real entre unidades;

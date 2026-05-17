@@ -38,6 +38,10 @@ MAX_TRAJECTORY_POINTS = 80
 SPAWN_MIN_DISTANCE = 35.0
 DEFAULT_ACTIVE_UNITS = 6
 
+SCENARIO_SOURCE_PREDEFINED = "Escenario predefinido"
+SCENARIO_SOURCE_FILE = "Archivo cargado"
+SCENARIO_SOURCE_MANUAL = "Modificado manualmente"
+
 # Movement / behavior tunables (extracted from inline literals)
 BATTERY_DRAIN_DT_SCALE = 10.0
 SEPARATION_CORRECTION_GAIN = 0.12
@@ -103,18 +107,18 @@ SEVERITY_INFO = "informativa"
 SEVERITY_WARN = "advertencia"
 SEVERITY_CRIT = "crítica"
 
-COLOR_BACKGROUND = "#071419"
-COLOR_BACKGROUND_ALT = "#0b1c24"
-COLOR_PANEL = "#10222b"
-COLOR_PANEL_ALT = "#0c1b22"
-COLOR_BORDER = "#1f4f57"
-COLOR_TEXT = "#d7f7f2"
-COLOR_MUTED = "#7ab4ae"
-COLOR_GRID = "#1d5a50"
-COLOR_ZONE = "#1bb58d"
-COLOR_SWEEP = "#7af7d0"
-COLOR_SWEEP_GLOW = "#32c39c"
-COLOR_TRAJECTORY = "#57d6c2"
+COLOR_BACKGROUND = "#071316"
+COLOR_BACKGROUND_ALT = "#0d1d22"
+COLOR_PANEL = "#10262c"
+COLOR_PANEL_ALT = "#0b1b20"
+COLOR_BORDER = "#245760"
+COLOR_TEXT = "#e3f7f4"
+COLOR_MUTED = "#8bb9b4"
+COLOR_GRID = "#1f625a"
+COLOR_ZONE = "#1fc89d"
+COLOR_SWEEP = "#8bf8db"
+COLOR_SWEEP_GLOW = "#35d4aa"
+COLOR_TRAJECTORY = "#60d9cc"
 COLOR_WAYPOINT = "#ffc857"
 COLOR_SELECTED = "#f4f1bb"
 COLOR_ALERT = "#ff6b6b"
@@ -158,7 +162,13 @@ SCENARIO_CONFIG = {
         "description": "Escenario centrado en supervisión perimetral continua alrededor de una zona estratégica protegida.",
         "mode": MODE_DEFENSIVE,
         "units": 6,
+        "swarms": 1,
+        "distribution": DISTRIBUTION_AUTO,
+        "max_speed": MAX_SPEED,
+        "target_altitude": DEFAULT_ALTITUDE,
         "zone_radius": 320.0,
+        "min_separation": DEFAULT_MIN_SEPARATION,
+        "low_battery_threshold": DEFAULT_LOW_BATTERY_THRESHOLD,
         "protected_radius": 95.0,
         "observation_points": [(-120.0, -140.0), (120.0, -140.0), (0.0, 180.0)],
     },
@@ -166,7 +176,13 @@ SCENARIO_CONFIG = {
         "description": "Escenario orientado al reconocimiento secuencial de puntos de observación sobre un área de interés.",
         "mode": MODE_RECON,
         "units": 5,
+        "swarms": 1,
+        "distribution": DISTRIBUTION_AUTO,
+        "max_speed": 70.0,
+        "target_altitude": 180.0,
         "zone_radius": 320.0,
+        "min_separation": DEFAULT_MIN_SEPARATION,
+        "low_battery_threshold": DEFAULT_LOW_BATTERY_THRESHOLD,
         "protected_radius": 70.0,
         "observation_points": [(-180.0, -120.0), (180.0, -40.0), (-150.0, 70.0), (150.0, 160.0)],
     },
@@ -174,7 +190,13 @@ SCENARIO_CONFIG = {
         "description": "Escenario combinado donde un grupo mantiene vigilancia perimetral mientras otro ejecuta reconocimiento secuencial.",
         "mode": MODE_MIXED,
         "units": 7,
+        "swarms": 2,
+        "distribution": DISTRIBUTION_HALF,
+        "max_speed": 75.0,
+        "target_altitude": 160.0,
         "zone_radius": 320.0,
+        "min_separation": 42.0,
+        "low_battery_threshold": DEFAULT_LOW_BATTERY_THRESHOLD,
         "protected_radius": 85.0,
         "observation_points": [(-180.0, -120.0), (180.0, -30.0), (-170.0, 85.0), (170.0, 160.0)],
     },
@@ -190,11 +212,14 @@ QWidget {{
     font-family: "Segoe UI";
     font-size: 12px;
 }}
+QLabel {{
+    background-color: transparent;
+}}
 QGroupBox {{
     border: 1px solid {COLOR_BORDER};
-    border-radius: 10px;
+    border-radius: 8px;
     margin-top: 12px;
-    padding: 12px;
+    padding: 12px 10px 10px 10px;
     background-color: {COLOR_PANEL};
 }}
 QGroupBox::title {{
@@ -206,15 +231,36 @@ QGroupBox::title {{
 QPushButton {{
     background-color: {COLOR_PANEL_ALT};
     border: 1px solid {COLOR_BORDER};
-    border-radius: 6px;
+    border-radius: 7px;
     padding: 9px 12px;
     font-weight: 600;
 }}
 QPushButton:hover {{
     border-color: {COLOR_ZONE};
+    background-color: {COLOR_BACKGROUND_ALT};
 }}
 QPushButton:pressed {{
     background-color: {COLOR_BORDER};
+}}
+QPushButton[variant="primary"] {{
+    background-color: {COLOR_ZONE};
+    border-color: {COLOR_ZONE};
+    color: #06211c;
+}}
+QPushButton[variant="primary"]:hover {{
+    background-color: {COLOR_SWEEP};
+    border-color: {COLOR_SWEEP};
+}}
+QPushButton[variant="warning"] {{
+    border-color: {COLOR_WARNING};
+    color: {COLOR_WARNING};
+}}
+QPushButton[variant="danger"] {{
+    border-color: {COLOR_ALERT};
+    color: {COLOR_ALERT};
+}}
+QPushButton[variant="utility"] {{
+    color: {COLOR_OBSERVATION};
 }}
 QPushButton:disabled {{
     color: {COLOR_MUTED};
@@ -224,21 +270,21 @@ QPushButton:disabled {{
 QComboBox, QListWidget, QProgressBar {{
     background-color: {COLOR_PANEL_ALT};
     border: 1px solid {COLOR_BORDER};
-    border-radius: 6px;
+    border-radius: 7px;
     padding: 6px;
 }}
 QTabWidget::pane {{
     border: 1px solid {COLOR_BORDER};
-    border-radius: 8px;
-    background-color: {COLOR_PANEL};
+    border-radius: 9px;
+    background-color: {COLOR_BACKGROUND_ALT};
 }}
 QTabBar::tab {{
     background-color: {COLOR_PANEL_ALT};
     color: {COLOR_TEXT};
-    padding: 8px 14px;
-    margin-right: 4px;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+    padding: 9px 14px;
+    margin-right: 3px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
 }}
 QTabBar::tab:selected {{
     background-color: {COLOR_PANEL};
@@ -252,10 +298,30 @@ QScrollArea {{
 QScrollArea > QWidget > QWidget {{
     background-color: {COLOR_BACKGROUND};
 }}
+QScrollBar:vertical {{
+    background-color: {COLOR_BACKGROUND_ALT};
+    width: 10px;
+    margin: 0;
+}}
+QScrollBar::handle:vertical {{
+    background-color: {COLOR_BORDER};
+    border-radius: 5px;
+    min-height: 36px;
+}}
+QScrollBar::handle:vertical:hover {{
+    background-color: {COLOR_ZONE};
+}}
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {{
+    height: 0;
+    background: none;
+}}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {{
+    background: none;
+}}
 QSpinBox, QDoubleSpinBox, QTextEdit {{
     background-color: {COLOR_PANEL_ALT};
     border: 1px solid {COLOR_BORDER};
-    border-radius: 6px;
+    border-radius: 7px;
     padding: 5px;
 }}
 QCheckBox {{
@@ -266,6 +332,16 @@ QComboBox::drop-down {{
 }}
 QLabel[role="value"] {{
     color: {COLOR_OK};
+    font-weight: 600;
+}}
+QLabel[role="metricValue"] {{
+    color: {COLOR_OK};
+    font-size: 13px;
+    font-weight: 700;
+}}
+QLabel[role="metricLabel"] {{
+    color: {COLOR_MUTED};
+    font-size: 11px;
     font-weight: 600;
 }}
 QLabel[role="field"] {{
@@ -280,6 +356,18 @@ QLabel[role="title"] {{
 QLabel[role="empty"] {{
     color: {COLOR_MUTED};
     font-style: italic;
+}}
+QFrame#metricCard {{
+    background-color: {COLOR_PANEL_ALT};
+    border: 1px solid #214a51;
+    border-radius: 8px;
+    padding: 8px;
+}}
+QFrame#swarmCard {{
+    background-color: {COLOR_PANEL_ALT};
+    border: 1px solid #214a51;
+    border-radius: 8px;
+    padding: 8px;
 }}
 QLabel[role="statusBadge"] {{
     border: 1px solid {COLOR_BORDER};
@@ -299,11 +387,16 @@ QProgressBar::chunk {{
 QListWidget {{
     outline: none;
     padding: 4px;
+    alternate-background-color: {COLOR_BACKGROUND_ALT};
 }}
 QListWidget::item {{
     margin: 3px 0;
     padding: 8px;
-    border-radius: 6px;
+    border-radius: 7px;
+}}
+QListWidget::item:selected {{
+    background-color: #173b42;
+    color: {COLOR_TEXT};
 }}
 QTextEdit {{
     color: {COLOR_TEXT};

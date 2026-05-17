@@ -1,0 +1,29 @@
+{
+  "scenario_name": "Protección de zona estratégica",
+  "unit_count": 2,
+  "swarm_count": 1,
+  "distribution": "Automática",
+  "use_existing_units": false,
+  "mode": "Defensivo",
+  "max_speed": 45.0,
+  "target_altitude": 150.0,
+  "zone_radius": 240.0,
+  "min_separation": 120.0,
+  "low_battery_threshold": 20.0,
+  "protected_radius": 95.0,
+  "observation_points": [
+    [
+      -120.0,
+      -140.0
+    ],
+    [
+      120.0,
+      -140.0
+    ],
+    [
+      0.0,
+      180.0
+    ]
+  ],
+  "auto_start": false
+}
