@@ -10,6 +10,7 @@ from app.domain.alert import Alert
 from app.domain.autonomous_unit import AutonomousUnit
 from app.domain.waypoint import Waypoint
 from app.services.alert_service import AlertService
+from app.services.battery_service import BatteryService
 from app.services.mode_service import ModeService
 from app.services.scenario_service import ScenarioApplicationConfig, ScenarioService
 from app.services.swarm_service import SwarmService, SwarmSummary
@@ -50,6 +51,7 @@ class SimulationEngine(QObject):
         self._mode_service = ModeService()
         self._swarm_service = SwarmService()
         self._scenario_service = ScenarioService(self._swarm_service)
+        self._battery_service = BatteryService()
         self._timer = QTimer(self)
         self._timer.setInterval(settings.SIMULATION_INTERVAL_MS)
         self._timer.timeout.connect(self.update_simulation)
@@ -315,6 +317,41 @@ class SimulationEngine(QObject):
             reached_target = False
             self._apply_battery_speed_policy(unit)
 
+            rtb_action = self._battery_service.evaluate(unit, self.low_battery_threshold, dt)
+            if rtb_action == "rtb_start":
+                if unit.task_label != settings.TASK_TEMPORARY:
+                    unit.mission_snapshot = self._build_mission_snapshot(unit)
+                self._register_alerts([
+                    Alert(
+                        alert_type=settings.ALERT_RTB_START,
+                        unit_id=unit.identifier,
+                        swarm_id=unit.swarm_id,
+                        message=f"La unidad {unit.identifier} inició retorno a base por batería baja.",
+                        severity=settings.SEVERITY_INFO,
+                        prefix="INFO",
+                        key=f"{unit.identifier}:{settings.ALERT_RTB_START}",
+                    )
+                ])
+            elif rtb_action == "recharge_done":
+                self._restore_mission(unit)
+                self._register_alerts([
+                    Alert(
+                        alert_type=settings.ALERT_RECHARGE_DONE,
+                        unit_id=unit.identifier,
+                        swarm_id=unit.swarm_id,
+                        message=f"La unidad {unit.identifier} completó recarga y reanudó su misión.",
+                        severity=settings.SEVERITY_INFO,
+                        prefix="INFO",
+                        key=f"{unit.identifier}:{settings.ALERT_RECHARGE_DONE}",
+                    )
+                ])
+
+            if unit.is_charging:
+                unit.direction_x = 0.0
+                unit.direction_y = 0.0
+                unit.append_trajectory()
+                continue
+
             if unit.battery <= 0.0:
                 unit.direction_x = 0.0
                 unit.direction_y = 0.0
@@ -342,7 +379,9 @@ class SimulationEngine(QObject):
                     kp=settings.CONTROL_KP,
                 )
 
-            if unit.waypoint is not None and reached_target and unit.task_label == settings.TASK_TEMPORARY:
+            if unit.waypoint is not None and reached_target and unit.is_returning:
+                self._battery_service.notify_base_reached(unit)
+            elif unit.waypoint is not None and reached_target and unit.task_label == settings.TASK_TEMPORARY:
                 self._restore_mission(unit)
             elif unit.waypoint is not None and reached_target and unit.route:
                 self._mode_service.advance_unit_route(unit)
@@ -424,6 +463,8 @@ class SimulationEngine(QObject):
         self.alerts_updated.emit(alerts)
 
     def _restore_mission(self, unit: AutonomousUnit) -> None:
+        unit.is_returning = False
+        unit.is_charging = False
         if not unit.mission_snapshot:
             unit.task_label = settings.TASK_AUTOMATIC
             unit.state = settings.STATUS_OBJETIVO_ALCANZADO
@@ -468,6 +509,12 @@ class SimulationEngine(QObject):
         unit.battery = max(0.0, unit.battery - drain * (dt * settings.BATTERY_DRAIN_DT_SCALE))
 
     def _apply_state_overrides(self, unit: AutonomousUnit) -> None:
+        if unit.is_charging:
+            unit.state = settings.STATUS_RECARGANDO
+            return
+        if unit.is_returning:
+            unit.state = settings.STATUS_REGRESANDO
+            return
         if unit.battery <= 0.0:
             unit.state = settings.STATUS_SIN_BATERIA
         elif hypot(unit.x, unit.y) > self.zone_radius:
