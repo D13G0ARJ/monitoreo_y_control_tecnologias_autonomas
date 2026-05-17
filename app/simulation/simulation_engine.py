@@ -426,10 +426,10 @@ class SimulationEngine(QObject):
         dx = (left_unit.x - right_unit.x) / distance
         dy = (left_unit.y - right_unit.y) / distance
 
-        left_unit.x += dx * overlap * 0.12
-        left_unit.y += dy * overlap * 0.12
-        right_unit.x -= dx * overlap * 0.12
-        right_unit.y -= dy * overlap * 0.12
+        left_unit.x += dx * overlap * settings.SEPARATION_CORRECTION_GAIN
+        left_unit.y += dy * overlap * settings.SEPARATION_CORRECTION_GAIN
+        right_unit.x -= dx * overlap * settings.SEPARATION_CORRECTION_GAIN
+        right_unit.y -= dy * overlap * settings.SEPARATION_CORRECTION_GAIN
 
     def _register_alerts(self, alerts: list[Alert]) -> None:
         self.recent_alerts = (alerts + self.recent_alerts)[:100]
@@ -477,7 +477,7 @@ class SimulationEngine(QObject):
     def _drain_battery(self, unit: AutonomousUnit, dt: float) -> None:
         moving_factor = max(abs(unit.direction_x), abs(unit.direction_y))
         drain = settings.BATTERY_DRAIN_IDLE + (unit.speed * moving_factor * settings.BATTERY_DRAIN_MOVING_FACTOR)
-        unit.battery = max(0.0, unit.battery - drain * (dt * 10.0))
+        unit.battery = max(0.0, unit.battery - drain * (dt * settings.BATTERY_DRAIN_DT_SCALE))
 
     def _apply_state_overrides(self, unit: AutonomousUnit) -> None:
         if unit.battery <= 0.0:
@@ -516,7 +516,7 @@ class SimulationEngine(QObject):
     def _generate_spawn_position(self) -> tuple[float, float]:
         for _ in range(50):
             angle = random.uniform(0.0, 2 * pi)
-            radius = random.uniform(25.0, self.zone_radius * 0.45)
+            radius = random.uniform(settings.SPAWN_MIN_RADIUS, self.zone_radius * settings.SPAWN_MAX_RADIUS_FACTOR)
             x = radius * cos(angle)
             y = radius * sin(angle)
             if self._is_position_available(x, y):

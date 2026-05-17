@@ -36,7 +36,7 @@ class ModeService:
                 self._assign_recon_points(recon_units, zone_radius)
 
     def _assign_defensive_patrol(self, units: list[AutonomousUnit], zone_radius: float) -> None:
-        orbit_radius = zone_radius * 0.68
+        orbit_radius = zone_radius * settings.PATROL_ORBIT_FACTOR
         route_points = max(8, len(units) * 2)
         patrol_route = [
             Waypoint(
@@ -141,14 +141,14 @@ class ModeService:
         altitude: float,
         unit_id: str,
     ) -> list[Waypoint]:
-        left_x = -(zone_radius * 0.68)
-        right_x = zone_radius * 0.68
-        top_y = -(zone_radius * 0.52)
-        bottom_y = zone_radius * 0.48
+        left_x = -(zone_radius * settings.RECON_X_FACTOR)
+        right_x = zone_radius * settings.RECON_X_FACTOR
+        top_y = -(zone_radius * settings.RECON_TOP_FACTOR)
+        bottom_y = zone_radius * settings.RECON_BOTTOM_FACTOR
         lanes = max(3, total_units)
         lane_spacing = (bottom_y - top_y) / max(1, lanes)
         start_y = top_y + (index * lane_spacing)
-        step_y = zone_radius * 0.23
+        step_y = zone_radius * settings.RECON_STEP_FACTOR
         direction_left = index % 2 == 0
 
         route: list[Waypoint] = []
