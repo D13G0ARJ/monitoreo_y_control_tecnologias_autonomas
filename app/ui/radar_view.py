@@ -301,6 +301,10 @@ class RadarView(QGraphicsView):
             return settings.COLOR_STATUS_ROUTE
         if unit.state == settings.STATUS_FUERA_DE_ZONA:
             return settings.COLOR_STATUS_ALERT
+        if unit.state == settings.STATUS_REGRESANDO:
+            return settings.COLOR_STATUS_RTB
+        if unit.state == settings.STATUS_RECARGANDO:
+            return settings.COLOR_STATUS_CHARGING
         if unit.state == settings.STATUS_DETENIDO:
             return settings.COLOR_UNIT_IDLE
         if unit.role == settings.ROLE_RECON:
