@@ -47,6 +47,9 @@ class ControlWindow(QMainWindow):
         params.zone_radius_spin.valueChanged.connect(self.engine.update_zone_radius)
         params.low_battery_spin.valueChanged.connect(self.engine.update_low_battery_threshold)
         params.active_units_spin.valueChanged.connect(self.engine.update_active_unit_target)
+        params.time_scale_combo.currentTextChanged.connect(
+            lambda text: self.engine.set_time_scale(int(text.rstrip("x")))
+        )
 
         self.panels.alerts.clear_button.clicked.connect(self.engine.clear_alert_history)
 
@@ -211,6 +214,10 @@ class ControlWindow(QMainWindow):
 
         for widget in widgets:
             widget.blockSignals(False)
+
+        params.time_scale_combo.blockSignals(True)
+        params.time_scale_combo.setCurrentText(f"{self.engine.time_scale}x")
+        params.time_scale_combo.blockSignals(False)
 
         self.panels.scenario.scenario_selector.blockSignals(True)
         self.panels.scenario.scenario_selector.setCurrentText(self.engine.current_scenario_name)

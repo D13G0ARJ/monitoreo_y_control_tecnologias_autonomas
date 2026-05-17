@@ -334,6 +334,11 @@ class ParametersPanel(QGroupBox):
         self.alert_sound_checkbox = QCheckBox("Sonido de alertas")
         self.alert_sound_checkbox.setChecked(True)
 
+        self.time_scale_combo = QComboBox()
+        for scale in settings.AVAILABLE_TIME_SCALES:
+            self.time_scale_combo.addItem(f"{scale}x")
+        self.time_scale_combo.setMaximumWidth(150)
+
         for widget in (
             self.max_speed_spin,
             self.altitude_spin,
@@ -362,6 +367,12 @@ class ParametersPanel(QGroupBox):
             title.setProperty("role", "field")
             grid.addWidget(title, row, column)
             grid.addWidget(widget, row, column + 1)
+
+        time_scale_row = len(parameter_rows) // 2
+        time_scale_label = QLabel("Escala de tiempo:")
+        time_scale_label.setProperty("role", "field")
+        grid.addWidget(time_scale_label, time_scale_row, 0)
+        grid.addWidget(self.time_scale_combo, time_scale_row, 1)
 
         layout = QVBoxLayout()
         layout.addLayout(grid)
