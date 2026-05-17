@@ -54,6 +54,7 @@ class SimulationEngine(QObject):
         self._swarm_service = SwarmService()
         self._scenario_service = ScenarioService(self._swarm_service)
         self._battery_service = BatteryService()
+        self.time_scale: int = settings.DEFAULT_TIME_SCALE
         self._timer = QTimer(self)
         self._timer.setInterval(settings.SIMULATION_INTERVAL_MS)
         self._timer.timeout.connect(self.update_simulation)
@@ -313,9 +314,13 @@ class SimulationEngine(QObject):
         return f"{minutes:02d}:{seconds:02d}"
 
     def update_simulation(self) -> None:
-        dt = settings.SIMULATION_INTERVAL_MS / 1000.0
+        base_dt = settings.SIMULATION_INTERVAL_MS / 1000.0
+        dt = base_dt * self.time_scale
         self.simulation_time += dt
+        self._tick_units(dt)
+        self.updated.emit()
 
+    def _tick_units(self, dt: float) -> None:
         for unit in self.units.values():
             reached_target = False
             if not unit.is_charging:
@@ -426,7 +431,11 @@ class SimulationEngine(QObject):
 
         self.metrics.record_tick(self.simulation_time, list(self.units.values()),
                                  self.active_alert_count)
-        self.updated.emit()
+
+    def set_time_scale(self, value: int) -> None:
+        if value in settings.AVAILABLE_TIME_SCALES:
+            self.time_scale = value
+            self.updated.emit()
 
     def _handle_proximity_monitoring(self) -> list[Alert]:
         new_alerts: list[Alert] = []
