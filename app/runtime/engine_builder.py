@@ -16,7 +16,7 @@ def build_engine(scenario_name: str, seed: int | None = None) -> SimulationEngin
         scenario_name=scenario_name,
         unit_count=int(scenario.get("units", settings.DEFAULT_ACTIVE_UNITS)),
         swarm_count=2 if scenario_name == settings.SCENARIO_COMBINED else 1,
-        distribution="Mitad y mitad" if scenario_name == settings.SCENARIO_COMBINED else "Automática",
+        distribution=settings.DISTRIBUTION_HALF if scenario_name == settings.SCENARIO_COMBINED else settings.DISTRIBUTION_AUTO,
         use_existing_units=False,
         max_speed=settings.MAX_SPEED,
         target_altitude=settings.DEFAULT_ALTITUDE,

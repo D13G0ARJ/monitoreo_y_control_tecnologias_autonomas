@@ -12,9 +12,9 @@ def test_export_writes_csv_and_json(tmp_path: Path):
              "battery": 99.0, "state": "activo"}]
     summary = {"scenario": {"scenario": "X"}, "units": {"U01": {"distance": 0.0}}}
     paths = export_run(tmp_path, rows, summary)
-    csv_rows = list(csv.DictReader(open(paths["timeseries"])))
+    csv_rows = list(csv.DictReader(open(paths["timeseries"], encoding="utf-8")))
     assert csv_rows[0]["unit_id"] == "U01"
-    assert json.load(open(paths["summary"]))["scenario"]["scenario"] == "X"
+    assert json.load(open(paths["summary"], encoding="utf-8"))["scenario"]["scenario"] == "X"
 
 
 def test_export_empty_rows_ok(tmp_path: Path):

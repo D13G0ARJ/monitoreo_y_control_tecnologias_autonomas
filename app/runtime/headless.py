@@ -10,6 +10,7 @@ def run_headless(scenario_name: str, duration_s: float, out_dir: str,
     engine = build_engine(scenario_name, seed=seed)
     dt = settings.SIMULATION_INTERVAL_MS / 1000.0
     steps = int((duration_s / dt) / max(1, time_scale))
+    # headless drives ticks manually; QTimer is never started, so set the flag directly
     engine.is_running = True
     for _ in range(steps):
         engine.simulation_time += dt * time_scale

@@ -23,4 +23,4 @@ def test_counts_objective_reached():
     u.state = settings.STATUS_OBJETIVO_ALCANZADO
     m.record_tick(0.0, [u])
     s = m.build_summary({})
-    assert s["units"]["U01"]["objectives_reached"] >= 1
+    assert s["units"]["U01"]["objectives_reached"] == 1

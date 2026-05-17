@@ -6,22 +6,24 @@ from math import hypot
 from app.config import settings
 from app.domain.autonomous_unit import AutonomousUnit
 
-CHART_WINDOW = 240
-
-
 class MetricsService:
     def __init__(self) -> None:
+        self._init_state()
+
+    def _init_state(self) -> None:
         self._last_pos: dict[str, tuple[float, float]] = {}
         self._distance: dict[str, float] = {}
         self._objectives: dict[str, int] = {}
         self._prev_state: dict[str, str] = {}
         self._first_objective_time: dict[str, float] = {}
+        # _rows grows unbounded by design: full-fidelity timeseries for CSV export.
+        # Acceptable for thesis-scale runs; a long headless run trades memory for completeness.
         self._rows: list[dict[str, object]] = []
-        self.battery_window: deque[tuple[float, float]] = deque(maxlen=CHART_WINDOW)
-        self.alert_window: deque[tuple[float, int]] = deque(maxlen=CHART_WINDOW)
+        self.battery_window: deque[tuple[float, float]] = deque(maxlen=settings.METRICS_CHART_WINDOW)
+        self.alert_window: deque[tuple[float, int]] = deque(maxlen=settings.METRICS_CHART_WINDOW)
 
     def reset(self) -> None:
-        self.__init__()
+        self._init_state()
 
     def record_tick(self, sim_time: float, units: list[AutonomousUnit],
                     active_alert_count: int = 0) -> None:
@@ -57,7 +59,7 @@ class MetricsService:
         self.alert_window.append((round(sim_time, 2), active_alert_count))
 
     def timeseries_rows(self) -> list[dict[str, object]]:
-        return self._rows
+        return list(self._rows)
 
     def build_summary(self, scenario_info: dict[str, object]) -> dict[str, object]:
         return {

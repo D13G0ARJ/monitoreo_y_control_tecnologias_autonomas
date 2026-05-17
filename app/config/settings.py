@@ -58,6 +58,10 @@ RTB_TRIGGER_MARGIN = 0.0  # se dispara al cruzar low_battery_threshold
 # Control de tiempo (Fase 4)
 DEFAULT_TIME_SCALE = 1
 AVAILABLE_TIME_SCALES = (1, 2, 4, 8)
+METRICS_CHART_WINDOW = 240
+
+DISTRIBUTION_AUTO = "Automática"
+DISTRIBUTION_HALF = "Mitad y mitad"
 
 MODE_DEFENSIVE = "Defensivo"
 MODE_RECON = "Reconocimiento"

@@ -38,7 +38,7 @@ class ScenarioService:
         return {
             "unit_count": len(engine.units) or recommended_units,
             "swarm_count": recommended_swarms,
-            "distribution": "Mitad y mitad" if scenario_name == settings.SCENARIO_COMBINED else "Automática",
+            "distribution": settings.DISTRIBUTION_HALF if scenario_name == settings.SCENARIO_COMBINED else settings.DISTRIBUTION_AUTO,
             "max_speed": engine.max_speed,
             "target_altitude": engine.target_altitude,
             "zone_radius": float(scenario.get("zone_radius", engine.zone_radius)),
