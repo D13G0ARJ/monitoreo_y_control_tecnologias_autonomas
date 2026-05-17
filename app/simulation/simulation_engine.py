@@ -177,6 +177,10 @@ class SimulationEngine(QObject):
         self.simulation_status = "En ejecución"
         if not self._timer.isActive():
             self._timer.start()
+        for unit in self.units.values():
+            if unit.state_before_pause is not None:
+                unit.state = unit.state_before_pause
+                unit.state_before_pause = None
         self.updated.emit()
 
     def pause(self) -> None:
@@ -190,6 +194,7 @@ class SimulationEngine(QObject):
                 settings.STATUS_PATRULLANDO,
                 settings.STATUS_RECONOCIMIENTO,
             }:
+                unit.state_before_pause = unit.state
                 unit.state = settings.STATUS_DETENIDO
         self.updated.emit()
 

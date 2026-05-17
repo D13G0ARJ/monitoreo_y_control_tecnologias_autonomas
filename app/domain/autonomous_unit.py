@@ -34,6 +34,7 @@ class AutonomousUnit:
     signal_ok: bool = True
     direction_x: float = 0.0
     direction_y: float = 0.0
+    state_before_pause: str | None = None
 
     _initial_x: float = field(init=False, repr=False)
     _initial_y: float = field(init=False, repr=False)
@@ -84,3 +85,4 @@ class AutonomousUnit:
         self.signal_ok = True
         self.direction_x = 0.0
         self.direction_y = 0.0
+        self.state_before_pause = None
