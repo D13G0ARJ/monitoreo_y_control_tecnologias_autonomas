@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from PySide6.QtCore import QTimer, Signal
+from PySide6.QtCore import Qt, QTimer, Signal
 from PySide6.QtWidgets import QApplication, QMainWindow
 
 from app.config import settings
@@ -52,6 +52,9 @@ class ControlWindow(QMainWindow):
         )
 
         self.panels.alerts.clear_button.clicked.connect(self.engine.clear_alert_history)
+        self.panels.unit_list_panel.unit_list.itemClicked.connect(
+            lambda item: self.engine.set_selected_unit(item.data(Qt.UserRole))
+        )
 
         self.engine.updated.connect(self._refresh_ui)
         self.engine.selection_changed.connect(self._handle_selection_change)
@@ -145,6 +148,7 @@ class ControlWindow(QMainWindow):
     def _refresh_ui(self) -> None:
         selected_unit = self.engine.units.get(self.engine.selected_unit_id) if self.engine.selected_unit_id else None
         self.panels.unit_info.update_unit(selected_unit)
+        self.panels.unit_list_panel.update_units(list(self.engine.units.values()), self.engine.selected_unit_id)
         self.panels.global_status.update_status(self.engine.get_global_status())
         self.panels.swarm_status.update_summaries(self.engine.get_swarm_summaries())
         self.panels.scenario.set_description(self.engine.current_scenario_description)

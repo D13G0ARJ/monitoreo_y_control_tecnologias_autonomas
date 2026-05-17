@@ -499,6 +499,34 @@ class AlertsPanel(QGroupBox):
             self.list_widget.addItem(item)
 
 
+class UnitListPanel(QGroupBox):
+    def __init__(self) -> None:
+        super().__init__("Lista de unidades")
+        title_label = QLabel("Unidades activas")
+        title_label.setProperty("role", "title")
+
+        self.unit_list = QListWidget()
+        self.unit_list.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
+        self.unit_list.setAlternatingRowColors(True)
+
+        layout = QVBoxLayout()
+        layout.addWidget(title_label)
+        layout.addWidget(self.unit_list)
+        self.setLayout(layout)
+
+    def update_units(self, units: list, selected_id: str | None) -> None:
+        self.unit_list.blockSignals(True)
+        self.unit_list.clear()
+        for u in units:
+            text = f"{u.identifier} [{u.swarm_id}] {u.state}"
+            item = QListWidgetItem(text)
+            item.setData(Qt.UserRole, u.identifier)
+            self.unit_list.addItem(item)
+            if u.identifier == selected_id:
+                self.unit_list.setCurrentItem(item)
+        self.unit_list.blockSignals(False)
+
+
 class LegendPanel(QGroupBox):
     def __init__(self) -> None:
         super().__init__("Leyenda")
@@ -546,13 +574,14 @@ class ControlTabsWidget(QWidget):
         self.scenario = ScenarioPanel()
         self.parameters = ParametersPanel()
         self.unit_info = UnitInfoPanel()
+        self.unit_list_panel = UnitListPanel()
         self.controls = ControlPanel()
         self.legend = LegendPanel()
         self.alerts = AlertsPanel()
 
         self.tabs = QTabWidget()
         self.tabs.addTab(
-            self._wrap_scroll([self.global_status, self.swarm_status, self.unit_info]),
+            self._wrap_scroll([self.global_status, self.swarm_status, self.unit_list_panel, self.unit_info]),
             "Estado",
         )
         self.tabs.addTab(
