@@ -11,6 +11,7 @@ from app.domain.autonomous_unit import AutonomousUnit
 from app.domain.waypoint import Waypoint
 from app.services.alert_service import AlertService
 from app.services.battery_service import BatteryService
+from app.services.metrics_service import MetricsService
 from app.services.mode_service import ModeService
 from app.services.scenario_service import ScenarioApplicationConfig, ScenarioService
 from app.services.swarm_service import SwarmService, SwarmSummary
@@ -47,6 +48,7 @@ class SimulationEngine(QObject):
         self._next_unit_number = 1
         self._next_waypoint_number = 1
 
+        self.metrics = MetricsService()
         self._alert_service = AlertService()
         self._mode_service = ModeService()
         self._swarm_service = SwarmService()
@@ -207,6 +209,7 @@ class SimulationEngine(QObject):
         self.simulation_time = 0.0
         for unit in self.units.values():
             unit.reset()
+        self.metrics.reset()
         self.recent_alerts.clear()
         self.active_pair_alerts.clear()
         self.alerts_updated.emit([])
@@ -421,6 +424,8 @@ class SimulationEngine(QObject):
         if proximity_alerts:
             self._register_alerts(proximity_alerts)
 
+        self.metrics.record_tick(self.simulation_time, list(self.units.values()),
+                                 self.active_alert_count)
         self.updated.emit()
 
     def _handle_proximity_monitoring(self) -> list[Alert]:
