@@ -44,3 +44,34 @@ def test_charges_at_base_then_restores():
     assert u.battery == settings.RECHARGE_FULL
     assert u.is_charging is False
     assert u.is_returning is False
+
+
+def test_engine_full_rtb_cycle_restores_mission():
+    from app.simulation.simulation_engine import SimulationEngine
+
+    engine = SimulationEngine()
+    unit = engine.create_unit()
+    engine.set_mode(settings.MODE_DEFENSIVE)  # gives it an automatic patrol mission
+    assert unit.route, "unit should have a patrol route before RTB"
+    unit.battery = 12.0
+    engine.start()
+    saw_returning = False
+    saw_charging = False
+    cycle_complete = False
+    for _ in range(4000):
+        was_charging = unit.is_charging
+        engine.update_simulation()
+        saw_returning = saw_returning or unit.is_returning
+        saw_charging = saw_charging or unit.is_charging
+        # detect the tick on which charging completed: was_charging but now is not
+        if was_charging and not unit.is_charging and not unit.is_returning:
+            cycle_complete = True
+            break
+    assert saw_returning, "unit should have entered RTB"
+    assert saw_charging, "unit should have entered charging state"
+    assert cycle_complete, "recharge cycle should have completed within 4000 ticks"
+    assert unit.is_returning is False
+    assert unit.is_charging is False
+    # battery was set to RECHARGE_FULL inside evaluate, then may drain one tick — still very high
+    assert unit.battery > settings.RECHARGE_FULL * 0.95, f"expected near-full battery after recharge, got {unit.battery}"
+    assert unit.route, "patrol mission should be restored after recharge"

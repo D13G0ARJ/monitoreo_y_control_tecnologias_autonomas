@@ -315,7 +315,8 @@ class SimulationEngine(QObject):
 
         for unit in self.units.values():
             reached_target = False
-            self._apply_battery_speed_policy(unit)
+            if not unit.is_charging:
+                self._apply_battery_speed_policy(unit)
 
             rtb_action = self._battery_service.evaluate(unit, self.low_battery_threshold, dt)
             if rtb_action == "rtb_start":
@@ -347,6 +348,14 @@ class SimulationEngine(QObject):
                 ])
 
             if unit.is_charging:
+                unit.active_alerts = [
+                    alert for alert in unit.active_alerts
+                    if alert not in {
+                        settings.ALERT_BATTERY_LOW,
+                        settings.ALERT_BATTERY_CRITICAL,
+                        settings.ALERT_NO_BATTERY,
+                    }
+                ]
                 unit.direction_x = 0.0
                 unit.direction_y = 0.0
                 unit.append_trajectory()
@@ -379,7 +388,7 @@ class SimulationEngine(QObject):
                     kp=settings.CONTROL_KP,
                 )
 
-            if unit.waypoint is not None and reached_target and unit.is_returning:
+            if unit.waypoint is not None and reached_target and unit.is_returning and unit.waypoint.kind == "base":
                 self._battery_service.notify_base_reached(unit)
             elif unit.waypoint is not None and reached_target and unit.task_label == settings.TASK_TEMPORARY:
                 self._restore_mission(unit)

@@ -6,7 +6,7 @@ from app.domain.waypoint import Waypoint
 
 
 class BatteryService:
-    """Stateless RTB + recharge decisions. Engine owns mutation/signals."""
+    """RTB + recharge state machine. Mutates unit fields directly (intentional exception to the engine-owns-mutation convention: RTB is a tight per-tick state machine kept cohesive in one place; the engine still owns alerts/signals)."""
 
     def evaluate(self, unit: AutonomousUnit, low_battery_threshold: float, dt: float) -> str | None:
         if unit.task_label == settings.TASK_MANUAL:
