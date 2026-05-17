@@ -30,14 +30,34 @@ DEFAULT_MIN_SEPARATION = 38.0
 MAX_MIN_SEPARATION = 120.0
 CONTROL_KP = 0.85
 TARGET_TOLERANCE = 10.0
-LOW_BATTERY_THRESHOLD = 20.0
-DEFAULT_LOW_BATTERY_THRESHOLD = LOW_BATTERY_THRESHOLD
+DEFAULT_LOW_BATTERY_THRESHOLD = 20.0
 CRITICAL_BATTERY_THRESHOLD = 5.0
 BATTERY_DRAIN_IDLE = 0.02
 BATTERY_DRAIN_MOVING_FACTOR = 0.0009
 MAX_TRAJECTORY_POINTS = 80
 SPAWN_MIN_DISTANCE = 35.0
 DEFAULT_ACTIVE_UNITS = 6
+
+# Movement / behavior tunables (extracted from inline literals)
+BATTERY_DRAIN_DT_SCALE = 10.0
+SEPARATION_CORRECTION_GAIN = 0.12
+PATROL_ORBIT_FACTOR = 0.68
+RECON_X_FACTOR = 0.68
+RECON_TOP_FACTOR = 0.52
+RECON_BOTTOM_FACTOR = 0.48
+RECON_STEP_FACTOR = 0.23
+SPAWN_MIN_RADIUS = 25.0
+SPAWN_MAX_RADIUS_FACTOR = 0.45
+
+# Return-to-base / recharge (Fase 2)
+BASE_POSITION = (0.0, 0.0)
+RECHARGE_RATE = 6.0  # % por segundo de simulación
+RECHARGE_FULL = 100.0
+RTB_TRIGGER_MARGIN = 0.0  # se dispara al cruzar low_battery_threshold
+
+# Control de tiempo (Fase 4)
+DEFAULT_TIME_SCALE = 1
+AVAILABLE_TIME_SCALES = (1, 2, 4, 8)
 
 MODE_DEFENSIVE = "Defensivo"
 MODE_RECON = "Reconocimiento"
@@ -63,6 +83,8 @@ STATUS_SIN_BATERIA = "sin batería"
 STATUS_OBJETIVO_ALCANZADO = "objetivo alcanzado"
 STATUS_FUERA_DE_ZONA = "fuera de zona"
 STATUS_BATERIA_BAJA = "batería baja"
+STATUS_REGRESANDO = "regresando a base"
+STATUS_RECARGANDO = "recargando"
 
 ALERT_BATTERY_LOW = "batería baja"
 ALERT_BATTERY_CRITICAL = "batería crítica"
@@ -70,6 +92,8 @@ ALERT_NO_BATTERY = "sin batería"
 ALERT_OUT_OF_ZONE = "fuera de zona"
 ALERT_TARGET_REACHED = "objetivo alcanzado"
 ALERT_PROXIMITY = "proximidad entre unidades"
+ALERT_RTB_START = "retorno a base iniciado"
+ALERT_RECHARGE_DONE = "recarga completada"
 
 SEVERITY_INFO = "informativa"
 SEVERITY_WARN = "advertencia"
@@ -113,6 +137,8 @@ COLOR_ALERT_BG_INFO = "#14303a"
 COLOR_ALERT_BORDER_INFO = "#2d6f87"
 COLOR_ZONE_PROTECTED = "#1e7f6d"
 COLOR_OBSERVATION = "#9ac1ff"
+COLOR_STATUS_RTB = "#ffb454"
+COLOR_STATUS_CHARGING = "#43d9bd"
 
 SCENARIO_ZONE_PROTECTION = "Protección de zona estratégica"
 SCENARIO_RECON_AREA = "Reconocimiento de área de interés"
